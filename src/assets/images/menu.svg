@@ -1,0 +1,17 @@
+<svg id="icon_menu" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <rect id="Rectangle_106" data-name="Rectangle 106" width="20" height="20" fill="#fff" opacity="0.01"/>
+  <g id="Group_106" data-name="Group 106">
+    <g id="Rectangle_169" data-name="Rectangle 169" transform="translate(6 1)" fill="none" stroke="#f1950e" stroke-width="1">
+      <rect width="13" height="2" rx="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="12" height="1" rx="0.5" fill="none"/>
+    </g>
+    <g id="Rectangle_170" data-name="Rectangle 170" transform="translate(1 9)" fill="none" stroke="#f1950e" stroke-width="1">
+      <rect width="18" height="2" rx="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="17" height="1" rx="0.5" fill="none"/>
+    </g>
+    <g id="Rectangle_171" data-name="Rectangle 171" transform="translate(6 17)" fill="none" stroke="#f1950e" stroke-width="1">
+      <rect width="13" height="2" rx="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="12" height="1" rx="0.5" fill="none"/>
+    </g>
+  </g>
+</svg>

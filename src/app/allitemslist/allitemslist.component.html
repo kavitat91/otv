@@ -1,0 +1,96 @@
+<section class="pull-left w-100 padding-top-80">
+	<div class="container">
+		<div class="row">
+			<div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}" *ngIf="page == 'allitemlist'">	          
+        <section class="content padding-top-20 padding-bottom-40">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+              <h1 class="text-capitalize pull-left w-100 oriya-color1 font-sbold page-title">{{title}}</h1>						
+            </div>
+          </div>
+          <div class='thumbnail-list-wrap' [ngClass]=' allItemsData?.layout_type == "t_16_9_big_meta" ? "shows-list-page" : "movies-list-page" '>
+            
+            <div *ngFor="let item of all_items; let i = index;" class="thumbnail-list-box margin-bottom-20 relative-content">
+              <div class="item horizontal-carousel 121">
+                <a routerLink="{{item['itemUrl']}}">
+                  <img [src]='allItemsData?.layout_type == "t_16_9_big_meta" ? item["thumbnails"]["medium_16_9"]["url"] : item["thumbnails"]["medium_2_3"]["url"] ' class="carousel-slide-image">
+                </a>
+              
+                <span *ngIf="item?.access_control && item.access_control.is_free == false " class="premium-txt">Premium</span>
+                
+                <p class="margin-bottom-0">
+                  <label class="oriya-color1 block margin-bottom-0 text-ellipsis margin-top-5">{{item?.title}}</label>
+                  <span class="info block oriya-color2 text-ellipsis">{{item?.item_caption}}</span>
+                </p>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+      </div>
+      <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}" *ngIf="page == 'othertvshows'">	
+        <section class="content padding-top-20 padding-bottom-40">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+              <h1 class="text-capitalize pull-left w-100 oriya-color1 font-sbold page-title">{{title}}</h1>						
+            </div>
+          </div>
+          <div class="thumbnail-list-wrap shows-list-page">
+          
+            <div class="thumbnail-list-box margin-bottom-20 relative-content" *ngFor="let tvs of allTvshows; let i = index;">
+              <div class="item horizontal-carousel 122">
+                <a href="{{tvs['itemUrl']}}">
+                  <img src="{{ tvs['thumbnails']['medium_16_9']['url'] }}" class="carousel-slide-image">
+                </a>
+          
+                <span class="premium-txt" *ngIf="tvs.hasOwnProperty('access_control') && tvs['access_control']['is_free'] == false">Premium</span>
+            
+                <p class="margin-bottom-0">
+                  <label class="oriya-color1 block margin-bottom-0 text-ellipsis margin-top-5">{{tvs['title']}}</label>
+                  <span class="info block oriya-color2 text-ellipsis">{{tvs['item_caption']}}</span>
+                </p>
+              </div>
+            </div>
+          
+          </div>
+        </section>
+
+      </div>	
+      <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}" *ngIf="page == 'genreall'">	
+        <section class="content padding-top-20 padding-bottom-40" *ngIf="genreAll && genreAll?.length > 0">
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+              <!-- <h1 class="text-capitalize pull-left w-100 oriya-color1 font-sbold page-title">{{title}}</h1>						 -->
+            </div>
+          </div>
+          <div class="thumbnail-list-wrap shows-list-page">
+          
+            <div class="thumbnail-list-box margin-bottom-20 relative-content" *ngFor="let gen of genreAll; let i = index;">
+              <div class="item horizontal-carousel 123">
+                <a href="{{gen['itemUrl']}}">
+                  <img src="{{ gen['thumbnails']['medium_16_9']['url'] }}" class="carousel-slide-image">
+                </a>
+          
+                <span class="premium-txt" *ngIf="gen.hasOwnProperty('access_control') && gen['access_control']['is_free'] == false">Premium</span>
+            
+                <p class="margin-bottom-0">
+                  <label class="oriya-color1 block margin-bottom-0 text-ellipsis margin-top-5">{{gen['title']}}</label>
+                  <span class="info block oriya-color2 text-ellipsis">{{gen['item_caption']}}</span>
+                </p>
+              </div>
+            </div>
+          
+          </div>
+        </section>
+        <section class="content padding-top-20 padding-bottom-40" *ngIf="!genreAll && !genreAll?.length > 0">
+          <div class="error_message_center_align">
+            <p>{{statusMessage}}</p>
+          </div>  
+        </section>
+      </div>	
+
+    </div>
+  </div>
+</section>    
+
+      

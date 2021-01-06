@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="81" height="81" viewBox="0 0 81 81">
+  <g id="icon_pause" transform="translate(-11 -10)">
+    <circle id="Ellipse_19" data-name="Ellipse 19" cx="40" cy="40" r="40" transform="translate(11.5 10.5)" fill="none" stroke="#8c8c8c" stroke-width="1" opacity="0.5"/>
+    <circle id="Ellipse_20" data-name="Ellipse 20" cx="39.5" cy="39.5" r="39.5" transform="translate(12 11)" fill="#fff" opacity="0.5"/>
+    <path id="Path_128" data-name="Path 128" d="M390,372.941a1.292,1.292,0,0,1,1.019-.941h4.1a1.025,1.025,0,0,1,1.03.941v25.1a1.268,1.268,0,0,1-1.03.963h-4.1a1.083,1.083,0,0,1-.814-.386.934.934,0,0,1-.2-.578Zm18.852,0a1.292,1.292,0,0,1,1.019-.941h4.1a1.025,1.025,0,0,1,1.03.941v25.1a1.268,1.268,0,0,1-1.03.963h-4.1a1.083,1.083,0,0,1-.814-.386.935.935,0,0,1-.2-.578Z" transform="translate(-351 -335)" fill="#fff" fill-rule="evenodd"/>
+  </g>
+</svg>

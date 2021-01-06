@@ -1,0 +1,64 @@
+<div class="lds-roller" *ngIf="loadingIndicator">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<section class="pull-left w-100 padding-top-80">
+  <div class="container">
+    <div class="row">
+      <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
+        <div class="pull-left w-100 search-page padding-top-20 padding-bottom-40">
+          <div class="search-box-wrap pull-left w-100 margin-bottom-15">
+            <input type="search" id="search" name="searchval" class="item_search" placeholder="Search for movies, songs &amp; more …" value="" #box (keyup)="onSearch(box.value)">
+            <span class="search_errors" *ngIf="searchError">Please enter Search text</span>
+            <!-- {{box.value.length}} -->
+          </div>
+          <div class="pull-left w-100">
+						<h1 class="page-title pull-left w-100 margin-bottom-15" id="trending_search" *ngIf="!search_results1">Trending Search</h1>
+						
+						<!-- <h1 class="page-title pull-left w-100 margin-bottom-15" id="search_heading">Search Results(<span class="search_item_cnt"><%=@search_results.count%></span>)</h1>
+						<%end%>-->
+						<h1 class="page-title pull-left w-100 margin-bottom-15" id="search_heading" *ngIf="search_results1 && box.value.length != 0">Search Results(<span class="search_item_cnt">{{search_results.length}}</span>)</h1> 
+					</div>
+          <div *ngIf="box.value.length !=0 && search_results?.length == 0" class="thumbnail-list-wrap shows-list-page pull-left w-100">
+            <div id="search_all_results" class="thumbnail-list-wrap shows-list-page pull-left w-100">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-content-wrap text-center">
+                <img src="/assets/images/search_error.png" class="status_image margin-top-25 margin-bottom-25" alt="" title="">
+                <p class="margin-bottom-0 font-sbold text-ellipsis"><strong>No Results found! </strong></p>
+                <p class="margin-bottom-0">We could not find what you searched for.</p>
+                <p class="margin-bottom-0">Please check the spelling or try another term.</p>
+              </div>
+            </div>
+					</div>
+          <div class="thumbnail-list-wrap shows-list-page pull-left w-100" id="trending_results">			
+            
+            <div *ngFor="let s of search_results; let i=index;" class="thumbnail-search-list-box margin-bottom-20 relative-content">	
+              <div class="item-image">
+                  <a href="">
+                    <img class="img-fluid" [src]="s.thumbnails?.medium_16_9?.url">
+                  </a>
+                </div>
+                <div class="item-content">
+                  <p class="margin-bottom-0 margin-top-0 pull-left w-100">
+                    <label class="oriya-color1 margin-bottom-5 pull-left w-100 text-ellipsis">{{ s?.title }}</label>
+                    <span class="oriya-color2 pull-left w-100 text-ellipsis">{{ s?.item_caption }}</span>
+                  </p>
+                  <p class="pull-left w-100 margin-bottom-10 search_short_desc">
+                    <span>{{s?.description | slice: 0:100 }}</span>
+                  </p>
+                  <!-- <a href="<%=get_item_url(s)%>" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0"><i class="fa fa-play pull-left margin-right-10" aria-hidden="true"></i> watch now</a> -->
+                </div>
+              </div>             
+           </div>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+      

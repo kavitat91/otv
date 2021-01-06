@@ -1,0 +1,69 @@
+<div class="modal-backdrop show" [ngStyle]="{'display': displayPopStatus}"></div>
+  <div class="modal" id="otv_video_player" *ngIf="videoPop" [ngStyle]="{'display': displayPopStatus}">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <button type="button" class="close" id="player_pop">
+          <img src="/assets/images/btn_closeplayer.svg" alt="" title="" id="otv_video_player_close_btn" (click)="closePop('otv_video_player')">
+        </button>
+        <!-- |title={{title}}|theme_type=movie|channel_logo=|catalog_id={{catalogId}}|content_id={{contentId}}|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad={{episodeDetails['access_control']['pre_role_settings']['mobile_ads_url']}} -->
+        <div class="modal-body text-left padding-left-0 padding-right-0">
+          <div class="player_section w-100 embed-responsive embed-responsive-16by9"  id="shemaroo_player">
+            <div id="otvIframeVideo"> 
+              <!-- <iframe src="http://localhost:3000/odiyatv_player/demo/embed.html?contenturl=1lmjGnyJ2mY5UN9oxEzk7nRqIWzG8H3MRHbkT8VlSGmtOHLaSQsgq7eZ73lSn2mAxhpAqJbJ+vuGt8EuqL9/uhHSWy1p6PJ2me5RIDWXtU446/cL1xDGFdwLMUcv//19|key=NUrU2GFP4tWEVTFXKSMAnA==|image=https://d18yh0jkm7grap.cloudfront.net/images/Priya-Oh-Priya/5dc151d419521df3a900005b/large_16_9_1573808759.jpg?1573811425|title=Priya%20Oh%20Priya|theme_type=movie|channel_logo=|catalog_id=5d79d1f6babd81589500024e|content_id=5dc151d4babd81481d0007c8|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=https://googleads.g.doubleclick.net/pagead/ads?client=ca-video-pub-7560122883902914&slotname=TarangPlus-Skippable-Any-Duration&ad_type=video_image&description_url=https%3A%2F%2Ftarangplus.in&videoad_start_delay=0&vpmute=0&vpa=1|mid_role_ad=https://googleads.g.doubleclick.net/pagead/ads?client=ca-video-pub-7560122883902914&slotname=TarangPlus-3Min-Mid-Roll-30Sec-Skippable&ad_type=video_image&description_url=https%3A%2F%2Ftarangplus.in&max_ad_duration=30000&videoad_start_delay=180000&vpmute=0&vpa=1|mid_role_pos=231$462"></iframe> -->                  
+              <iframe src="/odiyatv_player/demo/embed.html?contenturl=1lmjGnyJ2mY5UN9oxEzk7nRqIWzG8H3MRHbkT8VlSGmtOHLaSQsgq7eZ73lSn2mAxhpAqJbJ+vuGt8EuqL9/uhHSWy1p6PJ2me5RIDWXtU446/cL1xDGFdwLMUcv//19$@key=NUrU2GFP4tWEVTFXKSMAnA==$@image={{episodeDetails?.thumbnails?.xl_image_16_9?.url}}$@title={{title}}$@theme_type=movie$channel_logo=$@catalog_id={{catalogId}}$@content_id={{contentId}}$@genre=crime$@language=hindi$@category=bollywood classic$@preview_avail=false$@is_premium=false$@pre_role_ad={{episodeDetails['access_control']['pre_role_settings']['mobile_ads_url']}} | safe"></iframe> -->
+              {{videoURL}}
+              <iframe [src]="videoURL | safe" *ngIf="videoClickStatus"></iframe>
+            </div>
+          </div>   
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="modal" id="video_watch_login_pop" *ngIf="videoWatchLoginPop" [ngStyle]="{'display': displayPopStatus}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-left padding-left-30 padding-right-30">
+          <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Login</h1>
+          <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">Please login to watch the video
+          </p>
+          <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15 login_cancel" (click)="closePop()">Cancel</a>
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left login_pop_show" id="" (click)="loginPop('signin_pop')">Proceed</a>          
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="modal" id="watchlater_without_login_pop" *ngIf="watchlaterWithoutLoginPop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-left padding-left-30 padding-right-30">
+          <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Login</h1>
+          <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">You have to login to add to watchlist
+          </p>
+          <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15 login_cancel">Cancel</a>
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left login_pop_show">Proceed</a>          
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal" id="sub_video_pop" *ngIf="subVideoPop" [ngStyle]="{'display': displayPopStatus}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-left padding-left-30 padding-right-30">
+          <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Subscribe</h1>
+          <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">You have to subscribe to watch the video
+          </p>
+          <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15 sub_pop_cancel" (click)="closePop()">Cancel</a>
+            <a routerLink="/plans" class="text-uppercase btn-oria btn-oria-big pull-left " id="">Proceed</a>          
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div>

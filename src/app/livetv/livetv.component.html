@@ -1,0 +1,96 @@
+<div class="lds-roller" *ngIf="loadingIndicator">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="pull-left w-100  padding-top-80" [ngStyle]="{'min-height': contentHeight+'px' }">
+  <div class="error_message_center_align" *ngIf="errorStatus">
+    <p>{{statusMessage}}</p>
+  </div>
+  <ng-container *ngIf="page == 'livetv'">
+    <section class="main-slider pull-left w-100">
+      <section class="banner-slider relative-content">
+        <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-padding">		
+          <div id="livetv-carousel" class="owl-carousel owl-theme margin-bottom-15">				
+            <owl-carousel [options]="carouselOptions" [items]="bannerContents" [carouselClasses]="['owl-theme owl-carousel margin-bottom-15']">            
+              <div class="item" *ngFor="let image of bannerContents;let i= index"> 
+                <a routerLink="{{image['itemUrl']}}">
+                  <img src="{{image['thumbnails']['xl_image_16_5']['url']}}" class="carousel-slide-image" alt="{{image['title']}}" title="{{image['title']}}">                
+                  <span class="live-txt" *ngIf="image['theme'] == 'live'">Live</span>              
+                </a>
+              </div>
+            </owl-carousel>          
+          </div>		
+        </div>
+      </section>
+    </section>
+    <section class="pull-left w-100">
+      <div class="container">
+        <div class="row">
+          <div class="wrapper">	
+            <section class="content padding-top-0 padding-bottom-60">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10"> 
+                  <h2 class="margin-bottom-0 margin-top-5 text-capitalize pull-left carousel-title oriya-color1 font-sbold" *ngIf="otherContents">Popular Channels</h2>
+                  <a routerLink="/channels" class="text-capitalize see-all see-all1 pull-right" *ngIf="desktopNav && otherContents?.length > 4">see all</a>
+                  <a href="/channels"
+                  class="text-capitalize see-all see-all2 pull-right" *ngIf="mobileNav && otherContents?.length > 4">
+                   <img src="/assets/images/right_arrow.svg" alt="" title=""></a>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-">
+                  <div id="channels-carousel" class="owl-carousel owl-theme genres-carousel">
+                    <owl-carousel [options]="carouselOptions2" [items]="otherContents" [carouselClasses]="['owl-theme owl-carousel horizontal-carousel margin-bottom-15']">            
+                      <div class="item relative-content" *ngFor="let image of otherContents;let i= index"> 
+                          <a routerLink="{{image['itemUrl']}}">
+                            <img src="{{image['thumbnails']['medium_16_9']['url']}}" class="carousel-slide-image" alt="{{image['title']}}" title="{{image['title']}}">                
+                            <span class="live-txt">Live</span>              
+                            <span class="premium-txt" *ngIf="image.hasOwnProperty('access_control') && image['access_control']['is_free'] == false ">Premium</span>
+                          </a>
+                        </div>
+                    </owl-carousel>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>              
+  </ng-container>
+
+  <ng-container *ngIf="page == 'channels'">
+    
+      <div class="container">
+        <div class="row">
+          <div class="wrapper">	
+            <section class="content padding-top-20 padding-bottom-60">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="text-capitalize pull-left w-100 oriya-color1 font-sbold page-title" *ngIf="otherContents">All channels</h1>						
+                </div>
+              </div>
+              <div class="thumbnail-list-wrap shows-list-page">
+                 
+                <div class="thumbnail-list-box margin-bottom-20" *ngFor="let channels of otherContents;let i= index">
+                  <div class="item relative-content">
+                      <a routerLink="{{channels['itemUrl']}}">
+                        <img src="{{channels['thumbnails']['medium_16_9']['url']}}">
+                      </a>
+                      <span class="live-txt">Live</span>
+                  </div>
+                </div>
+                    
+              </div>            
+
+            </section>
+          </div>
+        </div>   
+      </div>   
+       
+  </ng-container>  
+</div>

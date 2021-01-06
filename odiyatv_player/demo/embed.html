@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>TarangPlus Player</title>
+    <link rel="stylesheet" type="text/css" href="../skins/sphls.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+    <script src="../external/jquery-3.1.1.min.js"></script>
+    <script src="../external/player_crypt.js"></script>
+    <script src="../plugin/saranyuplayer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../plugin/cookies_plugin.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      var _paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["setCookieDomain", "*.54.221.118.191"]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function () {
+        var u = "https://vidura.tarangplus.in/";
+        _paq.push(['setTrackerUrl', u + 'matomo.php']);
+        _paq.push(['setSiteId', '1']);
+        var d = document,
+          g = d.createElement('script'),
+          s = d.getElementsByTagName('script')[0];
+        g.type = 'text/javascript';
+        g.async = true;
+        g.defer = true;
+        g.src = u + 'matomo.js';
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <style type="text/css">
+      body {
+        background: black;
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        position: absolute;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+      }
+
+      #video_player {
+        height: 100%;
+        width: 100%;
+      }
+
+      #login_overlay,
+      #subscrip_pop_overlay {
+        margin: 0 17.1%;
+        height: 100%;
+        width: 65.8%;
+        position: absolute;
+        background: gray;
+        z-index: 10000;
+        opacity: 0.9;
+        display: none;
+        text-align: center;
+      }
+
+      #login_overlay .login-popup-request,
+      #subscrip_pop_overlay .subscribe-popup-request {
+        background-color: #F1950E !important;
+        cursor: none;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        height: 2em;
+        width: auto;
+        color: white;
+        padding: 1em;
+        line-height: 2em;
+        border-radius: 50px;
+        text-align: center;
+        position: relative;
+        top: 47%;
+      }
+
+      #play_icon {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background: transparent;
+        z-index: 10000;
+        opacity: 0.9;
+        display: none;
+        text-align: center;
+      }
+
+      #play_icon .play-icon-request {
+        background-color: transparent !important;
+        cursor: pointer;
+        height: 2em;
+        width: auto;
+        color: white;
+        padding: 1em;
+        line-height: 2em;
+        border-radius: 12px;
+        text-align: center;
+        position: relative;
+        top: 40%;
+      }
+
+      .subscribe-popup-request a,
+      .login-popup-request a {
+        text-decoration: none;
+        color: #fff;
+      }
+
+      .videoAdUiSkipButtonExperimentalText {
+        font-size: 22px !important;
+      }
+
+      @media(max-width: 767px) {
+
+        #login_overlay,
+        #subscrip_pop_overlay {
+          margin: 0;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body style="background-color: rgb(38,38,38); height: 100%; width: 100%; overflow: hidden;">
+    <div id="login_overlay"><span class="login-popup-request">Please Login To Watch Video</span>
+    </div>
+    <div id="subscrip_pop_overlay"><span class="subscribe-popup-request">Please Subscribe To Watch Video</span>
+    </div>
+    <div id="video_player"></div>
+  </body>
+  <script type="text/javascript">
+
+    /* var getOTVUserCookies = function(){
+      var pairs = document.cookie.split("; ");
+      var cookies = {};
+      for (var i=0; i<pairs.length; i++){
+      var pair = pairs[i].split("=");
+      cookies[pair[0]] = unescape(pair[1]);
+      }
+      return cookies;
+    } */
+    console.log("123"+localStorage.getItem('otv_user_pack_status'));
+    var andriod_check = navigator.userAgent.toLowerCase();
+    var theme_type = $.cookie('theme_type');
+    var user_sub_status = localStorage.getItem('otv_user_pack_status');
+    var isiPad = navigator.userAgent.indexOf('iPad') != -1;
+    var isiPhone = navigator.userAgent.indexOf('iPhone') != -1;
+    var player_status = false;
+    var currentURLType = "hls";
+    var user_status = "false"
+    var to_mute = "false";
+    var auto_playz = "true";
+    var autoplay_status = false;
+    var contenturl = location.href;
+    var res = contenturl.split("contenturl=");
+    var contenturlobtained = res;
+    var video_img = ""
+    var video_url = contenturlobtained[1].split("|")[0];
+    var key = contenturlobtained[1].split("key=")[1].split("|")[0]
+    var video_name = contenturlobtained[1].split("title=")[1].split("|")[0]
+    var video_image_url = contenturlobtained[1].split("image=")[1].split("|")[0]
+    var catalogid = contenturlobtained[1].split("catalog_id=")[1].split("|")[0]
+    var contentid = contenturlobtained[1].split("content_id=")[1].split("|")[0];
+    var theme = contenturlobtained[1].split("theme_type=")[1].split("|")[0];
+    var pre_role_ad_url = contenturlobtained[1].split("pre_role_ad=")[1].split("|")[0];
+    var mid_role_ad_url = contenturlobtained[1].split("mid_role_ad=")[1].split("|")[0];
+    var mid_role_sch = contenturlobtained[1].split("mid_role_pos=")[1].split("|")[0];
+    var videotitle = contenturlobtained[1].split("|")[3].split("=")[1];
+    var wind_url = window.location.protocol + "//" + window.location.host;
+    var  adv_urls = "";
+    var decrypted = CryptoJS.AES.decrypt({
+      ciphertext: CryptoJS.enc.Base64.parse(video_url)
+    }, CryptoJS.enc.Base64.parse(key), {
+      iv: CryptoJS.enc.Hex.parse('00000000000000000000000000000000')
+    });
+    video_url = decrypted.toString(CryptoJS.enc.Utf8);
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    var player_status = false;
+    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (/android/i.test(userAgent)) {
+      if ((navigator.userAgent.indexOf("Chrome") != -1) || (navigator.userAgent.toLowerCase().indexOf('firefox') > -
+          1) || iOS) {
+        image_url = video_img;
+      }
+    }
+    if (iOS) {
+      image_url = video_img;
+    }
+    if (theme == "live") {
+      var featureszz = ['playpause', 'volume', 'fullscreen', 'videotitle', 'bigicons', 'hotkeys', 'eventcallbacks', 'qualityswitch','advertisement'];
+      autoplay_status = "false"
+    } else {
+      var featureszz = ['rewind', 'playpause', 'forward', 'progressbar', 'time', 'volume', 'fullscreen', 'videotitle', 'tvlogo', 'bigicons',
+        'hotkeys', 'eventcallbacks', 'qualityswitch','advertisement'
+      ];
+    }
+    var mobileFeatures = ['rewind', 'playpause', 'forward', 'progressbar', 'time', 'fullscreen', 'qualityswitch',
+      'videotitle', 'tvlogo', 'bigicons', 'eventcallbacks','advertisement'
+    ];
+    if (isiPad) {
+      featureszz = mobileFeatures;
+    }
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if (/android/i.test(userAgent)) {
+      if ((navigator.userAgent.indexOf("Chrome") != -1) || (navigator.userAgent.toLowerCase().indexOf('firefox') > -
+          1) || iOS) {
+        auto_playz = "false"
+        featureszz = mobileFeatures;
+      }
+    }
+    if (iOS) {
+      auto_playz = "false";
+    }
+    ww = window.innerWidth - 0.1;
+    wh = window.innerHeight - 0.1;
+    setInterval(function () {
+      var isiPad = navigator.userAgent.indexOf('iPad') != -1;
+      var isiPhone = navigator.userAgent.indexOf('iPhone') != -1;
+      if (isiPad || isiPhone) {} else {
+        ww = window.innerWidth - 0.1;
+        wh = window.innerHeight - 0.1;
+        $("#video_player").parent().css("width", ww);
+        $("#video_player").parent().css("height", wh);
+      }
+    }, 700);
+  
+    if(user_sub_status == "false"){
+      var adv_pos = mid_role_sch.split("$")
+      var adv_urls = []
+      adv_urls.push({'adurl' : pre_role_ad_url,'schedule' : '0.5'})
+      for(a=0;a<adv_pos.length;a++){
+       adv_urls.push({'adurl': mid_role_ad_url,'schedule': adv_pos[a]})
+      }
+      console.log(adv_urls);
+      /*adv_urls =  [{'adurl' : pre_role_ad_url,'schedule' : '0.5'},{'adurl' : mid_role_ad_url,'schedule' : '1835'},{'adurl' : mid_role_ad_url,'schedule' : '3670'} ]*/
+    }
+    else{
+      adv_urls = [];
+    }
+    if (isiPad || isiPhone) {} else {
+      $("#video_player").parent().css("width", ww);
+      $("#video_player").parent().css("height", wh);
+    }
+    if (isiPad || isiPhone) {
+      $("#video_player").replaceWith("<video id='video_player' controls src='" + video_url + "' poster='" +
+        video_image_url + "' height='100%' width='100%'></video>");
+    } else {
+      playerObject = new saranyuplayer(currentURLType, '#video_player', {
+        'licence': '6BdgYyHxsYkXNCViMFM1+RZy9RNs2YO9Xe7ATbcHakqLzZzSAqxou+Iz51R1%0AbjMo655ZwM58\/oaZcSQ5fHkgqeqHW1C+pLEUFFN+qlI3ZgM=%0A',
+        'type': 'video',
+        'content': 'vod',
+        'file': [{
+          'content_url': video_url,
+          'label': 'Auto',
+          'mediaid': '123',
+          'poster': video_image_url,
+          'videotitle': decodeURI(videotitle),
+        }, ],
+        'autoplay': autoplay_status,
+        'seekonload': 00,
+        'mute': to_mute,
+        'poster': 'http://localhost:3000/assets/transparent.png',
+          'advertisement' : {
+                    'cues' : 'true',
+                    'adsets' : adv_urls
+                },
+        'hideControlsWhenInactive': 'true',
+        'qualityswitch': {
+          'label': 'Auto',
+          'metric': 'resolution'
+        }, // metric can be resolution or bitrate.
+        'features': featureszz
+      });
+    }
+
+
+
+   function stopPlayer() {
+      hlsPlayer._videoPlayerControls("stop");
+    }
+
+    function pausePlayer() {
+      hlsPlayer._videoPlayerControls("pause");
+    }
+
+    function playPlayer() {
+      hlsPlayer._videoPlayerControls("play");
+    }
+
+    function seekPlayer(val) {
+      hlsPlayer._videoPlayerControls("seek", val);
+    }
+
+    function getcurrentTime() {
+      return hlsPlayer._getCurrentTime();
+    }
+
+    function getTotalDuration() {
+      return hlsPlayer._getTotalDuration();
+    }
+
+
+    function login_sub_andriod_check(){
+         if(andriod_check.indexOf("android") > -1){
+          if(!localStorage.getItem('otv_user_id')){
+            console.log("posst postMessage")
+            stopPlayer();
+            $("#login_overlay").show();
+            top.postMessage({ga_event: 'loginpop'}, wind_url)
+          }
+          else if(localStorage.getItem('otv_user_id') && (localStorage.getItem('otv_user_pack_status') == undefined || localStorage.getItem('otv_user_pack_status') == "false")){
+            console.log("posst postMessage")
+            stopPlayer();
+            $("#subscrip_pop_overlay").show();
+            top.postMessage({ga_event: 'subscribe_pop'}, wind_url)
+          }
+        }
+    }
+
+    $(document).ready(function() {  
+      if(iOS) {
+         setInterval(function(){
+          var getcurrentTime_iphone = $('#video_player')[0].currentTime;
+          if(getcurrentTime_iphone > 1){
+              if(!localStorage.getItem('otv_user_id')) {
+                 $('#video_player').remove();
+                 $("#login_overlay").show();
+                 top.postMessage({ga_event: 'loginpop'}, wind_url)
+              }  
+              else if(localStorage.getItem('otv_user_id') && (localStorage.getItem('otv_user_pack_status') == undefined || localStorage.getItem('otv_user_pack_status') == "false")){
+                  $('#video_player').remove();
+                  $("#subscrip_pop_overlay").show();
+                  top.postMessage({ga_event: 'subscriptionpop'}, wind_url);
+                }
+              }    
+        }, 2000);
+      }
+    })
+
+    function createEventCallBacks() {
+      hlsPlayer.eventcallbacks.onPlay = function (presentTime, duration, mediaId) {
+        player_status = true;
+        console.log("play start ss");
+        login_sub_andriod_check()
+        //var time = getOTVUserCookies().otv_user_played_time
+        var time = '';
+        if(time != undefined){
+        var is_safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if(is_safari) {
+          setTimeout(function(){             
+            hlsPlayer._videoPlayerControls("seek",time);                      
+          },200);
+          setTimeout(function(){                       
+            $(".sp-player-loading").hide(); 
+          },500);
+        }
+        else {
+          hlsPlayer._videoPlayerControls("seek",time);  
+        }
+      }
+        /*
+        _paq.push(['trackEvent', 'Media', 'Activity', 'play', 1, {
+          dimension1: 'shemaroo-web',
+          dimension2: $('#language').val(),
+          dimension3: $('#item_category').val(),
+          dimension4: $('#theme_type').val(),
+          dimension5: $("#genre").val(),
+          dimension6: "NA",
+          dimension7: "284p",
+          dimension10: $.cookie('user_state'),
+          dimension11: $.cookie('user_period'),
+          dimension14: getShemarooCookies().user_analytical_id,
+          dimension15: $("#content_id").val(),
+          dimension16: $("#ma_title").val(),
+          dimension18: $("#video_duration").val(),
+          dimension28: media_dimension
+      }]);
+        */
+
+      };
+      hlsPlayer.eventcallbacks.onPause = function (presentTime, duration, mediaId) {
+        player_status = false;
+        console.log("onPause");
+      };
+      hlsPlayer.eventcallbacks.onResume = function (presentTime, duration, mediaId) {
+        login_sub_andriod_check();
+        player_status = true;
+        console.log("onResume");
+      };
+      hlsPlayer.eventcallbacks.onComplete = function (presentTime, duration, mediaId) {
+        player_status = false;
+        console.log("onComplete");
+
+        /*
+        _paq.push(['trackEvent', 'Media', 'Activity', 'play', 1, {
+          dimension1: 'shemaroo-web',
+          dimension2: $('#language').val(),
+          dimension3: $('#item_category').val(),
+          dimension4: $('#theme_type').val(),
+          dimension5: $("#genre").val(),
+          dimension6: "NA",
+          dimension7: "284p",
+          dimension10: $.cookie('user_state'),
+          dimension11: $.cookie('user_period'),
+          dimension14: getShemarooCookies().user_analytical_id,
+          dimension15: $("#content_id").val(),
+          dimension16: $("#ma_title").val(),
+          dimension18: $("#video_duration").val(),
+          dimension28: media_dimension
+      }]);
+        */
+
+      };
+      hlsPlayer.eventcallbacks.onSeeked = function (presentTime, duration, mediaId) {
+        player_status = true;
+        console.log("onSeeked");
+      }
+    }
+
+
+   
+    function ExitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+    $(document).ready(function () {
+      $(window).keypress(function (e) {
+        if (e.keyCode === 0 || e.keyCode === 32) {
+          e.preventDefault();
+          console.log('Space pressed')
+        }
+      })
+      var url = window.location.protocol + "//" + window.location.host;
+
+      function convert_seconds_hh_mm_ss(sec) {
+        var hours = Math.floor(sec / 3600);
+        var min = Math.floor((sec - (hours * 3600)) / 60);
+        var seconds = Math.floor(sec % 60);
+        if (hours >= 0 && hours <= 9) {
+          hours = "0" + hours
+        }
+        if (min >= 0 && min <= 9) {
+          min = "0" + min
+        }
+        if (seconds >= 0 && seconds <= 9) {
+          seconds = "0" + seconds
+        }
+        console.log(hours);
+        return hours + ":" + min + ":" + seconds
+      }
+
+      function sendPlaybackTime(re_time) {
+        var player_time = "00:00:00"
+        /*if(check_ie_browser){
+          player_time = $(".sp-media-element video").get(0).currentTime
+        }*/
+        player_time = getcurrentTime();
+        /*else{
+        }*/
+        time = convert_seconds_hh_mm_ss(player_time);
+        if (re_time == 0) {
+          time = "00:00:00"
+        } else if (time != "00:00:00") {
+          var video_bit_rate = hlsPlayer.mediaElement.videoElement.hlsObj.levels[0].bitrate
+          var postData = "catalog_id=" + catalogid + "&content_id=" + contentid + "&time=" + time;
+          top.postMessage({
+            ga_event: 'video_view_time',
+            video_time: time,
+            bit_rate: video_bit_rate
+          }, url);
+          $.ajax({
+            type: "POST",
+            url: "http://localhost:3000/users/player_persistant",
+            data: postData,
+            success: function (e) {}
+          });
+        }
+      }
+      setInterval(function(argument){
+        var replay_time = 1;
+        sendPlaybackTime(replay_time);
+      },20000);
+
+
+
+      function VideoPauseEvnt() {
+        console.log(" Video Pause Ok");
+      }
+
+      var title_category = $.cookie('title_category');
+      var content_id = $.cookie('content_id');
+      var genres = $.cookie('genres');
+      var language = $.cookie('language');
+      var state_of_user = $.cookie('state_of_user');
+      var user_plan_type = $.cookie('user_plan_type');
+      var user_plan = $.cookie('user_plan');
+      var user_analytic_id = $.cookie('user_analytic_id');
+      var title = $.cookie('title');
+
+      // Matomo support attr adding start
+      $(document).on('DOMNodeInserted', function (e) {
+        $('#video_player').find("video").attr("data-matomo-title", title);
+        var video_url = $(".sp-media-element video").attr("src");
+        var motamo_data_url = video_url + "?CT=" + title_category + "&CID=" + content_id + "&T=" + theme_type +
+          "&G=" + genres + "&L=" + language + "&B=240p" + "&UID=" + user_analytic_id + "&US=" + state_of_user +
+          "&UP=" + user_plan + "&UPT=" + user_plan_type
+        $('video').attr("data-matomo-resource", motamo_data_url);
+      });
+      // Matomo support attr adding end
+
+      $(".login-popup-request1,#login_overlay").click(function(){
+        top.postMessage({ga_event: 'loginpop'}, wind_url)
+      })
+     $(".subscribe-popup-request").click(function(){
+        top.postMessage({ga_event: 'subscribe_pop'}, wind_url)
+      })
+
+    })
+  </script>
+
+</html>

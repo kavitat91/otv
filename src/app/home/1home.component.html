@@ -1,0 +1,184 @@
+<div class="lds-roller" *ngIf="loadingIndicator">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="pull-left w-100  padding-top-80 min-height-div" [ngStyle]="{'min-height': contentHeight+'px' }">
+  <div class="error_message_center_align" *ngIf="errorStatus">
+    <p>{{statusMessage}}</p>
+  </div>
+
+	<section class="main-slider pull-left w-100">
+		<section class="banner-slider relative-content">
+			<div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-padding">		        
+				<div id="banner-carousel" class="owl-carousel owl-theme margin-bottom-15">
+          <owl-carousel [options]="carouselOptions" [items]="bannerSliderContent" [carouselClasses]="['owl-theme owl-carousel margin-bottom-15']">            
+            <div class="item" *ngFor="let image of bannerSliderContent;let i= index"> 
+              <a routerLink="{{image['item_url']}}">
+                <img src="{{image['thumbnails']['xl_image_16_5']['url']}}" class="d-none d-lg-block" alt="{{image['title']}}" title="{{image['title']}}">
+                <img src="{{image['thumbnails']['xl_image_16_9']['url']}}" class="d-block d-lg-none" alt="{{image['title']}}" title="{{image['title']}}"> 
+              </a>
+            </div>
+          </owl-carousel>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section class="pull-left w-100">
+      <div class="container">
+        <div class="row">
+          <div class="wrapper">	
+            <section class="content padding-top-0 padding-bottom-60 relative-content">
+              <ng-container *ngFor="let list of items; let i = index">
+                <ng-container *ngIf="list['display_title'] != 'Movies' && list['display_title'] != 'Jatras'">
+                  <ng-container *ngIf="i != 0 && list['catalog_list_items'].length > 0">
+                    <div class="row">
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                        <h2 class="pull-left text-capitalize carousel-title oriya-color1 font-sbold margin-bottom-0 margin-top-5" id="home_title_{{i}}"
+                         >{{list['display_title']}}</h2>
+                        <a routerLink="{{items[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : list['more_url'] }}" 
+                          class="text-capitalize see-all pull-right see-all1 all_items_{{i}}" *ngIf="desktopNav">more</a>
+                        <a routerLink="{{items[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : '/list'+list['more_url'] }}" class="text-capitalize see-all pull-right see-all2 all_items_{{i}}_mobile" *ngIf="mobileNav">
+                          <img src="/assets/images/right_arrow.svg" alt="" title="">
+                        </a>
+
+                      </div>
+                      
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-">			
+                          
+                        <div id="tarang-carousel_{{i}}" class="owl-carousel owl-theme margin-bottom-0" 
+                        [ngClass]="items[i]['layout_type'] == 't_16_9_right_meta' ? 'horizontalbox-carousel' : 'horizontal-carousel' "  
+                        attr.data-item-det="{{items[i]['layout_type']}}${{list['catalog_list_items'].length}}">
+                          <ng-container *ngIf="list['catalog_list_items'].length > 0">
+                            <!-- {{items[i]['layout_type'] == 't_16_9_big' || items[i]['layout_type'] == 't_16_9_small' ||
+                            items[i]['layout_type'] == 't_16_9_big_meta' || items[i]['layout_type'] == 't_16_9_livebanner' ||
+                            items[i]['layout_type'] == 't_16_9_big_without_meta'}} -->
+                            <owl-carousel [options]="carouselOptions2" [items]="items" [carouselClasses]="['owl-theme owl-carousel margin-bottom-15']" *ngIf="items[i]['layout_type'] == 't_16_9_big' || items[i]['layout_type'] == 't_16_9_small' ||
+                            items[i]['layout_type'] == 't_16_9_big_meta' || items[i]['layout_type'] == 't_16_9_livebanner' ||
+                            items[i]['layout_type'] == 't_16_9_big_without_meta' ">   
+                              <div class="item" *ngFor="let item of list['catalog_list_items'];">
+                                <!-- <ng-container *ngIf="items[i]['layout_type'] == 't_16_9_right_meta'; then thenBlock11 else elseBlock11"></ng-container>
+                                <ng-template #thenBlock11>
+                                  <div class="pull-left carousel-image relative-content">
+                                    <a routerLink="{{item['item_url']}}">
+                                      <img src="{{item['image_url']}}">
+                                      <span class="premium-txt" *ngIf="item.hasOwnProperty('access_control') && item['access_control']['is_free'] == false">Premium</span>
+                                    </a>
+                                  </div>
+                                  <div class="pull-left carousel-content">
+                                    <h6 class="font-sbold oriya-color1">{{ item['title'] }}</h6>
+                                    <p class="carousel-info font-sbold oriya-color2">{{ item['item_caption'] }}</p>
+                                    <p class="oriya-color1 carousel-desc">{{ item['short_description'] | slice:0:60 }}</p>                                    
+                                  </div>
+                                </ng-template>  
+                                <ng-template #elseBlock11> -->
+                                  <a routerLink="{{item['item_url']}}">
+                                    <img src="{{item['image_url']}}">
+                                    <span class="premium-txt" *ngIf="item.hasOwnProperty('access_control') && item['access_control']['is_free'] == false">Premium</span>
+                                  </a>
+                                  <p class="margin-bottom-0" *ngIf="items[i]['layout_type']  != 't_16_9_big_without_meta' ">
+                                    <label class="oriya-color1 block margin-bottom-0 ellipse-content">{{ item['title'] }}</label>
+                                    <span class="oriya-color2 block ellipse-content">{{ item['item_caption'] }}</span>
+                                  </p>
+                                <!-- </ng-template> -->
+                              </div>
+                            </owl-carousel>  
+                            <owl-carousel [options]="carouselOptions4" [items]="items" [carouselClasses]="['owl-theme owl-carousel margin-bottom-15']" *ngIf="items[i]['layout_type'] == 't_16_9_big' || items[i]['layout_type'] == 't_16_9_small' ||
+                            items[i]['layout_type'] == 't_2_3_big_meta' ">   
+                              <div class="item" *ngFor="let item of list['catalog_list_items'];">
+                                <!-- <ng-container *ngIf="items[i]['layout_type'] == 't_16_9_right_meta'; then thenBlock11 else elseBlock11"></ng-container>
+                                <ng-template #thenBlock11>
+                                  <div class="pull-left carousel-image relative-content">
+                                    <a routerLink="{{item['item_url']}}">
+                                      <img src="{{item['image_url']}}">
+                                      <span class="premium-txt" *ngIf="item.hasOwnProperty('access_control') && item['access_control']['is_free'] == false">Premium</span>
+                                    </a>
+                                  </div>
+                                  <div class="pull-left carousel-content">
+                                    <h6 class="font-sbold oriya-color1">{{ item['title'] }}</h6>
+                                    <p class="carousel-info font-sbold oriya-color2">{{ item['item_caption'] }}</p>
+                                    <p class="oriya-color1 carousel-desc">{{ item['short_description'] | slice:0:60 }}</p>                                    
+                                  </div>
+                                </ng-template>  
+                                <ng-template #elseBlock11> -->
+                                  <a routerLink="{{item['item_url']}}">
+                                    <img src="{{item['image_url']}}">
+                                    <span class="premium-txt" *ngIf="item.hasOwnProperty('access_control') && item['access_control']['is_free'] == false">Premium</span>
+                                  </a>
+                                  <p class="margin-bottom-0" *ngIf="items[i]['layout_type']  != 't_16_9_big_without_meta' ">
+                                    <label class="oriya-color1 block margin-bottom-0 ellipse-content">{{ item['title'] }}</label>
+                                    <span class="oriya-color2 block ellipse-content">{{ item['item_caption'] }}</span>
+                                  </p>
+                                <!-- </ng-template> -->
+                              </div>
+                            </owl-carousel> 
+                            <owl-carousel [options]="carouselOptions3" [items]="items" [carouselClasses]="['owl-theme owl-carousel margin-bottom-15']" *ngIf="items[i]['layout_type'] == 't_16_9_right_meta' ">   
+                              <div class="item" *ngFor="let item of list['catalog_list_items'];">
+                                <!-- <ng-container *ngIf="items[i]['layout_type'] == 't_16_9_right_meta'; then thenBlock11 else elseBlock11"></ng-container>
+                                <ng-template #thenBlock11> -->
+                                  <div class="pull-left carousel-image relative-content" *ngIf="items[i]['layout_type'] == 't_16_9_right_meta'">
+                                    <a routerLink="{{item['item_url']}}">
+                                      <img src="{{item['image_url']}}">
+                                      <span class="premium-txt" *ngIf="item.hasOwnProperty('access_control') && item['access_control']['is_free'] == false">Premium</span>
+                                    </a>
+                                  </div>
+                                  <div class="pull-left carousel-content">
+                                    <h6 class="font-sbold oriya-color1">{{ item['title'] }}</h6>
+                                    <p class="carousel-info font-sbold oriya-color2">{{ item['item_caption'] }}</p>
+                                    <p class="oriya-color1 carousel-desc">{{ item['short_description'] | slice:0:60 }}</p>                                    
+                                  </div>
+                               <!--  </ng-template>  
+                                <ng-template #elseBlock11>
+                                  <a routerLink="{{item['item_url']}}">
+                                    <img src="{{item['image_url']}}">
+                                    <span class="premium-txt" *ngIf="item.hasOwnProperty('access_control') && item['access_control']['is_free'] == false">Premium</span>
+                                  </a>
+                                  <p class="margin-bottom-0" *ngIf="items[i]['layout_type']  != 't_16_9_big_without_meta' ">
+                                    <label class="oriya-color1 block margin-bottom-0 ellipse-content">{{ item['title'] }}</label>
+                                    <span class="oriya-color2 block ellipse-content">{{ item['item_caption'] }}</span>
+                                  </p>
+                                </ng-template> -->
+                              </div>
+                            </owl-carousel> 
+                          </ng-container>
+                        </div>
+                        <div class="line-divider pull-left w-100" id="sec_divider_{{i}}" *ngIf="items?.length != i+2">&nbsp;</div>
+                      </div>
+                    </div>
+                  </ng-container>  
+                </ng-container>  
+              </ng-container>  
+              <div class="toster-message-wrap" id="reset_password_sucs" *ngIf="resetPasswordToast">
+                  <div class="center-align-content">
+                    <div class="toster-message">
+                      <img src="/assets/images/tick.svg" alt="" title="">
+                      <p id="watch_later_message">
+                        Password reset successfully
+                      </p>
+                    </div>
+                  </div>
+                </div> 
+
+                <!-- <div class="toster-message-wrap" id="continue_delet_toast">
+                  <div class="center-align-content">
+                    <div class="toster-message">
+                      <img src="/assets/images/tick.svg" alt="" title="">
+                      <p id="watch_later_message">
+                        Item deleted successfully
+                      </p>
+                    </div>
+                  </div>
+                </div>  -->
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+                        
+</div>

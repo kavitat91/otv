@@ -1,0 +1,1337 @@
+<div class="lds-roller" *ngIf="loadingIndicator">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div *ngIf="page == 'contact'">
+  <section class="pull-left w-100 padding-top-80 relative-content">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
+          <div class="static-page contact-page small-page">
+            <div class="static-content-bg">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-0">
+                  <h1 class="page-title margin-bottom-25 pull-left w-100 font-sbold" style="text-align: center;">Contact
+                    us</h1>
+                  <div class="contact-form-wrap">
+                    <input type="hidden" id="user_region" name="" value="IN">
+                    <form #contactForm="ngForm" (ngSubmit)="onContactSubmit(contact)">
+                      <div class="input-group query_type margin-bottom-25 margin-top-25">
+                        <div class="custom-select">
+                          <select id="contact_us_query" name="contact_us_query" [(ngModel)]="contact.contact_us_query">
+                            <option value="Subscription">Subscription</option>
+                            <option value="Billing">Billing</option>
+                            <option value="Content Issue">Content Issue</option>
+                            <option value="Account Information">Account Information</option>
+                            <option value="Others">Others</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="input-group country"
+                        [ngClass]="{ 'has-error': contact_mobile.touched && contact_mobile.invalid }">
+                        <input type="text" id="" name="country_code" class="form-control country_code" value="+91"
+                          readonly="" autocomplete="new-countrycode">
+                        <input type="number" id="contact_mobile" name="contact_mobile" pattern="^[0-9_-]{10}$"
+                          #contact_mobile="ngModel" [(ngModel)]="contact.contact_mobile" class="form-control" value=""
+                          required>
+                        <span class="input-label">Your Mobile Number</span>
+                        <label class="error" id="mobile_error"
+                          *ngIf="contact_mobile.errors?.required && contact_mobile.touched">Please enter your Mobile
+                          Number </label>
+                        <label class="error" id="mobile_error"
+                          *ngIf="contact_mobile.errors?.pattern && contact_mobile.touched">
+                          Please enter 10 digit mobile number
+                        </label>
+                      </div>
+                      <div class="input-group contact-email margin-bottom-15"
+                        [ngClass]="{ 'has-error': contact_email.touched && contact_email.invalid }">
+                        <input type="email" id="contact_email" name="contact_email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$" class="form-control"
+                          #contact_email="ngModel" [(ngModel)]="contact.contact_email" required value="">
+                        <span class="input-label">Your Email ID</span>
+                        <label class="error" id="email_error"
+                          *ngIf="contact_email.errors?.required && contact_email.touched">Please enter your Email ID </label>
+                          <label class="error" id="email_error"
+                          *ngIf="contact_email.errors?.pattern && contact_email.touched">Email is invalid </label>
+                      </div>
+                      <div class="input-group query_description margin-bottom-35"
+                        [ngClass]="{ 'has-error': query_description.touched && query_description.invalid }">
+                        <textarea id="query_description" class="form-control rounded margin-bottom-5"
+                          name="query_description" #query_description="ngModel" [(ngModel)]="contact.query_description"
+                          required="true" rows="2" resize="false" value=""></textarea>
+                        <span class="input-label" style="top: 37px;">Enter Your Query</span>
+                        <label class="error" id="query_error"
+                          *ngIf="query_description.touched && query_description.invalid">Please enter your query
+                        </label>
+
+
+                      </div>
+                      <div class="block text-center margin-bottom-20">
+                        <!-- <a href="javascript:void(0);" id="contact-submit" class="text-uppercase inline-block">submit</a> -->
+                        <input type="submit" id="contact-submit" class="text-uppercase inline-block" value="submit"
+                          [disabled]="contactForm.invalid">
+                      </div>
+                    </form>
+                    <!-- <div class="thank_you" style="display:none;">
+                      <p class="block font-size2 font-sbold oriya-color1 text-center margin-bottom-0">Thank you for contacting us.<br>We will get back to you as soon as possible should be shown After feedback submission</p>
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+            <div style="margin: 0 auto; max-width: 500px; margin-top: 20px;">
+              <p class="margin-bottom-10">If you have any queries please contact us on</p>
+              <p class="margin-bottom-5 font-sbold">
+                Odisha Television Ltd
+              </p>
+              <p class="margin-bottom-5">
+                N/28-30/1/A Chandaka Industrial Estate,
+              </p>
+              <p class="margin-bottom-5">
+                Prasanti Vihar, Patia,
+              </p>
+              <p class="margin-bottom-5">
+                Bhubaneswar Odisha, 751024
+              </p>
+              <p class="margin-bottom-5">
+                <span class="font-sbold">Email</span> <i class="fa fa-envelope-o" aria-hidden="true"></i> : <a
+                  href="mailto:tarangplus@odishatv.in" class="oriya-color4">tarangplus@odishatv.in</a>
+              </p>
+              <p class="margin-bottom-5">
+                <span class="font-sbold">Phone Number</span> <i class="fa fa-mobile" aria-hidden="true"
+                  style="font-size: 18px;"></i> : +91 - 7077710423
+              </p>
+            </div>
+
+
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+    <div class="toster-message-wrap margin-top-0 margin-bottom-20 padding-top-5" id="contactform_toast" *ngIf="contactToast">
+      <div class="center-align-content less_height_box">
+        <div class="toster-message">
+          <img src="/assets/images/tick.svg" alt="contact-form-status" title="contact-form-status">
+          <p class="oriya-color3">
+            Message sent successfully
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div *ngIf="page == 'pp'">
+  <section class="pull-left w-100 padding-top-80">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
+          <div class="static-page">
+            <div class="static-content-bg">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="page-title margin-bottom-25 pull-left w-100 font-sbold">Privacy Policy</h1>
+                  <p class="margin-bottom-15 pull-left w-100">
+                    We, <b>Odisha Television Ltd </b> ("we", "us", "OTV") value the trust placed in use by You and
+                    therefore, we follow the highest standards of privacy guidelines to protect the information shared
+                    by You with us.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">This Privacy Policy ("Privacy Policy") governs the use of
+                    Personal Information shared (as defined below) with or collected by <b>ODISHA TELEVISION LTD</b>
+                    from the users or subscribers of ' TarangPlus.'</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">Your viewing or browsing of our content or Your use of
+                    our services offered on <b>TARANGPLUS</b> is constructed to mean that You consent to our collection,
+                    storage, processing and transfer of your Personal Information or Sensitive Personal Data or
+                    Information in accordance with this Privacy Policy and you consent to the terms and conditions of
+                    this Privacy Policy. You agree to be bound by the terms of this Privacy Policy.</p>
+
+
+                  <p class="margin-bottom-15  pull-left w-100">If You do not agree with the terms contained herein,
+                    please do not download or browse <b>TARANGPLUS</b>. By mere browsing or use of the <b>TARANGPLUS</b>
+                    platform or its application, You consent to the terms of this Privacy Policy and agree to the use of
+                    Your Personal Information in the manner as provided under this Privacy Policy.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">All capitalized terms that have not been specifically
+                    defined herein shall have the same meaning as provided under the Terms of Use.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">This Privacy Policy should be read in conjunction and
+                    together with the Terms of Use available on <a href="/terms_and_condtions"
+                      class="oriya-color4">https://www.tarangplus.in/terms_and_condtions</a></p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    'Personal Information', 'Information' and 'Sensitive Personal Data or Information' shall have the
+                    meaning ascribed to it under the applicable laws in India.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Collection And Use Of Personal Information</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We collect the information directly provided by you, your usage and log data, data collected through
+                    cookies and similar technologies.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Data provided by the user</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We collect the following personal information about You when You use or browse <b>TARANGPLUS</b>, at
+                    the time of Your registration with <b>TARANGPLUS</b> and when You share such information with Us
+                    through email, by posting on <b>TARANGPLUS</b> or by any other means like customer care centre, etc
+                    made available to You by Us.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We collect information with respect to Your name, mobile number, email, address, IP Address, zip
+                    code, age, gender, occupation etc.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Further, with respect to Non-Personal Information automatically collected and stored in files, we
+                    shall use this information to understand and analyze trends, to administer our services, to learn
+                    about user behaviour on the apps and while using our services, to gather demographic information
+                    about the user base as a whole and to measure traffic patterns on our network and apps. As
+                    Non-Personal Information does not personally identify you, we may use and disclose Non-Personal
+                    Information at our discretion.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Based on Your purchase of a subscription package, our payment gateway partners collect information
+                    with respect to Your credit/debit card details/other payment instrument details or other bank
+                    account details. This information is stored by our payment gateway partners. For instance,
+                    <b>TARANGPLUS</b> will be using third party payment gateway providers to process and facilitate the
+                    payment of Your Subscription Fee to <b>TARANGPLUS</b> for providing you access to the subscription.
+                    Please note that <b>TARANGPLUS</b> does not directly collect any financial information such as
+                    credit card or debit card or net banking details from You. Such payment gateway partners are not
+                    controlled by us. When you visit such payment gateways you do so at your own risk. These payment
+                    gateways may have their own privacy policies in place, which we recommend You review if You visit
+                    any such payment gateways. We do not assume any responsibility or liability for such payment
+                    gateways, the content of such payment gateways and their privacy practices, nor do we endorse them.
+                    We encourage you to familiarize yourself with the privacy statements provided by such payment
+                    gateways prior to providing them with information about you or entering into any transactions with
+                    them.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    While transacting with these payment gateways, You may provide Your financial information including
+                    without limitation Your bank account details, credit/debit card account details or your details
+                    pertaining to any payment settlement or pre-paid instrument service provider. You understand, agree
+                    and acknowledge that <b>TARANGPLUS</b> never receives Your financial and payment information from
+                    these payment gateways. Your Personal Information, Sensitive Personal Data or Information and
+                    financial information will be dealt with by these payment gateways in accordance with their
+                    respective privacy policies and other terms and conditions and <b>TARANGPLUS</b> shall not be
+                    liable, accountable or responsible for Your Personal Information, Sensitive Personal Data or
+                    Information and financial information which You provide to these payment gateways.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If you choose to log-in, access or otherwise connect to <b>TARANGPLUS</b>, through a third-party
+                    service (such as Google,Facebook, Twitter, etc), we may, for example, collect your user ID and user
+                    name associated with that service, as well as any information you make public using that service. We
+                    may also collect the information you have authorized the service to share with us (such as your user
+                    ID, billing information, public profile information, email address, birthday, and other account and
+                    profile data).
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We collect information in order to provide You with a safe, efficient, smooth and customized
+                    experience. This allows Us to provide services and features that most likely meet Your needs, and to
+                    customize <b>TARANGPLUS</b> to make Your experience safer and easier.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Except as provided herein, we do not solicit any Sensitive Information about You. However, if You
+                    share such information with us voluntarily, We will not be liable for any actions, claims, costs,
+                    expenses or other liabilities that may arise as a consequence of such any unauthorized use or misuse
+                    of such information.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Inferred Information through usage and log data</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We may track certain information about You based upon Your behaviour/usage patterns/preferences on
+                    <b>TARANGPLUS</b>. We use this information for conducting internal research on Our users'
+                    demographics, devices, interests, and behaviour to better understand, protect and serve Our users.
+                    This information is compiled and analysed on an aggregated basis. This information may include the
+                    platform that You just visited (whether this platform is on <b>TARANGPLUS</b> or not), which
+                    platform You next visit, Your computer browser information.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We may also collect Your Information to track user behaviour and preferences for internal analytics
+                    and research purpose. We may also use Your information: (i) to evaluate Your interest for various
+                    genres of content, services, offers; (ii) to perform analytics and conduct customer research, to
+                    determine Your interest, for identifying Content that generate sales and to analyse traffic
+                    patterns.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If You choose to post messages on social media accounts, message boards, chat rooms or other message
+                    areas or leave feedback, We will collect that information You provide to Us. We retain this
+                    information as necessary to resolve disputes, provide customer support and troubleshoot problems as
+                    permitted by law.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If You send us personal correspondence, such as emails or letters, or if other users or third
+                    parties send us correspondence about Your activities or postings on <b>TARANGPLUS</b>, we may
+                    collect and store such information.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We identify and use Your IP address to help diagnose any problems with Our server, and to administer
+                    <b>TARANGPLUS</b>. Your IP address is also used to help identify You and to gather broad demographic
+                    information to customize Your experience on <b>TARANGPLUS</b>.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We will occasionally ask You to complete optional online surveys. These surveys may ask You for
+                    contact information and demographic information (like zip code, age, etc). We use this data to
+                    tailor Your experience at <b>TARANGPLUS</b>, providing You with content that We think You might be
+                    interested in and to display content according to Your preferences.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Cookie</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    A "cookie" is a small piece of information stored by a web server on a web browser so it can be
+                    later read back from that browser. Cookies are useful for enabling the browser to remember
+                    information specific to a given user. We place both permanent and temporary cookies in Your
+                    computer's hard drive. The cookies do not contain any of Your personally identifiable information.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We may combine Your Personal Information or Sensitive Personal Data or Information, other
+                    information and information collected from tracking technologies and aggregate it with information
+                    collected from other Users using our service to attempt to provide You with the Services and a
+                    better experience on <b>TARANGPLUS</b>.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">User consent</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    You expressly understand, agree and acknowledge that our collection, storage and processing of your
+                    Personal Information or
+                    Sensitive Personal Data or Information is for a lawful purpose connected with a function or activity
+                    of <b>TARANGPLUS</b> platform.
+                    You hereby consent to the collection, storage, use, disclosure, transfer, of the Personal
+                    Information or Sensitive Personal Data or Information by
+                    <b>TARANGPLUS</b> or <b>ODISHA TELEVISION LTD</b> for the purposes set out herein. You further
+                    understand, agree and acknowledge that Your Personal
+                    Information, which is classified as Sensitive Personal Data or Information as per applicable laws,
+                    is considered necessary for TARANGPLUS to provide
+                    various services on its platform to You and for Your usage of the platform and other services
+                    provided by <b>TARANGPLUS</b>
+                    and You affirmatively give consent to <b>TARANGPLUS</b>
+                    for collecting, storing, transferring and processing Your Personal Information.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Disclosure of Personal Information with Third Parties
+                  </h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We may disclose Personal Information to affiliates and group companies. We may also disclose Your
+                    Personal Information with third parties strictly on confidential terms. We may disclose such
+                    information to third parties in order to provide You access to <b>TARANGPLUS</b> and facilitate or
+                    Your participation in any contest, game or activity conducted by <b>ODISHA TELEVISION LTD</b>, to
+                    comply with Our legal obligations, to enforce Our Terms of Use, to facilitate Our marketing and
+                    advertising activities, or to prevent, detect, mitigate, and investigate fraudulent or illegal
+                    activities related to <b>TARANGPLUS</b>.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    You hereby provide Your express consent to us for sharing Your Personal Information with third
+                    parties for marketing and advertising purposes.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We shall endeavor that the third parties and agents engaged by us to whom we may provide access to
+                    Your Personal Information or Sensitive Personal Data or Information for the purposes set out herein
+                    are under a contractual obligation to protect Your Personal Information or Sensitive Personal Data
+                    or Information in accordance with the same standard that <b>TARANGPLUS</b> has agreed to be subject
+                    to in this Privacy Policy.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    TARANGPLUS may disclose Your Personal Information or Sensitive Personal Data or Information to such
+                    extent as <b>TARANGPLUS</b> may deem necessary for You to enter into commercial transactions with
+                    the website and/or application of <b>TARANGPLUS</b>. Recipients of your Personal Information or
+                    Sensitive Personal Data may be located outside India. This may include countries where applicable
+                    data protection laws provide a lesser degree of protection than India. However, You expressly
+                    consent to usage of such Personal Information and Sensitive Personal Data.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    In the event of any requirement by court order, government or quasi-government agency to disclose
+                    Your Personal Information, We will disclose information as may be legally required. We may also
+                    disclose Your Personal Information if We, in the good faith believe that such disclosure is
+                    reasonably necessary to respond to subpoenas, court orders, or other legal process.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    In the event <b>ODISHA TELEVISION LTD</b> is merged with or acquired by another company or in case
+                    of reorganization or restructuring of the business, we and our affiliates will share Your Personal
+                    Information, wholly or in part, with another business entity.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We will strive to keep your personal information confidential and will place reasonable security
+                    controls to protect it. Your Personal Information will be kept confidential as required under
+                    applicable laws.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Third Party Sites</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>TARANGPLUS</b> may provide links to various third party websites that may collect Your Personal
+                    Information. Use of Your information collected by such third-party platform will be governed by the
+                    Privacy Policy in such a third party platform. <b>ODISHA TELEVISION LTD</b> has no control on the
+                    operation of such third-party websites and You may share information with such third party at Your
+                    sole risk. <b>ODISHA TELEVISION LTD</b> shall not be liable to You for any misappropriation of Your
+                    Personal Information by such third party.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Promotional and Marketing Activities</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We will send communications through various modes like SMS, message, email, etc to You at regular
+                    intervals to notify You of, among other things, various offers, new content, exclusive deals etc.,
+                    that may be available or new services that You may be interest to subscribe to etc. By accessing
+                    TARANGPLUS, You expressly consent to receive such communications from us at regular intervals.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    However, if You do not wish to receive any communication from us, You may request to unsubscribe
+                    from such communication by sending an email to <span
+                      class="oriya-color4">tarangplus@odishatv.in</span>. with the subject as "Unsubscribe".
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Data Retention</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We retain Personal Information or Sensitive Personal Data or Information only for as long as We
+                    believe it to be necessary for the purposes set out herein for which the Personal Information or
+                    Sensitive Personal Data or Information was collected, subject to any legal requirements for the data
+                    to be retained for longer periods of time.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Deleting Your Information</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If You wish to have the Personal Information or Sensitive Personal Data or Information that You have
+                    provided to us deleted, You can always do so by sending a request to us on the e-mail id of our
+                    Customer Services department provided at the bottom of this page. You may note that deletion of
+                    certain Personal Information may lead to cancellation of your registration with the TARANGPLUS
+                    and/or your access to certain features of 5 can be restricted and may also lead to a complete
+                    cessation of Your Access to <b>TARANGPLUS</b> platform or application.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Deleting Your Information</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We collect the information directly provided by you, your usage and log data, data collected through
+                    cookies and similar technologies.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We may share your Personal Information with the government / government authorities or agencies and
+                    legal or judicial authorities for any investigation or to comply with legal process or in response
+                    to a request by any of these authorities or to enforce applicable terms and conditions or to protect
+                    our, our users and Partners rights, privacy, safety or property.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Security and Compliance with Laws</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We strive to protect Your Personal Information against unauthorized disclosure, misuse, unlawful
+                    use, modification, loss or destruction. We take all reasonable measures and precautions, as per
+                    standard industry practises, to keep Your Personal Information confidential. We ensure compliance
+                    with all applicable laws.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We use reasonable administrative, logical, physical and managerial measures to safeguard your
+                    personal information against loss, theft and unauthorized access, use and modification as per law.
+                    Unfortunately, no measures can be guaranteed to provide 100% security. Accordingly, we cannot
+                    guarantee the security of your information. By continuing to access the TARANGPLUS platform you are
+                    aware of such risk.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    We have taken appropriate steps for the security and protection of all our digital platforms
+                    including internal applications, however, we shall not be responsible for any breach of security or
+                    the disclosure of Personal Information for reasons outside our control, such as hacking, social
+                    engineering, cyber terrorism, espionage by third parties, or any events by way of force majeure such
+                    as sabotage, fire, flood, explosion, acts of God, civil commotion, strikes or industrial action of
+                    any kind, riots, insurrection, war, acts of government.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Amendments</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    This Privacy Policy is subject to change from time to time without any written notice/intimation to
+                    You. We reserve the right, at our sole discretion, to modify the terms of this Privacy Policy from
+                    time to time in order to ensure compliance with applicable laws (“Updated Terms”). The Updated Terms
+                    shall be effective immediately and shall supersede these the terms of this Privacy Policy. We will
+                    not be under an obligation to notify you of any changes to this Privacy Policy. You shall be solely
+                    responsible for reviewing the Privacy Policy from time to time for any modifications. By continuing
+                    to use <b>TARANGPLUS</b> after the Updated Terms have been published, You affirm Your agreement to
+                    the Updated Terms.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">Contact Us</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    if You require any information or clarification regarding the use of Your Personal Information or
+                    this Privacy Policy, You can contact us at <span class="oriya-color4">tarangplus@odishatv.in</span>.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If You have any grievances with respect to use of Your Personal Information, please email us at
+                    <span class="oriya-color4">tarangplus@odishatv.in</span>.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>ODISHA TELEVISION LTD</b> is a company based in India registered under the Companies Act ,1956.
+                    By browsing/using TARANGPLUS, You hereby acknowledge that <b>ODISHA TELEVISION LTD</b> is not
+                    responsible or liable in any manner to comply with any local laws of Your territory except India
+                    with respect to <b>TARANGPLUS</b>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- privacy policy ends -->
+<div *ngIf="page == 'tc'">
+  <section class="pull-left w-100 padding-top-80">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
+          <div class="static-page">
+            <div class="static-content-bg">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="page-title margin-bottom-25 pull-left w-100 font-sbold">Terms of Use</h1>
+                  <p class="margin-bottom-15 pull-left w-100">
+                    This application known as “Tarang Plus ” (“Application”) is made available by Odisha Televison
+                    Limited and/or its affiliates (“Company”, “we” or “us”), located at B-7/122A, Safdarjung Enclave,
+                    New Delhi having corporate office at Plot no-28/30, Patia , Chandaka Industrial Estate, Bhubaneswar,
+                    Odisha.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">Welcome to <b>TarangPlus</b>, we provide you both free
+                    and subscription based service that allows our end users to access entertainment content including
+                    movies, serials, LiveTv and series streamed over the internet to certain Devices. These terms
+                    ("Terms of Use") govern your use of our services.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">The Terms are an electronic record in terms of the
+                    Information Technology Act, 2000 (as amended / re-enacted) (“IT Act") and rules thereunder, and is
+                    published in accordance with the provisions of the Information Technology (Intermediaries
+                    Guidelines) Rules, 2011, which mandates for publishing of rules and regulations, privacy policy and
+                    terms of use for access or usage of Application</p>
+
+
+                  <p class="margin-bottom-15  pull-left w-100">The website, <b>www.TarangPlus.in</b> and its application
+                    is owned, operated and maintained by <b>Odisha Television Ltd</b>.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">PLEASE READ THE TERMS CAREFULLY BEFORE USE OF THE
+                    <b>TARANGPLUS</b> SERVICES. THESE TERMS CONSTITUTE A LEGAL AND BINDING AGREEMENT BETWEEN YOU (THE
+                    END USER OF <b>TARANGPLUS</b>) AND <b>ODISHA TELEVISION LTD</b> (THE OWNER OF <b>TARANGPLUS</b>),
+                    AND GOVERN YOUR USE OF THE <b>TARANGPLUS</b>. BY CHECKING/CLICKING ON THE 'I AGREE' LINK AND/OR BY
+                    DOWNLOADING AND/OR INSTALLING AND/OR BROWSING OR USING <b>TARANGPLUS</b>, YOU EXPRESSLY ACCEPT THE
+                    TERMS. IF YOU DO NOT ACCEPT TO THE TERMS, PLEASE DO NOT BROWSE AND/OR DOWNLOAD AND/OR INSTALL AND/OR
+                    USE <b>TARANGPLUS</b>.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">For the purpose of these Terms of Use, the terms "You"
+                    "Your" or "User" shall mean any person, natural or legal who uses or browses <b>TARANGPLUS</b>. The
+                    term "We", "Us", "Our" shall mean <b>ODISHA TELEVISION LTD</b>.</p>
+
+                  <h6 class="margin-bottom-15  pull-left w-100">DEFINITIONS</h6>
+
+                  <p class="margin-bottom-15  pull-left w-100">Certain words in this TERMS have a specific meaning and
+                    are explained below for YOUR easy understanding:</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">1. 'Application' means the <b>TARANGPLUS</b> application
+                    owned by <b>Odisha Television Ltd</b> to provide the Content on Devices, which is available on
+                    various platforms such as iOS, Android and supported web browsers etc.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">2. 'Content' means all text, graphics, images, music,
+                    software, audio, video, information or any other materials available on <b>TARANGPLUS</b>.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">3. 'Devices' means any and all internet enabled devices
+                    like smartphones, tablets, laptops, desktops, etc. which are compatible with and have access to the
+                    Internet.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">4. <b>'TARANGPLUS'</b> means <b>TARANGPLUS</b> website,
+                    <b>www.TarangPlus.in, TARANGPLUS</b> mobile web , and any other future variations or domain,
+                    Application and any present and future means and modes to offer Services.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">5. 'Internet' shall mean the system making use of the
+                    TCP/IP software protocols known as the internet or the worldwide web whatever the communication
+                    links may be which connects the user (including by way of fixed, mobile, DSL, ISDN, UMTS WiMax or
+                    other broadband links) including any developments in such protocols or any other protocols which may
+                    be developed which give equivalent, reduced or enhanced functionality compared with such protocols.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">6. 'Subscription Package' means a combination of one or
+                    multiple live tv channels, video on demand, TV shows, movies, music or any other Information or
+                    entertainment based Content priced at a specific amount decided by <b>TarangPlus (Odisha Television
+                      Ltd)</b> at its sole discretion.</p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">ELIGIBILITY</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Unless otherwise specified, <b>TARANGPLUS</b> is available for individuals who have attained the age
+                    of majority in their jurisdiction. In the case of India, this service is restricted to Users who are
+                    aged 18 years or older. If You are under the relevant age of majority in Your jurisdiction, You may
+                    only access the Site and the Services only in accordance with applicable law which enables a minor
+                    in your jurisdiction to access such a service. In India, by browsing or downloading and/or
+                    installing and/or using the <b>TARANGPLUS</b>, YOU represent and warrant that YOU are 18 years of
+                    age or older and in case YOU are less than 18 years of age, YOU have taken consent of YOUR parent or
+                    guardian.
+                  </p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    SOME CONTENT OFFERED ON THE SITE MAY NOT BE SUITABLE FOR SOME VIEWERS AND THEREFORE VIEWER
+                    DISCRETION IS ADVISED. ALSO, SOME CONTENT OFFERED ON THE SITE MAY NOT BE APPROPRIATE FOR VIEWERSHIP
+                    BY CHILDREN. PARENTS AND/OR LEGAL GUARDIANS ARE ADVISED TO EXERCISE DISCRETION BEFORE ALLOWING THEIR
+                    CHILDREN AND/OR WARDS TO ACCESS CONTENT ON THIS WEBSITE. Your access to and use of the Services is
+                    subject to these Terms of Use, Privacy Policy and all applicable laws, rules, and regulations.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">YOUR RESPONSIBILITIES</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    YOU will be solely responsible for obtaining and maintaining the Device and Internet connection
+                    needed in order to access and use <b>TARANGPLUS</b> and paying for all such charges in relation
+                    thereto. Internet charges will depend on the plan subscribed by You from the internet service
+                    provider/Mobile Service Provider.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>TARANGPLUS</b> is compatible on selected operating systems and specific versions and Device(s).
+                    The download procedure of the Application shall be subject to the process specified by the operating
+                    system of YOUR Device(s). YOU need to have a Device connected with Internet for download of
+                    <b>TARANGPLUS</b> to begin and complete. <b>Odisha Television Ltd</b> shall not be responsible in
+                    case of any fluctuation in the Internet connection speed leading to corruption of Application file
+                    download or any delayed or defective download of the Application on Your Device(s). The performance
+                    and speed of data browsing is dependent on network usage patterns. <b>Odisha Television Ltd</b>
+                    shall not be
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    responsible or liable to YOU for interruption, disruption, deactivation of <b>TARANGPLUS</b> on
+                    account of any Force Majeure Event. For the purpose of these Terms of Use, “Force Majeure Event”
+                    shall mean any event beyond the reasonable control of <b>Odisha Television Ltd</b> including but not
+                    limited to act of God, any act or omission of government or quasi-government agencies or lock out,
+                    strike, curfew, technical errors etc. <b>Odisha Television Ltd</b> may, at its sole discretion, make
+                    bug fixes, updates for the installed Application. In the event <b>Odisha Television Ltd</b> has
+                    upgraded the Application or any features thereof, You will be required to update Your Device in
+                    order to make the Device compatible with such upgrades. <b>Odisha Television Ltd</b> shall not be
+                    responsible or liable to YOU in the event You are unable to access <b>TARANGPLUS</b> or view the
+                    Content on <b>TARANGPLUS</b> due to Your failure to upgrade Your Device.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    The Content contained or available on <b>TARANGPLUS</b> is protected by copyright, trademark,
+                    patent, trade secret and other laws and shall be used as provided in these Terms of Use, without
+                    written permission of <b>Odisha Television Ltd</b>.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">REGISTERED USERS</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    YOU may register YOURSELF as a user of <b>TARANGPLUS</b> and become a registered user of the
+                    <b>TARANGPLUS</b> platform ("Registered User"). During the registration process, YOU as Registered
+                    User are required to create a user name (by using YOUR mobile number) and password.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    As a Registered User, YOU agree to provide accurate, current and complete information during the
+                    registration process and to update such information to keep it accurate, current and complete.
+                    <b>ODISHA TELEVISION LTD</b> reserves the right to suspend or terminate YOUR registration as
+                    Registered User without assigning any reason (including for provision of inaccurate, not current or
+                    incomplete information during the registration process or thereafter). As a Registered User, YOU
+                    shall be responsible for safeguarding YOUR password and for all transactions undertaken using YOUR
+                    Username and password. YOU agree not to disclose YOUR password to any third party and to take sole
+                    responsibility for any activities or actions under YOUR account, whether or not YOU have authorized
+                    such activities or actions. It is YOUR sole responsibility to change YOUR password immediately if
+                    YOU believe that YOUR password has been compromised. <b>ODISHA TELEVISION LTD</b> will not be
+                    responsible for any financial loss, inconvenience or mental agony resulting from misuse of YOUR
+                    Username and password in any circumstances.
+                  </p>
+                  <h6 class="margin-bottom-15 pull-left w-100">SUBSCRIPTION SERVICES</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Some of the Content is only available to users who avail the Subscription Packages. Any Registered
+                    User can avail the Subscription Package ("Subscription User"). As Subscription User, You will be
+                    required to subscribe to Subscription Packages made available by <b>ODISHA TELEVISION LTD</b> from
+                    time to time. The subscription to Subscription Packages may be subject to additional terms specified
+                    by <b>ODISHA TELEVISION LTD</b>. Depending on packages and/or value added services and the term of
+                    the proposed subscription, YOU will be required to make online payments through YOUR credit card or
+                    debit card or net banking account or cash card or via any other mode made available for making
+                    payments through mediums as authorized in YOUR territory and as provided by <b>ODISHA TELEVISION</b>
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>LTD</b> for accessing and browsing <b>TARANGPLUS</b>. The facility for online payments through
+                    credit cards or debit cards or net banking account or cash card or any other mode is available for
+                    selected credit cards, debit cards, net banking accounts and cash cards only. If YOU wish to avail
+                    the <b>TARANGPLUS</b> after the expiry of the initial term of Subscribed Packages, YOU shall prior
+                    to expiry of such term, recharge of YOUR account with the then prevailing subscription charges.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    The playback resolution or quality of the content of our service will depend on a number of factors,
+                    including the type of compatible device that you are using to access the service from, and your
+                    bandwidth, which may vary during your course of viewing. If we detect that the content you are
+                    streaming from our platform is being interrupted or otherwise does not play as intended due to
+                    bandwidth issues, we may decrease the resolution and file size of the streamed content in an effort
+                    to provide you with the uninterrupted viewing experience.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    The Subscription Fees billed are non-refundable irrespective of whether the Subscription have been
+                    availed by You or not.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Any request for change or cancellation in any Subscription plan prior to the expiration of the
+                    current Subscription plan period will not entail You with a refund for any portion of the
+                    Subscription Fee paid by You for the unexpired period.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>ODISHA TELEVISION LTD</b> reserves the right to modify or discontinue <b>TARANGPLUS or any
+                      content therein</b> at its sole discretion with or without notice to YOU. <b>ODISHA TELEVISION
+                      LTD</b> shall not be liable to YOU or any third party in any manner, should <b>ODISHA TELEVISION
+                      LTD</b> exercise its right to modify or discontinue the <b>TARANGPLUS</b>. Further, <b>ODISHA
+                      TELEVISION LTD</b> reserves the right, at any time, with or without notice and without any
+                    liability to:
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    (i) replace or otherwise withdraw Subscription Packages or Content,
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    (ii) change or reduce the number of hours of any Content,
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    (iii) blackout any Content; and
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    (iv) modify the prices for Subscription Packages or any part of <b>TARANGPLUS</b> service. Further,
+                    <b>ODISHA TELEVISION LTD</b> reserves the right to change packaging and introduce base and add on
+                    packages and/or offer channels on a-la-carte basis. YOU acknowledge and agree that the Content
+                    provided by <b>ODISHA TELEVISION LTD</b> as part of <b>TARANGPLUS</b> is being supplied by third
+                    parties and availability of such Content is outside <b>ODISHA TELEVISION LTD</b>'s' control and can
+                    be removed anytime. Additionally, <b>ODISHA TELEVISION LTD</b> shall have the right, but not the
+                    obligation, to refrain from providing to YOU any Content in the interest of national security or in
+                    the event of emergency / war or similar situation or if the Content is anti-national, promotes
+                    political / religious propaganda, is against public policy, is banned or restricted from being
+                    distributed under any applicable law or <b>ODISHA TELEVISION LTD</b> otherwise determine that it is
+                    objectionable or obscene or is derogatory to any person or class of persons, hurts the religious
+                    sentiments of any religious group or infringes the privacy rights of any individual(s) or is not in
+                    the interest of <b>ODISHA TELEVISION LTD</b>'ssubscribers or the general public.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    In a credit card and/or debit card and/or net banking and/or cash card transaction and/or any other
+                    mode available, YOU must use YOUR own credit card and/or debit card and/or net banking account
+                    and/or cash card. YOU confirm and acknowledge that YOU are aware of the fact that when making any
+                    online payment through credit card or debit card or net banking account or cash card or via any
+                    other mode available, YOU may be directed to an external payment gateway page. The payment gateway
+                    may redirect YOU to other website(s) maintained or controlled by third parties, and <b>ODISHA
+                      TELEVISION LTD</b> does not control such third party website(s) and hence are not responsible for
+                    any transactions on such website(s). <b>ODISHA TELEVISION LTD</b> will not be liable for any credit
+                    card or debit card or net banking or cash card fraud, and <b>ODISHA TELEVISION LTD</b> will not
+                    entertain or address any such grievances or issues. YOU are requested to communicate all grievances
+                    related to such issues to YOUR bank or mobile carrier/operator or mobile wallet provider who has
+                    issued such credit card or debit card or net banking account or cash card. <b>ODISHA TELEVISION
+                      LTD</b> shall not be responsible for all or any dispute or difference relating to online payment
+                    made by YOU through credit card or debit card or net banking account or cash card or via any other
+                    mode available. Further, <b>ODISHA TELEVISION LTD</b> will not be responsible for any financial
+                    loss, inconvenience or mental agony resulting from misuse of YOUR credit card or debit card or net
+                    banking account number or cash card and other details. Payments once made by credit card or debit
+                    card or net banking or cash cards or via any other mode available shall not be refunded in any
+                    circumstances. You are hereby advised to keep details of your credit/debit card and net banking
+                    confidential and do not share any such details with any other third party.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>TARANGPLUS</b> is available in select countries only. <b>ODISHA TELEVISION LTD</b> would not be
+                    held responsible for hindrances in the access and use of <b>TARANGPLUS</b> due to geographical
+                    change in YOUR location. Further, YOU will be solely liable for accessing and using
+                    <b>TARANGPLUS</b> in the countries of YOUR use.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>TARANGPLUS</b> shall have the discretion to make certain or all Content that is a part of the
+                    Subscription available to You on either one or a limited number of end user devices concurrently.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">OWNERSHIP</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    The Content on TARANGPLUS and the "TARANGPLUS" word mark and the <b>“TARANGPLUS”</b> design mark, as
+                    well as certain other of the names, logos, and materials displayed on or through <b>TARANGPLUS</b>
+                    that constitute trademarks, trade-names, service marks or logos ("Marks") are owned by or licensed
+                    to <b>ODISHA TELEVISION LTD</b> and are subject to copyright, trademark, and other intellectual
+                    property rights under Indian laws. YOU agree not to reproduce, duplicate, copy, download, stream
+                    capture, archive, upload, publish, broadcast, sell, resell, modify, translate, decompile,
+                    disassemble, reverse engineer or exploit for any purposes the <b>TARANGPLUS</b> or any portion of
+                    the <b>TARANGPLUS</b>, including, without limitation, the Content and the Marks, except as
+                    authorized by these TERMS or as otherwise authorized in writing by <b>ODISHA TELEVISION LTD</b>. In
+                    addition, YOU are strictly prohibited from creating derivative works, or materials that otherwise
+                    are derived from or based on in any way the Content and the Marks, including montages, mash-ups and
+                    similar videos, wallpaper, desktop themes, greeting cards, and merchandise, except as authorized by
+                    these TERMS or as otherwise authorized in writing by <b>ODISHA TELEVISION LTD</b>. You must abide by
+                    all copyright notices, information, and restrictions contained in or associated with any Content.
+                    You must not remove, alter, interfere with, or circumvent any copyright, trademark, or other
+                    proprietary notices marked on the Content or any digital rights management mechanism, device or
+                    other content protection or access control measure (including, without limitation, geo-filtering
+                    and/or encryption) associated with the Content.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    You hereby agree that all intellectual property rights, title and interest in the user generated
+                    content published or generated on TARANGPLUS by You shall vest with <b>ODISHA TELEVISION LTD</b>.
+                  </p>
+
+                  <h6 class="margin-bottom-15 pull-left w-100">RESTRICTIONS</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    a. It is hereby clarified that TARANGPLUS is provided for YOUR personal, non-commercial use only.
+                    You agree not to, either directly or through the use of any device, software, web-based service, or
+                    by other means, copy, download, archive, perform, display, upload, publish, transmit or retransmit
+                    the Content or create any work or material that is derived from or based on the Content, rent,
+                    lease, duplicate, sublicense, assign, pledge, loan, or resell the Content of TARANGPLUS. YOU shall
+                    not translate, reverse engineer, decompile, disassemble TARANGPLUS. YOU shall only use the
+                    TARANGPLUS on Device that is under YOUR exclusive control and ownership. YOU shall not permit any
+                    third party to benefit from the use or functionality of TARANGPLUS, either directly or via any
+                    facility management, timesharing, service bureau or any other arrangement. If YOU transfer
+                    possession of any copy of TARANGPLUS to another party, YOUR subscription of TARANGPLUS shall
+                    automatically get terminated. All rights not expressly set forth hereunder are reserved exclusively
+                    by ODISHA TELEVISION LTD. As a condition of your use of the Application, you warrant to the Company
+                    that you will not use the Application for any purpose that is commercial, unlawful or prohibited by
+                    these Terms. You may not use the Application in any manner which could damage, disable, overburden
+                    or impair the Services or interfere with any other party's use and enjoyment of the Application.
+                  </p>
+
+                  <p class="margin-bottom-15  pull-left w-100">
+                    b.You are prohibited from using technology or other means to access, index, frame, or link
+                    TARANGPLUS, in whole or in part that is not authorized by ODISHA TELEVISION LTD;</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    c. You hereby agree not to use TARANGPLUS for promoting services of competitors of ODISHA TELEVISION
+                    LTD;</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    d. You hereby expressly agree to use TARANGPLUS in strict compliance with applicable laws;</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    e. You agree, undertake and confirm that Your use of TARANGPLUS shall be strictly governed by the
+                    following binding principles:</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    f. You shall not host, display, upload, modify, publish, transmit, update or share any information
+                    that:</p>
+                  <ol type="i">
+                    <p class="margin-bottom-15  pull-left w-110">
+                      <li> belongs to another person and to which You do not have any right to; or interferes with
+                        another user's use and enjoyment of <b>TARANGPLUS</b>;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> that is harmful, harassing, blasphemous, defamatory, obscene, pornographic, libellous,
+                        invasive of another's privacy, hateful, or ethnically objectionable, disparaging, relating or
+                        encouraging money laundering or gambling, or otherwise unlawful in any manner whatever, or
+                        unlawfully threatening or unlawfully harassing including but not limited to "indecent
+                        representation of women" within the meaning of the Indecent Representation of Women
+                        (Prohibition) Act, 1986, of another person;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> misleading in any way; or</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> is patently offensive to the online community, such as content that promotes paedophilia,
+                        racism, bigotry, or physical harm of any kind against any group or individual;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> involves the transmission of "junk mail," "chain letters," or unsolicited mass mailing or
+                        "spamming";</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> infringes upon intellectual property rights of third party or violates the rights of privacy
+                        (including without limitation unauthorized disclosure of a person's name, email address,
+                        physical address or phone number) or rights of publicity;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> contains restricted or password-only access pages, or hidden pages or images;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> provides material that exploits people in a violent or otherwise inappropriate manner or
+                        solicits personal information from anyone;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> provides instructional information about illegal activities such as making or buying illegal
+                        weapons or providing or creating computer viruses;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> contains video, photographs, or images of another person without his or her express written
+                        consent and permission or the permission or the consent of his her guardian in the case of
+                        minor;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> engages in commercial activities and/or sales without Our prior written consent such as
+                        contests, sweepstakes, barter, advertising etc. Throughout these Terms of Use, Our "prior
+                        written consent" means a communication coming from Our authorized representative, specifically
+                        in response to Your request, and specifically addressing the activity or conduct for which You
+                        seek authorization;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> harm minors in any way;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> violates any law for the time being in force;</li>
+                    </p>
+                    <p class="margin-bottom-15  pull-left w-100">
+                      <li> threatens the unity, integrity, defence, security or sovereignty of India, friendly relations
+                        with foreign states, or public order or causes incitement to the commission of any cognizable
+                        offence or prevents investigation of any offence or is insulting any other nation;</li>
+                    </p>
+                  </ol>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    g. You shall not use any "deep-link", "page-scrape", "robot'', "spider" or other automatic device,
+                    program, algorithm or methodology, or any similar or equivalent manual process, to access, acquire,
+                    copy or monitor any portion of TARANGPLUS or any Content, or in any way reproduce or circumvent the
+                    navigational structure or presentation of TARANGPLUS or any Content, to obtain or attempt to obtain
+                    any materials, documents or information through any means not purposely made available through
+                    TARANGPLUS. We reserve the right to bar any such activity.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    h. You shall not probe, scan or test the vulnerability of TARANGPLUS website or any network
+                    connected to TARANGPLUS nor breach the security or authentication measures on TARANGPLUS or any
+                    network connected to TARANGPLUS. You may not reverse look-up, trace or seek to trace any information
+                    on any other user or visitor to TARANGPLUS to its source.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    i. You agree that You will not take any action that imposes an unreasonable or disproportionately
+                    large load on the infrastructure of TARANGPLUS or any systems or networks connected to
+                    <b>TARANGPLUS</b>.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    j. You may not forge headers or otherwise manipulate identifiers in order to disguise the origin of
+                    any message or transmittal You send to Us on or through TARANGPLUS or any service offered on or
+                    through TARANGPLUS. You may not pretend that You are, or that You represent, someone else, or
+                    impersonate any other individual or entity.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    k. You shall not engage in advertising to, or solicitation of, other users of TARANGPLUS to buy or
+                    sell any products or services, including, but not limited to, services being displayed on or related
+                    to <b>TARANGPLUS</b>.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    l. Your correspondence or business dealings with, or participation in promotions of, third party
+                    advertisers found on or through <b>TARANGPLUS</b>, including payment and delivery of goods or
+                    services, and any other terms, conditions, warranties or representations associated with such
+                    dealings, are solely between You and such third party advertiser. We shall not be responsible or
+                    liable for any loss or damage of any sort incurred as the result of any such dealings or as the
+                    result of the presence of such third party advertisers on <b>TARANGPLUS</b>. YOU acknowledge and
+                    agree that <b>ODISHA TELEVISION LTD</b> is not responsible or liable for: (i) the availability or
+                    accuracy of such websites or resources; or (ii) the content, products, or services on or available
+                    from such websites or resources. Links to such websites or resources do not imply any endorsement by
+                    <b>ODISHA TELEVISION LTD</b> of such websites or resources or the content, products, or services
+                    available from such websites or resources. YOU acknowledge sole responsibility for and assume all
+                    risks arising from YOUR use of any such websites or resources.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    m. It is possible that other users (including unauthorized users or "hackers") may post or transmit
+                    offensive or obscene materials on <b>TARANGPLUS</b> and that You may be involuntarily exposed to
+                    such offensive and obscene materials. It also is possible for others to obtain personal information
+                    about You on the public forum due to Your use of <b>TARANGPLUS</b>, and that the recipient may use
+                    such information to harass or injure You. We do not approve of such unauthorized uses but by
+                    browsing/using <b>TARANGPLUS</b>, You acknowledge and agree that We shall not be responsible for the
+                    use of any personal information that You publicly disclose or share with others on
+                    <b>TARANGPLUS</b>. Please carefully select the type of information that You publicly disclose or
+                    share with others on <b>TARANGPLUS</b>.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">TERMINATION</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    YOUR (User, Registered User or Subscription User) right to use TARANGPLUS shall automatically
+                    terminate if YOU violate these Terms of Use or any terms, rules or guidelines published in
+                    connection with TARANGPLUS. <b>ODISHA TELEVISION LTD</b> reserves the right, in its sole discretion,
+                    to suspend or terminate YOUR access to all or any part of TARANGPLUS, for any reason, with or
+                    without notice.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    As Subscription User, YOUR right to use TARANGPLUS shall automatically terminate on the expiry of
+                    the term of the Subscription Package. You may discontinue your participation in and access to
+                    TARANGPLUS at any time. YOU agreed that upon suspension or termination, no amount shall be refunded
+                    to YOU by ODISHA TELEVISION LTD.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">FEEDBACK</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>ODISHA TELEVISION LTD</b> welcomes and encourages YOU to provide feedback, comments and
+                    suggestions for improvements to TARANGPLUS ("Feedback"). YOU may submit Feedback by emailing us at
+                    <span class="oriya-color4">tarangplus@odishatv.in</span>.in. YOU acknowledge and agree that all
+                    Feedback will be the sole and exclusive property of <b>ODISHA TELEVISION LTD</b> and YOU hereby
+                    irrevocably assign to <b>ODISHA TELEVISION LTD</b> all of YOUR right, title, and interest in and to
+                    all Feedback, including without limitation all worldwide patent rights, copyright rights, trade
+                    secret rights, and other proprietary or intellectual property rights therein. At ODISHA TELEVISION
+                    LTD's request and expense, YOU will execute documents and take such further acts as <b>ODISHA
+                      TELEVISION LTD</b> may reasonably request to assist <b>ODISHA TELEVISION LTD</b> to acquire,
+                    perfect, and maintain its intellectual property rights and other legal protections for the Feedback.
+                    You further acknowledge and agree that <b>ODISHA TELEVISION LTD</b> shall not be under an obligation
+                    to take any action pursuant to the Feedback provided by You. <b>ODISHA TELEVISION LTD</b> may, at
+                    its sole discretion, decide whether any action is required to be taken based on the Feedback
+                    received from You. You hereby expressly agree to indemnify and keep <b>ODISHA TELEVISION LTD</b>
+                    harmless against any liabilities that may suffered or incurred by <b>ODISHA TELEVISION LTD</b> as a
+                    consequence of any action taken by <b>ODISHA TELEVISION LTD</b> pursuant to Your Feedback.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">WARRANTY DISCLAIMER</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW OF INDIA, <b>TARANGPLUS</b> IS PROVIDED ON AN "AS
+                    IS" BASIS WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. WITHOUT LIMITING THE FOREGOING
+                    PROVISIONS, YOU ASSUME SOLE RISK AND RESPONSIBILITY FOR SELECTING <b>TARANGPLUS</b> TO ACHIEVE YOUR
+                    INTENDED RESULTS, AND SOLE RESPONSIBILITY FOR THE INSTALLATION OF, USE OF, AND RESULTS OBTAINED FROM
+                    <b>TARANGPLUS</b>. WITHOUT LIMITING THE FOREGOING PROVISIONS, <b>ODISHA TELEVISION LTD</b> MAKES NO
+                    WARRANTY THAT <b>TARANGPLUS</b> WILL BE ERROR-FREE, VIRUS FREE, OR FREE FROM INTERRUPTIONS OR OTHER
+                    FAILURES OR THAT THE <b>TARANGPLUS</b> WILL SATISFY YOUR SPECIFIC REQUIREMENTS OR THAT THE ERRORS
+                    WILL BE RECTIFIED. YOU UNDERSTAND THAT <b>TARANGPLUS</b> AN BE BLOCKED OR MADE INOPERABLE AND
+                    <b>ODISHA TELEVISION LTD</b> ASSUMES NO RESPONSIBILITY OR LIABILITY FOR THE SAME. <b>TARANGPLUS</b>
+                    IS NOT FAULT-TOLERANT AND IS NOT DESIGNED OR INTENDED FOR USE IN HAZARDOUS ENVIRONMENTS REQUIRING
+                    FAIL-SAFE PERFORMANCE, INCLUDING WITHOUT LIMITATION, IN THE OPERATION OF NUCLEAR FACILITIES,
+                    AIRCRAFT NAVIGATION OR COMMUNICATION SYSTEMS, AIR TRAFFIC CONTROL, WEAPONS SYSTEMS, DIRECT
+                    LIFE-SUPPORT MACHINES, OR ANY OTHER APPLICATION IN WHICH THE FAILURE OF <b>TARANGPLUS</b> NETWORK
+                    COULD LEAD DIRECTLY TO DEATH, PERSONAL INJURY, OR SEVERE PHYSICAL OR PROPERTY DAMAGE (COLLECTIVELY,
+                    "HIGH RISK ACTIVITIES"). <b>ODISHA TELEVISION LTD</b> EXPRESSLY DISCLAIMS ANY EXPRESS OR IMPLIED
+                    WARRANTY OF FITNESS FOR HIGH RISK ACTIVITIES.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">INDEMNIFICATION</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    YOU AGREE TO INDEMNIFY, DEFEND, AND HOLD HARMLESS ODISHA TELEVISION LTD, ITS SUBSIDIARIES,
+                    AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, CONSULTANTS AND AGENTS (“INDEMNIFIED PARTIES”) FROM AND
+                    AGAINST ANY AND ALL CLAIMS, LIABILITIES, DAMAGES, LOSSES, COSTS, EXPENSES, FEES (INCLUDING
+                    REASONABLE ATTORNEYS' FEES AND COSTS) THAT SUCH INDEMNIFIED PARTIES MAY INCUR AS A RESULT OF OR
+                    ARISING FROM (A) ANY INFORMATION (INCLUDING, WITHOUT LIMITATION, YOUR USER GENERATED CONTENT,
+                    FEEDBACK, OR ANY OTHER CONTENT) YOU (OR ANYONE USING YOUR ACCOUNT) SUBMIT, POST, OR TRANSMIT ON OR
+                    THROUGH <b>TARANGPLUS</b>; (B) YOUR (OR ANYONE USING YOUR ACCOUNT'S) USE OF THE <b>TARANGPLUS</b>;
+                    (C) YOUR (OR ANYONE USING YOUR ACCOUNT'S) VIOLATION OF THESE TERMS; OR (D) YOUR (OR ANYONE USING
+                    YOUR ACCOUNT'S) VIOLATION OF ANY RIGHTS OF ANY OTHER PERSON OR ENTITY, INCLUDING, WITHOUT
+                    LIMITATION, ANY COPYRIGHT, PATENT, TRADEMARK, TRADE SECRET OR OTHER PROPRIETARY RIGHTS OF ANY PERSON
+                    OR ENTITY. <b>ODISHA TELEVISION LTD</b> RESERVES THE RIGHT, AT ITS OWN EXPENSE, TO ASSUME THE
+                    EXCLUSIVE DEFENSE AND CONTROL OF ANY MATTER OTHERWISE SUBJECT TO INDEMNIFICATION BY YOU, IN WHICH
+                    EVENT YOU WILL COOPERATE WITH <b>ODISHA TELEVISION LTD</b> IN ASSERTING ANY AVAILABLE DEFENSES.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">LIMITATION OF LIABILITY</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT, CONTRACT, OR OTHERWISE, SHALL
+                    <b>ODISHA TELEVISION LTD</b> BE LIABLE TO YOU OR TO ANY OTHER PERSON OR ENTITY FOR ANY INDIRECT,
+                    SPECIAL, INCIDENTAL, PUNITIVE, REMOTE OR CONSEQUENTIAL DAMAGES OR ANY OTHER DAMAGES WHATSOEVER
+                    (INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF GOODWILL, LOSS OF CONFIDENTIAL
+                    OR OTHER INFORMATION, BUSINESS INTERRUPTION, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION,
+                    PERSONAL INJURY, LOSS OF PRIVACY, FAILURE TO MEET ANY DUTY INCLUDING A DUTY OF GOOD FAITH OR OF
+                    REASONABLE CARE, NEGLIGENCE (WHETHER ACTIVE OR PASSIVE), AND ANY OTHER PECUNIARY OR OTHER LOSS
+                    WHATSOEVER) ARISING OUT OF OR IN ANY WAY RELATED TO THE USE OR INABILITY TO USE <b>TARANGPLUS</b>,
+                    LOSS OF DATA OR OTHERWISE UNDER OR IN CONNECTION WITH ANY PROVISION OF THESE TERMS, EVEN IN THE
+                    EVENT OF THE FAULT, TORT (INCLUDING NEGLIGENCE, AND GROSS NEGLIGENCE), STRICT LIABILITY, BREACH OF
+                    CONTRACT, OR BREACH OF WARRANTY BY ODISHA TELEVISION LTD, AND EVEN IF <b>ODISHA TELEVISION LTD</b>
+                    HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT WILL <b>ODISHA TELEVISION LTD</b>
+                    BE LIABLE FOR ANY DAMAGES IN EXCESS OF YOUR LAST RECHARGE AMOUNT FOR <b>TARANGPLUS</b>. THIS
+                    LIMITATION OF LIABILITY SHALL NOT APPLY TO LIABILITY FOR DEATH OR PERSONAL INJURY TO THE EXTENT THAT
+                    APPLICABLE LAW PROHIBITS SUCH LIMITATION. THE FOREGOING PROVISIONS SHALL BE ENFORCEABLE TO THE
+                    MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">INTERNATIONAL USE</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>ODISHA TELEVISION LTD</b> is a company based in India. ODISHA TELEVISION LTD’s goal is to bring
+                    to YOU as much Content as is legally available. That said, <b>ODISHA TELEVISION LTD</b> is limited
+                    by the rights that ODISHA TELEVISION LTD’s content licensors grant to ODISHA TELEVISION LTD. Using
+                    technologies to access the Content from territories where <b>ODISHA TELEVISION LTD</b> does not have
+                    rights or does not offer services is prohibited. By browsing or using TARANGPLUS, YOU hereby
+                    acknowledge that <b>ODISHA TELEVISION LTD</b> is not responsible or liable in any manner to comply
+                    with any local laws of YOUR territory except India with respect to TARANGPLUS. Further, YOU hereby
+                    agree that by usage of TARANGPLUS, YOU undertake the responsibility and liability with respect to
+                    viewing the Content of TARANGPLUS in YOUR territory.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">PRIVACY POLICY</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    All information provided by You or collected by us shall be governed in accordance with the Privacy
+                    Policy located at <a href="/privacy_policy"
+                      class="oriya-color4">https://tarangplus.in/privacy_policy</a></p>
+                  <h6 class="margin-bottom-15 pull-left w-100">RELATIONSHIP</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    The relationship between <b>ODISHA TELEVISION LTD</b> and You is on a principal-to-principal basis.
+                    You are in no way ODISHA TELEVISION LTD’s legal representative, partner or agent for any reason
+                    whatsoever.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">EXPORT LAWS</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    YOU agree to comply fully with all Indian export laws and regulations to ensure that TARANGPLUS \
+                    are not exported or re-exported directly or indirectly in violation of, or used for any purposes
+                    prohibited by, such laws and regulations.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">CONFIDENTIALITY</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    YOU agree that TARANGPLUS, including, but not limited to, the object code components, provided to
+                    YOU is "Confidential Information" of ODISHA TELEVISION LTD. YOU shall retain all Confidential
+                    Information in strict confidence at least with the same amount of diligence that YOU exercise in
+                    preserving the secrecy of YOUR most-valuable information, but in no event less than reasonable
+                    diligence.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">ASSIGNMENT</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    These TERMS are personal to YOU and YOU shall not assign, transfer, sub-contract or otherwise part
+                    with these TERMS or any right or obligation under it without ODISHA TELEVISION LTD's prior written
+                    consent. Any attempt by YOU to assign or transfer these TERMS, without such written consent, will be
+                    null and of no effect. <b>ODISHA TELEVISION LTD</b> may assign or transfer these TERMS to any third
+                    party, at its sole discretion, without restriction. Subject to the foregoing, these TERMS will bind
+                    and inure to the benefit of the parties, their successors, personal representatives and permitted
+                    assigns.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">SEVERABILITY</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If any of the provisions of these Terms are deemed invalid, void, or for any reason unenforceable,
+                    that part of these Terms will be deemed severable and will not affect the validity and
+                    enforceability of any remaining provisions of these Terms.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">WAIVER</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    The failure of <b>ODISHA TELEVISION LTD</b> to enforce or to exercise at any time or for any period
+                    any term of or any right pursuant to these Terms of Use shall not be construed as a waiver of any
+                    such right and shall in no way affect ODISHA TELEVISION LTD’s right later to enforce or exercise it.
+                  </p>
+                  <h6 class="margin-bottom-15 pull-left w-100">ELECTRONIC COMMUNICATION</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    When You use or send any data, information or communication to ODISHA TELEVISION LTD, You agree and
+                    understand that You are communicating with <b>ODISHA TELEVISION LTD</b> through electronic records
+                    and You consent to receive communications via electronic records from <b>ODISHA TELEVISION LTD</b>
+                    periodically and as and when required. <b>ODISHA TELEVISION LTD</b> will communicate with You by
+                    email or any push or other message or electronic records on the email address and or mobile number
+                    available with <b>ODISHA TELEVISION LTD</b> which will be deemed adequate service of notice /
+                    electronic record.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">NOTICE</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    Any notices or other communications required will be in writing and emailed to <b>ODISHA TELEVISION
+                      LTD</b> at <span class="oriya-color4">tarangplus@odishatv.in</span>. For notices made by e-mail,
+                    the date of receipt will be deemed the date on which such notice is transmitted.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    In the event you have any complaints with respect to any Content on TARANGPLUS, please write to us
+                    at <span class="oriya-color4">tarangplus@odishatv.in</span>. with details of the objectionable
+                    content and Your details including Your name and mobile number and such other details as may be
+                    requested by Us. Based on the complaint raised, we will take reasonable measures to resolve the
+                    issue. You hereby expressly agree that <b>ODISHA TELEVISION LTD</b> shall under no circumstance
+                    shall be liable to You for any damages whatsoever. Further, You hereby expressly agree that
+                    <b>ODISHA TELEVISION LTD</b> makes no representations under these Terms of Use that any complaint
+                    raised by You will be resolved to Your satisfaction. All steps to be taken by <b>ODISHA TELEVISION
+                      LTD</b> in this regard shall be at the sole discretion of <b>ODISHA TELEVISION LTD</b>.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    If You have any claims with respect to the ownership of Content transmitted through TARANGPLUS,
+                    please follow the “Ownership Claims and Dispute Resolution Mechanism” at <a href="/privacy_policy"
+                      class="oriya-color4">https://tarangplus.in/privacy_policy</a>.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">LAW & DISPUTES</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    These TERMS and all matters arising from it are governed by and construed in accordance with the
+                    laws of India and courts of Bhubaneswar, India shall have exclusive jurisdiction over all disputes
+                    arising in connection with these TERMS.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">ENTIRE AGREEMENT AND AMENDMENT</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    These TERMS expressly supersedes and completely replaces any and all prior ‘Terms of Use’. <b>ODISHA
+                      TELEVISION LTD</b> shall not be bound by or liable to YOU for any pre-existing or contemporaneous
+                    written or oral representations or warranties made by anyone, with respect to TARANGPLUS, including
+                    any authorized agents, employees, or representatives.</p>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    <b>ODISHA TELEVISION LTD</b> reserves the right, at its sole discretion, to modify the TERMS from
+                    time to time (“Updated Terms of Use”). The Updated Terms of Use shall be effective immediately and
+                    shall supersede these Terms of Use. <b>ODISHA TELEVISION LTD</b> shall not be under an obligation to
+                    notify you of any changes to the Terms of Use. YOU shall be solely responsible for reviewing the
+                    Terms of Use from time to time for any modifications. By continuing to use TARANGPLUS after the
+                    Updated Terms of Use have been published, YOU affirm YOUR agreement to the Updated Terms of Use.</p>
+                  <h6 class="margin-bottom-15 pull-left w-100">CONTACT</h6>
+                  <p class="margin-bottom-15  pull-left w-100">
+                    You have any questions about these Terms of Use, please contact <b>ODISHA TELEVISION LTD</b> at
+                    <span class="oriya-color4">tarangplus@odishatv.in</span>.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!--tc ends -->
+<div *ngIf="page == 'faq'">
+  <section class="pull-left w-100 padding-top-80">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
+          <div class="static-page">
+            <div class="static-content-bg">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="page-title margin-bottom-25 pull-left w-100 font-sbold">FAQ</h1>
+                  <div id="faqs" class="pull-left w-100">
+                    <div id="accordion" class="pull-left w-100">
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse1">
+                            HOW DO I DOWNLOAD THE APP?
+                          </a>
+                        </div>
+                        <div id="collapse1" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              You can find TarangPlus on the playstore and App Store.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse2">
+                            IS THERE A WEBSITE AVAILABLE?
+                          </a>
+                        </div>
+                        <div id="collapse2" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              Yes, it is! Link : <a href="https://tarangplus.in/" target="_blank">www.tarangplus.in</a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse3">
+                            WHY CAN'T I REGISTER ONTO THE APP?
+                          </a>
+                        </div>
+                        <div id="collapse3" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              If you can't register on the app, restart your phone and try again. Are you still facing
+                              the same problem after that? Send us an email at tarangplus@odishatv.in, and we'll try to
+                              fix this.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse4">
+                            IS THE APP AVAILABLE ON TABLETS AS WELL?
+                          </a>
+                        </div>
+                        <div id="collapse4" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              Yes, Our App is available on tablets as well.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse5">
+                            WHAT ARE THE DEVICES THAT I CAN USE?
+                          </a>
+                        </div>
+                        <div id="collapse5" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              Smartphones, Desktop and Laptop.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse6">
+                            WHAT ARE THE PHONE REQUIREMENTS TO DOWNLOAD THE APP?
+                          </a>
+                        </div>
+                        <div id="collapse6" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              Any Android (running 4.1 or later) and iOS (running 9.0 or later) device.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse7">
+                            CAN I SAVE A LIST OF MOVIES AND SHOWS TO WATCH LATER?
+                          </a>
+                        </div>
+                        <div id="collapse7" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              Yes, you can add content to 'Watch later' section to watch it later.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <a class="card-link text-uppercase" data-toggle="collapse" href="#collapse8">
+                            DOES THE CONTENT AVAILABLE HERE BEFORE IT DOES ON TV?
+                          </a>
+                        </div>
+                        <div id="collapse8" class="collapse" data-parent="#accordion">
+                          <div class="card-body">
+                            <p class="margin-bottom-0">
+                              No, but we are working on it to bring out content first to our Tarang plus premium
+                              subscribers
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- faq ends-->
+<div *ngIf="page == 'about'">
+  <section class="pull-left w-100 padding-top-80">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
+          <div class="static-page">
+            <div class="static-content-bg">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="page-title margin-bottom-25 pull-left w-100 font-sbold">About Tarang plus</h1>
+                  <p class="margin-bottom-15 pull-left w-100">TarangPlus, Odisha's first online video streaming Over The
+                    Top (OTT) platform owned by Odisha Television Ltd. TarangPlus is the one-stop destination for All
+                    Odia Entertainment.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">Watch your favorite show anywhere any time: Tarangplus
+                    brought you TV shows, Live TV, Odia Jatra, Movies, Mega Serials, Video Songs, News and much more
+                    under one roof. Now access all of your favorite entertainment on your fingertips with TarangPlus be
+                    it on the bus, at work or home in your smartphone, tablet or laptop.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">We offer a comfortable and friendly user experience with
+                    highly evolved video streaming technology. Our video streaming technology ensures that the best
+                    possible video quality is played back automatically based on the available bandwidth, therefore
+                    making it a great video experience on both mobile networks as well as WiFi internet connections.
+                    Seamless Video playback, Smart Content Search & Recommendation, Option to choose Video Quality gives
+                    you a video experience like never before.</p>
+
+                  <p class="margin-bottom-15  pull-left w-100">TarangPlus can be accessed at Tarangplus.in and mobile
+                    application is available on the Google Play Store and Apple App Store.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- aboutus ends-->
+<div *ngIf="page == 'coming_soon'">
+  <section class="pull-left w-100 padding-top-80">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper">
+          <div class="static-page">
+            <div class="min-height-div2 center-align-content2"  [ngStyle]="{'min-height': (contentHeight-73)+'px'}">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="page-title margin-bottom-25 pull-left w-100 font-sbold text-center oriya-color4"
+                    style="font-size: 40px;">Coming Soon</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- comingsoon ends-->

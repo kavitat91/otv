@@ -1,0 +1,229 @@
+<div class="lds-roller" *ngIf="loadingIndicator">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<div class="item_details_page padding-top-80 relative-content" [ngStyle]="{'min-height': contentHeight+'px'}">
+	<div class="banner12">
+      <!-- {{episodeDetails['access_control']['pre_role_settings']['mobile_ads_url']}} -->
+		<img src="{{episodeDetails?.thumbnails?.xl_image_16_5?.url}}" class="banner-image" id="desktop_otv_player">
+		<div class="player_section w-100 embed-responsive embed-responsive-16by9"  id="mobile_otv_player">              
+      <!-- <iframe src="/odiyatv_player/demo/embed.html?contenturl=<%=@new_play_url%>|key=<%=@key%>|image=<%=@episode_details['thumbnails']['large_16_9']['url']%>|title=<%=@episode_details['title']%>|theme_type=movie|channel_logo=|catalog_id=<%=@episode_details['catalog_id']%>|content_id=<%=@episode_details['content_id']%>|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad=<%=@episode_details['access_control']['pre_role_settings']['mobile_ads_url']%>|mid_role_ad=<%=@episode_details['access_control']['mid_role_settings']['mobile_ads_url']%>|mid_role_pos=<%=@episode_details['access_control']['mid_role_settings']['midroll_position'].join("$") if @episode_details['access_control']['mid_role_settings'].has_key?("midroll_position") && @episode_details['access_control']['mid_role_settings']["midroll_position"].length > 0%>" width="1000" height="500"></iframe> -->
+    </div>
+  </div>  
+
+  <div class="video-content relative-content">
+      <input type="hidden" id="app_share_url" value="{{episodeDetails?.internal_share_url}}">
+      <input type="hidden" id="bi_url" value="123">
+    <div class="video-info-vox pull-left w-100">
+      <div class="pull-left w-100 margin-bottom-0">
+        <div class="pull-left video-feature-sec1">
+          <h2 class="page-title">{{episodeDetails?.title | slice:0:50 }}</h2>
+          <p class="video-info">{{episodeDetails?.title | slice:0:50 }}</p>	
+        </div>
+        <div class="pull-right video-feature-sec2">
+          <ul class="pull-left w-100 list-none padding-left-0 margin-bottom-0">
+            <li class="pull-left d-none d-xl-block">
+              <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 video_play" (click)="showVideoPop()">
+                <i class="fa fa-play pull-left margin-right-10" aria-hidden="true"></i> watch now
+              </a>	
+            </li>
+            <li class="pull-left">
+              <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 d-none d-xl-block add_watch_later"
+               id="watch_later_new" (click)="addWatchLater()">
+                <img src="/assets/images/watchlater_add.svg" class="watch_later_icon" alt="Watch Later" title="Watch Later"> watch later
+              </a>	                
+              <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 d-block d-xl-none add_watch_later"
+               (click)="addWatchLater()">
+                <img src="/assets/images/watchlater_mobile.svg" class="text-center watch_later" alt="Watch Later" title="Watch Later">
+                <span>Watch Later</span>
+              </a>
+            </li>
+            <li class="pull-left relative-content share_social_icons" (clickElsewhere)="closeShareVideo()">
+              <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 d-none d-xl-block" (click)="shareToggleVideo()">
+                <img src="/assets/images/share.svg" alt="share" title="share"> share
+              </a>
+              <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 d-block d-xl-none" (click)="shareToggleVideo()">
+                <img src="/assets/images/share_mobile.svg"  alt="share" title="share"> <span>Share</span>
+              </a>
+              <ul class="share_feature list-none padding-bottom-10 padding-top-10" *ngIf="shareEnable == true">
+                <li class="pull-left margin-right-10">
+                  <a href="https://www.facebook.com/dialog/share?app_id={{fbKey}}&display=popup&href={{site+'/'+catalogName+'/'+showName+'/'+itemName}}&redirect_uri={{site+'/'+catalogName+'/'+showName+'/'+itemName}}" 
+                    target="_blank" class="pull-left">
+                  <img src="/assets/images/facebook.svg" class="text-center pull-left" alt="facebook" title="facebook">                  
+                </a>
+                </li>
+                <li class="pull-left margin-right-10">
+                  <a href="https://twitter.com/intent/tweet?text={{itemName}}&url={{site+'/'+catalogName+'/'+showName+'/'+itemName}}" target="_blank" class="pull-left">
+                  <img src="/assets/images/twitter.svg" class="text-center pull-left" alt="twitter" title="twitter">                  
+                </a>
+                </li>
+                <li class="pull-left margin-right-0">
+                  <a href="javascript:void(0);" class="pull-left">
+                    <img src="/assets/images/copylink.svg" class="text-center pull-left copy_link margin-right-0" alt="copy Link" title="copy link"
+                    id="{{site+'/'+catalogName+'/'+showName+'/'+itemName}}" (click)="copyLink('copy_link12')">
+                    <input type="text" id="copy_link12" [value]="site+'/'+catalogName+'/'+showName+'/'+itemName">                                       
+                  </a>
+                </li>
+              </ul>	
+            </li>
+          </ul>
+        </div>
+        <!-- <div class="pull-left w-100" *ngIf="episodeDetails.short_description == true"> -->
+          <div class="pull-left w-100">
+              
+          <p class="pull-left w-100 margin-bottom-0">
+            <span class="short_desc" *ngIf="short_desc == true">{{episodeDetails?.short_description | slice:0:200}}
+            </span>
+            <span class="full_desc" *ngIf="full_desc">{{episodeDetails ? episodeDetails.short_description : ''}}</span>
+            <!-- <ng-container *ngIf="episodeDetails.short_description.length > 200"> -->
+              <ng-container>
+                <a href="javascript:void(0);" class="read_more desc_show_more_icon" (click)="readMore()">Read More</a>
+                <a href="javascript:void(0);" class="read_more desc_show_less_icon" (click)="readLess()">Read Less</a>
+              <!-- <a href="javascript:void(0);" class="read_more desc_show_more_icon" (click)="readMore()" *ngIf="desc_show_more_icon">Read More</a> -->
+              <!-- <a href="javascript:void(0);" class="read_more desc_show_less_icon" (click)="readLess()" *ngIf="desc_show_less_icon">Read Less</a>    	      -->
+            </ng-container>
+          </p>
+
+          <!-- <p class="pull-left w-100 text-center center-align-content margin-top-10 margin-bottom-10" *ngIf="episodeDetails.short_description.length > 200"> -->
+            <p class="pull-left w-100 text-center center-align-content margin-top-10 margin-bottom-10">
+            <img src="/assets/images/accordian_arrow.svg" class="desc_show_more_icon_mobile" (click)="readMore()" alt="" title="">
+            <img src="/assets/images/accordian_arrow.svg" class="desc_show_less_icon_mobile" (click)="readLess()" alt="" title="">
+            <!-- <img src="/assets/images/accordian_arrow.svg" class="desc_show_more_icon_mobile" (click)="readMore()" alt="" title=""  *ngIf="desc_show_more_icon">
+            <img src="/assets/images/accordian_arrow.svg" class="desc_show_less_icon_mobile" (click)="readLess()" alt="" title="" *ngIf="desc_show_less_icon">	 -->
+          </p>
+
+        </div>
+      </div>    
+    </div>  
+
+    <!-- <div class="toster-message-wrap" id="watch_later_pop" *ngIf="watchLaterPop"> -->
+      <div class="toster-message-wrap" id="watch_later_pop">
+      <div class="center-align-content">
+        <div class="toster-message">
+          <img src="/assets/images/tick.svg" alt="" title="">
+          <p id="watch_later_message" class="watch_later_msg1">
+            Added to your Watchlist successfully
+          </p>
+        </div>
+      </div>
+    </div> 
+
+    <!-- <div class="toster-message-wrap" id="watch_later_remove_pop" *ngIf="watchLaterRemovePop"> -->
+      <div class="toster-message-wrap" id="watch_later_remove_pop">
+      <div class="center-align-content">
+        <div class="toster-message">
+          <img src="/assets/images/tick.svg" alt="" title="">
+          <p id="watch_later_message" class="watch_later_msg1">
+            Watchlist removed successfully
+          </p>
+        </div>
+      </div>
+    </div> 
+
+
+    <!-- <div class="toster-message-wrap" id="copy_link_pop" *ngIf="copyLinkPop"> -->
+      <div class="toster-message-wrap" id="copy_link_pop">
+      <div class="center-align-content">
+        <div class="toster-message toster-message-small">
+          <img src="/assets/images/tick.svg" alt="" title="">
+          <p>
+            Link Copied
+          </p>
+        </div>
+      </div>
+    </div>  
+
+  </div>
+
+  <section class="pull-left w-100 main-content padding-bottom-60">
+
+    <div class="container">
+      <div class="row">
+        <div class="wrapper">	
+          
+          <section class="content padding-bottom-0">
+            <!-- <span class="custom-dropdown margin-bottom-20" *ngIf="seasons.length"> -->
+              <span class="custom-dropdown margin-bottom-20">
+              <!-- <select class="seasons_drop_down">
+                <option value ="s" *ngFor="let s of seasons">{{s['title']}}</option>
+              </select> -->
+            </span>  
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10 margin-top-0">
+                  <h2 class="margin-bottom-0 margin-top-5 text-capitalize pull-left carousel-title oriya-color1 font-sbold">
+                    {{allEpisodesFirst?.catalog_object?.layout_type == "songs" ? "Songs" : "Episodes"}}</h2>
+                  <!-- <ng-container *ngIf="allEpisodes.length > 4"> -->
+                    <ng-container>
+                      <a routerLink="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
+                    class="text-capitalize see-all see-all1 pull-right">more</a>
+                    <a href="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
+                    class="text-capitalize see-all see-all2 pull-right">
+                    <img src="/assets/images/right_arrow.svg" alt="" title=""></a>
+                    <!-- <a routerLink="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
+                    class="text-capitalize see-all see-all1 pull-right" *ngIf="desktopNav && allEpisodes?.length > 4">more</a>
+                    <a href="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
+                    class="text-capitalize see-all see-all2 pull-right" *ngIf="mobileNav && allEpisodes?.length > 4">
+                    <img src="/assets/images/right_arrow.svg" alt="" title=""></a> -->
+                  </ng-container>
+              </div>
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- season_episode_list">
+                <div id="episodes-carousel" class="owl-carousel owl-theme episodes-carousel margin-bottom-0">
+                  <owl-carousel [options]="carouselOptions2" [items]="allEpisodes" [carouselClasses]="['owl-theme owl-carousel horizontal-carousel margin-bottom-15']">   
+                    <div class="item" *ngFor="let e of allEpisodes">  
+                      <a href="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
+                        <img src="{{e['thumbnails']['medium_16_9']['url']}}" class="carousel-slide-image">
+                      </a>
+                        
+                      <!-- <span class="premium-txt" *ngIf="e.hasOwnProperty('access_control') && e['access_control']['is_free'] == false">Premium</span>                               -->
+                      <span class="premium-txt" *ngIf="e.hasOwnProperty('access_control') && e['access_control']['is_free'] == false">Premium</span>                              
+                      <p class="margin-bottom-0">
+                        <label class="oriya-color1 block margin-bottom-0 ellipse-content">{{e['title']}}</label>
+                        <span class="oriya-color2 block ellipse-content">{{e['item_caption']}}</span>
+                      </p>
+                    </div>
+                  </owl-carousel>
+                </div>  
+                <div class="line-divider pull-left w-100" >&nbsp;</div>
+              </div>  
+            </div>   
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                <h2 class="margin-bottom-0 margin-top-5 text-capitalize pull-left carousel-title oriya-color1 font-sbold" *ngIf="other_items.length > 0">Other shows</h2>
+                <a href="/{{catalogName}}/others/all" class="text-capitalize see-all see-all1 pull-right" *ngIf="desktopNav && other_items.length > 4">more</a>
+                <a href="/{{catalogName}}/others/all" class="text-capitalize see-all see-all2 pull-right" *ngIf="mobileNav && other_items.length > 4">
+                  <img src="/assets/images/right_arrow.svg" alt="" title=""></a>
+              </div>   
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-">
+								<div id="episodes-carousel" class="owl-carousel owl-theme episodes-carousel margin-bottom-0">
+                  <owl-carousel [options]="carouselOptions2" [items]="other_items" [carouselClasses]="['owl-theme owl-carousel horizontal-carousel margin-bottom-15']">   
+                    <div class="item" *ngFor="let other of other_items;">
+                      <a routerLink="{{other['itemUrl']}}">
+                        <img src="{{other['thumbnails']['medium_16_9']['url']}}" title="" class="carousel-slide-image">
+                      </a>
+                      <span class="premium-txt" *ngIf="other.hasOwnProperty('access_control') && other['access_control']['is_free'] == false">Premium</span>
+                      <p class="margin-bottom-0">
+                        <label class="oriya-color1 block margin-bottom-0 ellipse-content">{{other['title']}}</label>
+                        <span class="oriya-color2 block ellipse-content">{{other['item_caption']}}</span>
+                      </p>
+                    </div>
+                  </owl-carousel>
+                </div>
+              </div>  
+            </div>
+          </section>
+        </div>
+      </div>
+      <!-- {{'videoLoginCheck'+videoLoginCheck}}{{'videoPremiumCheck'+videoPremiumCheck}} -->
+      <app-videopopup [videoLoginCheck]="videoLoginCheck" [videoPremiumCheck]="videoPremiumCheck" [catalogId]="catalogId" 
+      [contentId]="contentId" [videoURL]="videoURL"></app-videopopup>
+      
+
+    </div>
+  </section>        

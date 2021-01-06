@@ -1,0 +1,38 @@
+<section class="pull-left w-100 padding-top-80">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper min-height-div">	
+          <section class="content padding-top-20 padding-bottom-40">
+            <div class="row">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+              <h1 class="text-capitalize pull-left w-100 oriya-color1 font-sbold page-title">All Episodes</h1></div>
+            </div>
+            <div class="thumbnail-list-wrap shows-list-page">
+             
+              <div class="thumbnail-list-box margin-bottom-20 relative-content" *ngFor="let e of allEpisodes; let i = index;">	
+                <div class="item horizontal-carousel">
+                  <a routerLink="/{{this.catalogName}}/{{this.showName}}/{{e['friendly_id']}}">
+                  <img src="{{e['thumbnails']['medium_16_9']['url']}}" class="carousel-slide-image">
+                  </a>
+                  
+                  <span class="premium-txt" *ngIf="e.hasOwnProperty('access_control') && e['access_control']['is_free'] == false ">Premium</span>                              
+                  <p class="margin-bottom-0">
+                    <label class="oriya-color1 block margin-bottom-0 text-ellipsis margin-top-5">{{e['title']}}</label>
+                    <span class="oriya-color2 block text-ellipsis">{{e['item_caption']}}</span>
+                  </p>
+                </div>
+              </div>              
+            </div>
+            <!-- <%if @next_page == "true"%> 
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <div class="text-center margin-bottom-25 margin-top-20" id="load_more_items_link"> <a href="javascript:void(0);" class="inline-block text-uppercase btn-oria btn-oria-big load_all_items " id="load_more_all_items">Load more</a></div>
+                </div>
+              </div>
+            <%end%>		
+            <input type="hidden" value="1" id="page_number"> -->
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>	

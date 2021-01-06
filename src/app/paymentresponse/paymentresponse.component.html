@@ -1,0 +1,17 @@
+<div class="mobile_plans_selector padding-top-80">
+  <section class="min-height-div transation_status_page center-align-content2">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-content-wrap no_content_plans text-center">
+        <h2 class="block margin-bottom-25 margin-top-0 page-title">{{msg}}</h2>
+       <!-- <img src="/assets/images/{{ status == 'success' ? 'payment_success.png' : 'payment_failure.png'" class="status_image margin-top-5 margin-bottom-25" alt="" title=""> -->
+        <p class="margin-bottom-0 font-size3 oriya-color1"> Transaction ID </p>
+        <p class="font-sbold margin-bottom-10 font-size3 oriya-color1"></p> 
+        <p class="margin-bottom-15 font-size3" *ngIf="status == 'success'">Price Charged: &nbsp;Rs.{{response["data"]["price_charged"]}}</p>
+        <div class="inline-block w-100 custom-gradient margin-top-5 margin-bottom-25">
+          <p class="inline radius-button">
+            <a routerLink="/" class="text-uppercase btn-oria btn-oria-big" (click)="tellAndroidSuccess(msg)">Browse</a>
+          </p>
+        </div>
+      
+      </div>        
+  </section>
+</div>
