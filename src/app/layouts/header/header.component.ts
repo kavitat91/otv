@@ -113,7 +113,7 @@ public resetPasswordToast: boolean = false;
     console.log("this.radioSelected"+localStorage.getItem('language')); */
     this.loginPop = localStorage.getItem('loginPop');      
     this.continueWatchLength = localStorage.getItem('continueWatchItem');
-    console.log(this.continueWatchLength)
+    console.log("continueWatchLength: ", this.continueWatchLength)
   }
   ngOnChanges() {
     

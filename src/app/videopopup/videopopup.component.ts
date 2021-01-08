@@ -14,7 +14,8 @@ export class VideopopupComponent implements OnInit {
   @Input() videoLoginCheck: any;
   @Input() catalogId: any;
   @Input() contentId: any;
-  @Input() videoURL: string;
+  @Input() videoURL: string;  
+  @Input() episodeDetails: string;
   subVideoPop: boolean = false;
   videoWatchLoginPop: boolean = false;
   videoPop: boolean = false;

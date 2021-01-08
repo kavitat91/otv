@@ -103,6 +103,7 @@ export class PageService {
   }
 
   getItemGenre(lang: string, catalog_slug: string, genre: any) {
+    //return this.http.get<any>(environment.apiURL+"catalogs/tarang-serials/items/kunwari-bohu/episodes/?order_by=desc&region=IN&item_language="+lang+"&auth_token="+environment.authtoken)
     return this.http.get<any>(environment.apiURL+"catalogs/"+catalog_slug+"/items?genre="+genre+"region=IN&item_language="+lang+"&auth_token="+environment.authtoken)
     .pipe(
       retry(1),
@@ -110,7 +111,6 @@ export class PageService {
      );
   }
   getAssociatedVideos(lang: string, catalog_slug: string, item_slug: any) {
-    
     return this.http.get<any>(environment.apiURL+"catalogs/"+catalog_slug+"/items/"+item_slug+"videolists?region=IN&item_language="+lang+"&auth_token="+environment.authtoken)
     .pipe(
       retry(1),
