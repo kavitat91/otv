@@ -76,6 +76,8 @@ export class ItemdetailsComponent implements OnInit {
   selectedPop: string;
   videoURL: string;
   contentHeight: number;
+  addToFavouritesList: boolean = false;
+  removeFromFavourites: boolean = false;
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
 
@@ -294,6 +296,26 @@ export class ItemdetailsComponent implements OnInit {
     this.displayPopStatus = 'none';   
   }
 
+  addToFavourites(){
+    var favouritesParams = {};
+    favouritesParams["listitem"] = {};
+    favouritesParams["listitem"]["catalog_id"] = this.catalogId;
+    favouritesParams["listitem"]["content_id"] = this.contentId;
+    this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
+      (res) => {
+        this.addToFavouritesList = true;
+        this.removeFromFavourites = true;
+        setTimeout(function(){
+          this.addToFavouritesList = false;
+          this.removeFromFavourites = false;
+        }.bind(this), 1200);
+      }, 
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+
   addWatchLater() {
     var watchlaterParams = {};
     watchlaterParams["listitem"] = {};
@@ -341,6 +363,8 @@ export class ItemdetailsComponent implements OnInit {
    
     }
   }
+
+
   
   shareToggleVideo() {
     this.shareEnable = !this.shareEnable;
