@@ -236,6 +236,16 @@ export class UserService {
      );
   }
 
+
+  favourites(sessionId: string) {
+    //https://prod.api.tarangplus.in/users/7f7d0fd0040ce500e61bc84bbb29aa5f/playlists/favourite?region=IN&auth_token=3zZmzoHg8z6SM3wpDoyw
+    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/favourite/listitems?region=IN&auth_token="+environment.authtoken)
+    .pipe(
+      retry(1),
+      catchError(this.commonService.handleError)
+     );
+  }
+
   addWatchLater(sessionId: string, watchLaterParams: any) {    
     console.log(watchLaterParams)
     return this.http.post<any>(environment.apiURL+"users/"+sessionId+"/playlists/watchlater?region=IN&auth_token="+environment.authtoken, JSON.stringify(watchLaterParams), this.options)
@@ -248,6 +258,24 @@ export class UserService {
   removeWatchlist(sessionId: string, itemId: any) {
     console.log(itemId);    
     return this.http.delete<any>(environment.apiURL+"users/"+sessionId+"/playlists/watchlater/listitems/"+itemId+"?region=IN&auth_token="+environment.authtoken)
+    .pipe(
+      retry(1),
+      catchError(this.commonService.handleError)
+     );
+  }
+
+  addToFavourites(sessionId: string, favouritesParam: any){
+    console.log("Add To Favourites");
+    return this.http.post<any>(environment.apiURL+"users/"+sessionId+"/playlists/favourite?region=IN&auth_token="+environment.authtoken, JSON.stringify(favouritesParam), this.options)
+    .pipe(
+      retry(1),
+      catchError(this.commonService.handleError)
+     );
+  }
+
+  removeFavourite(sessionId: string, itemId: any) {
+    console.log(itemId);    
+    return this.http.delete<any>(environment.apiURL+"users/"+sessionId+"/playlists/favourite/listitems/"+itemId+"?region=IN&auth_token="+environment.authtoken)
     .pipe(
       retry(1),
       catchError(this.commonService.handleError)

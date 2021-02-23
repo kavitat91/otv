@@ -185,10 +185,10 @@ export class ItemdetailsComponent implements OnInit {
             this.allEpisodes = tvshow_response["data"]["items"];
             this.allEpisodesFirst = this.allEpisodes[1];
             if(this.allEpisodes.length > 0) {
-              /* dynamic video url 
+              // dynamic video url 
               this.contentId = this.allEpisodes[0]['content_id']
-              this.new_play_url = this.commonService.getPlayUrlKey(this.allEpisodes[0])
-              this.key =  this.new_play_url; */
+              this.new_play_url = this.commonService.getPlayUrlKey(this.allEpisodes[0]);
+              this.key =  this.new_play_url; 
               this.videoLoginCheck = this.allEpisodesFirst["access_control"]["login_required"]; 
               //console.log("this.videoLoginCheck"+this.videoLoginCheck);
             }
@@ -277,7 +277,7 @@ export class ItemdetailsComponent implements OnInit {
         this.videoLoginCheck = response["data"]["access_control"]["login_required"];
         this.videoPremiumCheck = response["data"]["access_control"]["is_free"];     
       }
-      this.videoURL = "http://localhost:4200/odiyatv_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image="+this.itemDetails['thumbnails']['large_16_9']['url']+"|title="+this.itemDetails['title']+"|theme_type="+this.theme_type+"|channel_logo=|catalog_id="+this.itemDetails['catalog_id']+"|content_id="+this.itemDetails['content_id']+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.itemDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.itemDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.itemDetails['access_control']['mid_role_settings']['midroll_position'];
+      this.videoURL = "https://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key="+ +"==|image="+this.itemDetails['thumbnails']['large_16_9']['url']+"|title="+this.itemDetails['title']+"|theme_type="+this.theme_type+"|channel_logo=|catalog_id="+this.itemDetails['catalog_id']+"|content_id="+this.itemDetails['content_id']+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.itemDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.itemDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.itemDetails['access_control']['mid_role_settings']['midroll_position'];
       
       console.log("this.videoLoginCheck"+this.videoLoginCheck+"this.videoPremiumCheck"+this.videoPremiumCheck); 
     },  

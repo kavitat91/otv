@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment'
 import * as CryptoJS from 'crypto-js';
 import {Md5} from 'ts-md5/dist/md5';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,6 +68,7 @@ export class CommonService {
     //console.log(i);
     /* console.log(Object.keys(i[x]['last_episode']).length == 0);
     console.log(Object.keys(i[x]['access_control']).length == 0); */
+    
     if(i["theme"] == "show" && i["subcategory_flag"] == "no") {
       //console.log("1");
       if(i['last_episode'] && Object.keys(i['last_episode']).length != 0) {
@@ -154,11 +156,11 @@ export class CommonService {
   }
   
   getPlayUrlKey(response: any) {
-    var url = this.signSmarturl(response['play_url']['saranyu']['url']);
+    let url = this.signSmarturl(response['play_url']['saranyu']['url']);
     console.log("urlurl"+url);
     //sign_smarturl(response['play_url']['saranyu']['url'])
     console.log(response);
-    var play_url = '';
+    let play_url = '';
     
     /* var url = response['play_url']['saranyu']['url'];
     console.log("url"+url); */
@@ -179,6 +181,7 @@ export class CommonService {
     }
       
     return this.new_play_url
+    //return url;
   }
   encryptPlayUrl(url: string): string {
     var new_url = ""
@@ -208,14 +211,14 @@ export class CommonService {
     console.log(JSON.parse(this.a11.body));
     return obj; */
 
-    //return signed_url    
+    //return signed_url  ;  
     /* var a11 = this.getSignedURL(signed_url);
       console.log("a11"+a11['body']); */
 
-      this.getSignedURL(signed_url).subscribe(
+      return this.getSignedURL(signed_url).subscribe(
         (resp) => {
           console.log("resp"+resp);
-          this.obj = resp.body;
+          this.obj = JSON.parse(resp.body);
         },
         (error) => {
           console.log(error);
@@ -225,8 +228,8 @@ export class CommonService {
 
   getSignedURL(signed_url: any) {
     console.log("signed_url"+signed_url);
-    /* let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
-    let options = new RequestOptions({ headers: headers }) */
+    // let headers = new Headers({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+    // let options = new RequestOptions({ headers: headers }); 
 
     let headers = new HttpHeaders({
       'Access-Control-Allow-Origin':'*',

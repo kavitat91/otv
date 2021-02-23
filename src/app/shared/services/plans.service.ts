@@ -7,6 +7,12 @@ import { environment } from '../../../environments/environment'
 import { CommonService } from './common.service';
 import {Md5} from 'ts-md5/dist/md5';
 
+
+function _window(): any {
+  // return the global native browser window object
+  return window;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,6 +37,9 @@ export class PlansService {
       retry(1),
       catchError(this.commonService.handleError)
      );
+  }
+  get nativeWindow(): any {
+    return _window();
   }
   initTransaction(sessionId: string, sePlan: string) {
     var planDet = sePlan.split("|");

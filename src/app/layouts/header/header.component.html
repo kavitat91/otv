@@ -50,8 +50,10 @@
                 Details</a></li>
             <li class="pull-left w-100"><a routerLink="/users/watchlist" class="watch_list oriya-color1" id="">Watchlist</a>
             </li>
-            <li class="pull-left w-100"><a href="javascript:void(0)" class="clear_watch_his oriya-color1 clear_watch"
-                id="" (click)="showPop('delete_watch')" *ngIf="continueWatchLength > 0">Clear Watch History</a></li>
+            <li class="pull-left w-100"><a routerLink="/users/favourites" class="watch_list oriya-color1" id="">Favourites</a>
+            </li>
+            <li class="pull-left w-100" *ngIf="continueWatchLength > 0"><a class="clear_watch_his oriya-color1 clear_watch"
+                id="" (click)="showPop('delete_watch')" >Clear Watch History</a></li>
             <li class="pull-left w-100"><a routerLink="/plans" class="oriya-color1" id="">My Plans</a></li>
             <li class="pull-left w-100"><a href="javascript:void(0)" class="account_url oriya-color1 logout_link"
               (click)="showPop('logout_pop')">Logout</a></li>

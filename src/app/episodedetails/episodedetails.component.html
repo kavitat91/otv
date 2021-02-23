@@ -45,6 +45,11 @@
                 <span>Watch Later</span>
               </a>
             </li>
+            <li class="pull-left d-none d-xl-block">
+              <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 video_play" (click)="addToFavourites()">
+                <i class="fa fa-heart-o pull-left margin-right-10" aria-hidden="true"></i> Favourite
+              </a>	
+            </li>
             <li class="pull-left relative-content share_social_icons" (clickElsewhere)="closeShareVideo()">
               <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 d-none d-xl-block" (click)="shareToggleVideo()">
                 <img src="/assets/images/share.svg" alt="share" title="share"> share
@@ -103,39 +108,67 @@
       </div>    
     </div>  
 
-    <!-- <div class="toster-message-wrap" id="watch_later_pop" *ngIf="watchLaterPop"> -->
-      <div class="toster-message-wrap" id="watch_later_pop">
-      <div class="center-align-content">
-        <div class="toster-message">
-          <img src="/assets/images/tick.svg" alt="" title="">
-          <p id="watch_later_message" class="watch_later_msg1">
-            Added to your Watchlist successfully
-          </p>
+    <div class="toster-message-wrap" id="watch_later_pop" *ngIf="watchLaterPop">
+      <div class="toster-message-wrap">
+        <div class="center-align-content">
+          <div class="toster-message">
+            <img src="/assets/images/tick.svg" alt="" title="">
+            <p id="watch_later_message" class="watch_later_msg1">
+              Added to your Watchlist successfully
+            </p>
+          </div>
+        </div>
+      </div> 
+    </div>
+
+    <div class="toster-message-wrap" id="watch_later_remove_pop" *ngIf="watchLaterRemovePop">
+      <div class="toster-message-wrap">
+        <div class="center-align-content">
+          <div class="toster-message">
+            <img src="/assets/images/tick.svg" alt="" title="">
+            <p id="watch_later_message" class="watch_later_msg1">
+              Watchlist removed successfully
+            </p>
+          </div>
         </div>
       </div>
-    </div> 
+    </div>
 
-    <!-- <div class="toster-message-wrap" id="watch_later_remove_pop" *ngIf="watchLaterRemovePop"> -->
-      <div class="toster-message-wrap" id="watch_later_remove_pop">
-      <div class="center-align-content">
-        <div class="toster-message">
-          <img src="/assets/images/tick.svg" alt="" title="">
-          <p id="watch_later_message" class="watch_later_msg1">
-            Watchlist removed successfully
-          </p>
+    <div class="toster-message-wrap" id="add_to_favourites" *ngIf="addToFavouritesList">
+      <div class="toster-message-wrap">
+        <div class="center-align-content">
+          <div class="toster-message">
+            <img src="/assets/images/tick.svg" alt="" title="">
+            <p id="watch_later_message" class="watch_later_msg1">
+              Added to your favourites successfully
+            </p>
+          </div>
         </div>
-      </div>
-    </div> 
+      </div> 
+    </div>
+    
+    <div class="toster-message-wrap" id="removeFromFavourites" *ngIf="copyLinkPop">
+      <div class="toster-message-wrap">
+        <div class="center-align-content">
+          <div class="toster-message">
+            <img src="/assets/images/tick.svg" alt="" title="">
+            <p id="watch_later_message" class="watch_later_msg1">
+              Favourites removed successfully
+            </p>
+          </div>
+        </div>
+      </div> 
+    </div>
 
-
-    <!-- <div class="toster-message-wrap" id="copy_link_pop" *ngIf="copyLinkPop"> -->
-      <div class="toster-message-wrap" id="copy_link_pop">
-      <div class="center-align-content">
-        <div class="toster-message toster-message-small">
-          <img src="/assets/images/tick.svg" alt="" title="">
-          <p>
-            Link Copied
-          </p>
+    <div class="toster-message-wrap" id="copy_link_pop" *ngIf="copyLinkPop">
+      <div class="toster-message-wrap">
+        <div class="center-align-content">
+          <div class="toster-message toster-message-small">
+            <img src="/assets/images/tick.svg" alt="" title="">
+            <p>
+              Link Copied
+            </p>
+          </div>
         </div>
       </div>
     </div>  

@@ -18,6 +18,7 @@ import { StaticpageComponent } from './statics/staticpage/staticpage.component';
 import { AllitemslistComponent } from './allitemslist/allitemslist.component';
 import { SearchComponent } from './search/search.component';
 
+
 import { PageService } from './shared/services/page.service';
 import { AllitmesserviceService } from './shared/services/allitmesservice.service';
 import { SearchService } from './shared/services/search.service';
@@ -43,6 +44,7 @@ import { ChannelsComponent } from './channels/channels.component';
 import { AllEpisodesComponent } from './all-episodes/all-episodes.component';
 import { PaymentresponseComponent } from './paymentresponse/paymentresponse.component';
 import { VideopopupComponent } from './videopopup/videopopup.component';
+
 //import {Md5} from 'ts-md5/dist/md5';
 
 

@@ -36,6 +36,8 @@ export class UserComponent implements OnInit {
   watch_list_items: any;
   deleteWatchlist: boolean = false;
   watch_list_items_count: number;
+  favourite_list_items: any;
+  favourite_list_items_count: number;
   itemURL: any;
   updateUser: any = {
     user_profile_name: null,
@@ -84,6 +86,9 @@ export class UserComponent implements OnInit {
       else if(page['page'] == 'watchlist') {
         this.page = "watchlist";
         this.watchlist();
+      }else if(page['page'] == 'favourites'){
+        this.page = "favourites";
+        this.favourites();
       }
     }); 
     this.contentHeight = this.commonService.pageHeight();
@@ -235,6 +240,56 @@ export class UserComponent implements OnInit {
   removeWatchList(itemId: any) {
     this.loadingIndicator = true;
     this.userService.removeWatchlist(this.sessionId, itemId).subscribe(
+      (response) => {
+        this.loadingIndicator = false;
+        console.log(response);
+        $("#item_"+itemId).hide();
+        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+        //$("#watch_list_delete_toast").show().fadeOut(4500);
+        this.deleteWatchlist = true;
+        setTimeout(function() {
+          this.deleteWatchlist = false;
+        }.bind(this), 4500);  
+        var item_cnt = response.items_count;
+        if(item_cnt == 0){
+          window.location.reload();
+        }
+      },
+      (error) => {
+        console.log(error);      
+        this.loadingIndicator = false;  
+        this.statusMessage = error.server_error_messsage;
+      }
+    )      
+  }
+
+  favourites(){
+    this.loadingIndicator = true;
+    this.userService.favourites(this.sessionId).subscribe(
+      (res) => {
+        this.favourite_list_items = res.data.items;
+        this.favourite_list_items_count = res.data.items.length;
+        console.log(res.data);
+        for(var x=0; x < this.favourite_list_items.length; x++)  {
+          this.favourite_list_items[x]["item_url"] = this.commonService.getItemURL(this.favourite_list_items[x]);
+          //this.watch_list_items[x]["item_url"].push(this.itemURL);
+          //this.watch_list_items[x].push({item_url,this.itemURL});
+        }
+        //console.log("this.itemURL"+this.itemURL);
+        //console.log("this.watch_list_items"+this.watch_list_items);
+        this.loadingIndicator = false;
+      },
+      (error) => {
+        this.loadingIndicator = false;
+        console.log(error);
+        this.statusMessage = error.server_error_messsage;
+      }
+    )
+  }
+
+  removeFavourite(itemId: any) {
+    this.loadingIndicator = true;
+    this.userService.removeFavourite(this.sessionId, itemId).subscribe(
       (response) => {
         this.loadingIndicator = false;
         console.log(response);

@@ -361,4 +361,73 @@
       </div>
     </div>
   </div>
-</section>        
+</section>   
+
+
+<section class="pull-left w-100 padding-top-80 relative-content" *ngIf="page == 'favourites'">
+  <div class="container">
+    <div class="row">
+      <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">	
+      
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-0">
+            <section class="content padding-top-20 padding-bottom-40">
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
+                  <h1 class="text-capitalize pull-left w-100 ms-color2 font-sbold page-title">Favourites</h1>				
+                  
+                  <div class="thumbnail-list-wrap shows-list-page" *ngIf="favourite_list_items_count > 0">
+                    <ng-container *ngFor="let w of favourite_list_items; let i = index; ">
+                      <div class="thumbnail-list-box margin-bottom-20 relative-content" id="item_{{w['listitem_id']}}">
+                        <div class="item">
+                          <a routerLink="{{w['item_url']}}">
+                            <img src='{{w["thumbnails"]["medium_16_9"]["url"]}}'>
+                          </a>
+                          <p class="pull-left wathlist_option1">
+                            <label class="oriya-color1 block w-100 margin-bottom-0 text-ellipsis margin-top-5">{{w['title']}}</label>
+                            <span class="pull-left w-100 oriya-color2 text-ellipsis">{{w['item_caption']}}</span>
+                          </p>
+                          <p class="pull-right wathlist_option2 margin-top-5">
+                            <span class="pull-right">
+                              <img src="/assets/images/delete.svg" (click)="removeFavourite(w['listitem_id'])" class="remove delete_watch_item cursor-pointer" alt="Delete Watch List" title="Delete Watch List" id='{{w["listitem_id"]}}'>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </ng-container>                      
+                  </div>
+
+                  <div class="row" id="no_search_results_wrap" *ngIf="watch_list_items_count == 0">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-content-wrap text-center" id="no_search_results">
+                      <p class="margin-bottom-5 font-medium ms-color2"><strong>Create your list now!</strong></p>
+                      <p class="font-light margin-bottom-25 ms-color5">Add movies, shows and songs to your Watchlist by pressing the 'Watch Later' button.</p>
+                      <div class="text-center margin-bottom-10 margin-top-5 light">
+                        
+                        <a [routerLink]="['/']" class="text-uppercase btn-oria btn-oria-big font-bold">Browse</a>
+                        
+                      </div>
+                    </div>  
+                  </div>                  
+                  
+                </div>
+              </div>
+            </section>
+
+            <div class="toster-message-wrap" id="watch_list_delete_toast" *ngIf="deleteWatchlist">
+              <div class="center-align-content">
+                <div class="toster-message">
+                  <img src="/assets/images/tick.svg" alt="" title="">
+                  <p id="watch_later_message">
+                    Item  deleted successfully
+                  </p>
+                </div>
+              </div>
+            </div> 
+
+          </div>
+        </div>        
+
+      </div>
+    </div>
+  </div>
+</section> 

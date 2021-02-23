@@ -36,6 +36,8 @@ export class EpisodedetailsComponent implements OnInit {
   seasons: any;
   watchLaterPop: boolean = false;
   watchLaterRemovePop: boolean = false;
+  addToFavouritesList: boolean = false;
+  removeFromFavourites: boolean = false;
   copyLinkPop: boolean = false;
   
   shareEnable: boolean = false;
@@ -196,6 +198,26 @@ export class EpisodedetailsComponent implements OnInit {
   }
   showVideoPop() {
     this.child.showVideoPopChild();  
+  }
+
+  addToFavourites(){
+    var favouritesParams = {};
+    favouritesParams["listitem"] = {};
+    favouritesParams["listitem"]["catalog_id"] = this.catalogId;
+    favouritesParams["listitem"]["content_id"] = this.contentId;
+    this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
+      (res) => {
+        this.addToFavouritesList = true;
+        this.removeFromFavourites = true;
+        setTimeout(function(){
+          this.addToFavouritesList = false;
+          this.removeFromFavourites = false;
+        }.bind(this), 1200);
+      }, 
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
   addWatchLater() {
