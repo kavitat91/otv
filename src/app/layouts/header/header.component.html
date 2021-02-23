@@ -680,7 +680,7 @@
           Are you sure you want to logout?
         </p>
         <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
-          <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop()">No</a>
+          <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop('logoutform')">No</a>
           <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="logoutConfirm()">Yes</a>          
         </div>
       </div>   
@@ -697,7 +697,7 @@
           Are you sure you want to clear your watch history? Your watch history helps us give you better recommendations.
         </p>
         <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
-          <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15 pop_close" (click)="closePop()">Cancel</a>
+          <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15 pop_close" (click)="closePop('deleteWatchHistory')">Cancel</a>
           <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="clear_watch_confirm" (click)="deleteWatchHistory()">Confirm</a>          
         </div>
       </div>   

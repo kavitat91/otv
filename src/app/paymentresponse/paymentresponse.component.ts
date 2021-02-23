@@ -12,6 +12,8 @@ export class PaymentresponseComponent implements OnInit {
   contentHeight: number;
   loginUserId: any;
   loadingIndicator: boolean = false;
+  msg: string = "";
+  status: string;
   
   constructor(private commonService: CommonService, private plansService: PlansService, private userService: UserService) { }
 
@@ -28,7 +30,7 @@ export class PaymentresponseComponent implements OnInit {
       }
     );  
   }
-  tellAndroidSuccess() {
-
+  tellAndroidSuccess(msg) {
+    console.log("msg", msg);
   }
 }

@@ -20,6 +20,7 @@ export class VideopopupComponent implements OnInit {
   videoWatchLoginPop: boolean = false;
   videoPop: boolean = false;
   videoClickStatus: boolean = false;
+  watchlaterWithoutLoginPop: boolean = false;
 
   constructor(private commonService: CommonService, private userService: UserService) { }
 

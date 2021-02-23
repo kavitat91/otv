@@ -162,7 +162,14 @@ public resetPasswordToast: boolean = false;
       this.emailForgotForm.reset();
       this.mobileForgotForm.reset();
       this.countryCodeStatus = false;
+    } 
+    if(popupType == 'logoutform'){
+      this.countryCodeStatus = false;
     }
+    if(popupType == 'deleteWatchHistory'){
+      this.countryCodeStatus = false;
+    }
+    
     $('.modal-backdrop.show').hide();
   }
 
@@ -448,7 +455,7 @@ public resetPasswordToast: boolean = false;
       }
       );
   }   
-  onUserMobileRegister1(userMobileRegister: any) { 
+  onUserMobileRegister(userMobileRegister: any) { 
     console.log(userMobileRegister);
     this.loadingIndicator = true;
     this.userService.mobileRegister1(userMobileRegister).subscribe(
@@ -545,7 +552,7 @@ public resetPasswordToast: boolean = false;
   }   
 
 
-  onMobileForgotPassword1(userMobileForgot: any) {
+  onUserMobileForgotPassword(userMobileForgot: any) {
     this.loadingIndicator = true;
     this.userService.mobileForgotPassword1(userMobileForgot).subscribe(
       (resp: any) => {
