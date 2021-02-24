@@ -1,0 +1,117 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<p>plan-summary works!</p>
+
+<div class="padding-top-100 padding-top-60 pull-left w-100 plans-bg">
+	<div class="plans-summary-container mb-3">
+		<div class="row">
+			<div class="col-lg-12 col-sm-12 col">
+				<div class="pull-left w-100 plans-summary-selected-plan-wrap">		
+					<div class="pull-left w-100 selected-plan-box">
+						<div class="pull-left">
+							<p class="mb-1 font-mregular font-size1">Plan selected</p>
+							<p class="font-size-plan mb-0 font-mblack" id="selected_plan" style="color:#F1950E; font-weight: bold;"></p>
+						</div>
+						<div class="pull-right">
+							<p class="font-mblack1 mb-0"><span class="sel_pl_cuncy font-mregular">{{currency}} {{price}}</span>&nbsp;<span class="sel_pln_prc"></span></p>
+						</div>	
+					</div>	
+					<div class="float-left promo-box relative-content">
+	          <p class="pull-left w-100 shemaroo-color9 font-size1 mb-2 font-mbold promo_sec">Have A Promocode?</p>
+	          <input type="text" name="" class="pull-left font-size1 promo_sec" placeholder="Enter Promo Code" id="promo_code" maxlength="15">
+	          <a href="javascript:void(0);" class="pull-left text-uppercase font-mbold font-size3 promo_sec" id="plan_apply_promo">Apply</a>
+            <p class="font-mregular pull-left w-100 text-left shemaroo-color1 font-size3" id="promo_suc_pop" style="display: none;">
+              <span class="pull-left w-100 font-light font-size2 shemaroo-color1"><img src="/assets/check_green.svg" alt="" title="">&nbsp;&nbsp;Applied Code&nbsp;&nbsp;<span class="text-uppercase font-semibold shemaroo-color4"><span id="user_promo_code" style="font-weight: bold;"> </span>&nbsp;&nbsp;</span><img src="/assets/cancel.svg" class="cancel_plan_promo" alt="" title=""><br></span>
+            </p>
+	          <label class="font-mregular error promocode_error mb-0">
+	            Sorry, this Promo Code is Invalid<img src="/assets/error_info.png" class="ml-1" style="margin-top: -4px;">
+	          </label>
+	          <p class="font-mregular pull-left w-100 text-left shemaroo-color8 font-size2" id="promo_success_msg" style="display: none;">
+	          	Your 20% discounted coupon code is been applyed
+	          </p>
+	          <div class="pull-left w-100 total-price">
+	          	<p class="pull-right w-100 text-right mb-3 font-mbold shemaroo-color9 font-size5" id="disct_sec" style="display:none;">
+	          		<span class="font-mregular shemaroo-color3 mr-4 font-size2">Discount</span>
+	          		<i class="fa fa-inr"></i> 999
+	          	</p>
+	          	<p class="pull-left font-mbold shemaroo-color9 font-size4">
+	          		Total Payable<br>
+	          		<span class="pull-left w-100 font-mregular shemaroo-color3 font-size2" id="inc_tax">*Inclusive of all taxes</span>
+	          	</p>
+	          	<p class="pull-right font-mblack1 shemaroo-color9" style="font-size: 24px;"><span class="sel_pl_cuncy font-mregular">{{currency}} <b>{{discountPrice}}</b></span>&nbsp;<span id="grand_amount" class="sel_pln_final_prc" style="font-weight: bold;"></span>
+	          	</p>
+	          </div>
+            <div class="pull-left w-100 total-price" id="tvod_sec" style="display:none;">
+              <p class="pull-left font-mbold shemaroo-color9 font-size4">
+                <span id="pre_rel_mesg"> </span><br>
+                <span class="pull-left w-100 font-mregular shemaroo-color3 font-size2" id="mov_valid_till" style="display:none;">*Inclusive of all taxes</span>
+              </p>
+            </div>
+	        </div>
+          </div>	
+          
+          <!-- choose cashree or razor pay -->
+	        <div class="pull-left w-100 plans-payment-wrap mt-3">
+	      	<h2 class="font-mbold font-size4 mb-3 ml-3 mt-1 pb-1" id="chs_pymt">Choose Payment Method</h2>
+	      	<div class="plan-box-wrap relative-content mb-3 w-100 p-0">
+				<div class="pull-left w-100" style="padding: 0px 32px" id="pymnt_sec">
+  							<p class="mb-3 vcenter-align-content price-box shadow-box mb-3" id="paytm_sec">
+  								<input type="radio" id="cashfree" name="radio-group" class="pay_sel_radio" value="cashfree" (change)="paymentGatewayType($event)">
+  		    				    <label for="cashfree" class="mb-0 shemaroo-color9 font-mregular font-size1 text-uppercase">
+                                  Cashfree
+                                </label>
+  							</p>
+  				</div>
+  				<div class="pull-left w-100" style="padding: 0px 32px" id="razorpay_sec">
+  							<p class="mb-3 vcenter-align-content price-box shadow-box mb-3" id="">
+  								<input type="radio" id="razorpay" name="radio-group" class="pay_sel_radio" value="razorpay" (change)="paymentGatewayType($event)">
+  		    				    <label for="razorpay" class="mb-0 shemaroo-color9 font-mregular font-size1 text-uppercase">
+                                  RazorPay
+                                </label>
+  							</p>
+  				</div>
+  			</div>
+            </div>
+            
+  			</div>
+  		</div>
+  	</div>
+  </div>
+
+  <form action="" name="cashfree" method="post" class="cashfree_form">
+    <input type="hidden" name="signature" value='' id="cashfree_signature">
+    <input type="hidden" name="appId" value='' id="cashfree_appid">
+    <input type="hidden" name="orderId" value='' id="cashfree_order_id">
+    <input type="hidden" name="orderNote" value='' id="cashfree_order_note">
+    <input type="hidden" name="orderCurrency" value='' id="cashfree_order_currency">
+    <input type="hidden" name="customerName" value='' id="cashfree_cust_name">
+    <input type="hidden" name="customerEmail" value='' id="cashfree_cust_email">
+    <input type="hidden" name="customerPhone" value='' id="cashfree_cust_phone">
+    <input type="hidden" name="orderAmount" value='' id="cashfree_order_amt">
+    <input type ="hidden" name="notifyUrl" value='' id="cashfree_notify_url">
+    <input type ="hidden" name="returnUrl" value='' id="cashfree_return_url">
+  </form>
+
+  <!-- <%=render "plans/cashfree_form"%>
+  <%=render "plans/razorpay_form"%> -->
+ 
+  <!-- <input type="hidden" id="promo_check" name="promo_check" value="false">
+  <input type="hidden" id="coupon_code" name="coupon_code" value="">
+  <input type="hidden" id="coupon_code_id" name="coupon_id" value=""> -->
+
+
+<script type="text/javascript">
+    // $(document).load(function(){
+    //     alert("script")
+
+    //     // $("#with_header_tabs").hide();
+    //     // $("#without_header_tabs").show();
+    //     // var pln_det = localStorage.getItem("otv_plan_details").split(",")[0].split("|");
+    //     // var pln_name = pln_det[8].replace(/_/g," ")
+    //     // var pln_prc = pln_det[4]
+    //     // var pln_curncy = pln_det[6]
+    //     // $("#selected_plan").text(pln_name);
+    //     // $(".sel_pl_cuncy").text(pln_curncy)
+    //     // $(".sel_pln_prc,.sel_pln_final_prc").text(pln_prc);
+    // })
+</script>

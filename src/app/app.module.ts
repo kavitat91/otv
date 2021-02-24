@@ -44,7 +44,8 @@ import { ChannelsComponent } from './channels/channels.component';
 import { AllEpisodesComponent } from './all-episodes/all-episodes.component';
 import { PaymentresponseComponent } from './paymentresponse/paymentresponse.component';
 import { VideopopupComponent } from './videopopup/videopopup.component';
-
+import { PlanSummaryComponent } from './plan-summary/plan-summary.component';
+import { RazorpayresponseComponent } from './razorpayresponse/razorpayresponse.component';
 //import {Md5} from 'ts-md5/dist/md5';
 
 
@@ -70,7 +71,9 @@ import { VideopopupComponent } from './videopopup/videopopup.component';
     AllEpisodesComponent,
     SafePipe,
     PaymentresponseComponent,
-    VideopopupComponent
+    VideopopupComponent,
+    PlanSummaryComponent,
+    RazorpayresponseComponent
   ],
   imports: [
     BrowserModule,

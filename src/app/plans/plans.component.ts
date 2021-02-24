@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from './../shared/services/user.service';
 import { CommonService } from './../shared/services/common.service';
 import { PlansService } from './../shared/services/plans.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-plans',
@@ -17,7 +18,7 @@ export class PlansComponent implements OnInit {
   activePlans: any;
   loadingIndicator: boolean = false;
   language: string;
-  constructor(private titleService: Title, private metaService: Meta, private commonService: CommonService, private plansService: PlansService, private userService: UserService) { }
+  constructor(private titleService: Title, private metaService: Meta, private commonService: CommonService, private plansService: PlansService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.contentHeight = this.commonService.pageHeight();        
@@ -48,8 +49,7 @@ export class PlansComponent implements OnInit {
             }
             );
           //this.activePlans = user_plans_resp['current_active_plans']
-        }
-          
+          }
         else{
           this.activePlans = []
         }
@@ -66,37 +66,21 @@ export class PlansComponent implements OnInit {
   plansSubscribe() {
     this.loadingIndicator = true;
     var sePlan = $(".plan_selction:checked").data("plan-info");
-    this.plansService.initTransaction(localStorage.getItem('otv_user_id'), sePlan).subscribe(
-      (response) => {
-        console.log("data"+response['data']);
-        this.setCashfreeData(response['data']);
-        this.loadingIndicator = false;
-      },
-      (error) => {
-        console.log(error);
-        this.loadingIndicator = false;
-        alert(error.error_mesg);
-        alert(error.server_error_messsage);
-      }
-    )
+    console.log("Plans componenet : sePlan - "+sePlan);
+    // this.plansService.initTransaction(localStorage.getItem('otv_user_id'), sePlan).subscribe(
+    //   (response) => {
+    //     console.log("data"+response['data']);
+    //     this.setCashfreeData(response['data']);
+    //     this.loadingIndicator = false;
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //     this.loadingIndicator = false;
+    //     alert(error.error_mesg);
+    //     alert(error.server_error_messsage);
+    //   }
+    // )
+    //this.router.navigate(['./plans/plans_summary', { 'sePlan': sePlan}]);
+    this.router.navigate(['/plans/plans_summary'], {state: {sePlan}})
   }
-
-  setCashfreeData(dt: any) {
-    var payment_dt = dt
-    console.log("payment_dt"+payment_dt);
-    $("#cashfree_signature").val(payment_dt['signature'])
-    $("#cashfree_appid").val(payment_dt['signature_data']['appId'])
-    $("#cashfree_order_id").val(payment_dt['signature_data']['orderId'])
-    $("#cashfree_order_note").val(payment_dt['signature_data']['orderNote'])
-    $("#cashfree_order_currency").val(payment_dt['signature_data']['orderCurrency'])
-    $("#cashfree_cust_name").val(payment_dt['signature_data']['customerName'])
-    $("#cashfree_cust_email").val(payment_dt['signature_data']['customerEmail'])
-    $("#cashfree_cust_phone").val(payment_dt['signature_data']['customerPhone'])
-    $("#cashfree_order_amt").val(payment_dt['signature_data']['orderAmount'])
-    $("#cashfree_notify_url").val(payment_dt['signature_data']['notifyUrl'])
-    $("#cashfree_return_url").val(payment_dt['signature_data']['returnUrl'])
-    $(".cashfree_form").attr('action',payment_dt['payment_url'])
-    $(".cashfree_form").submit();
-  }
-
 }

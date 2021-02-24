@@ -1,0 +1,29 @@
+<div class="mobile_plans_selector padding-top-80">
+    <section class="min-height-div transation_status_page center-align-content2">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-content-wrap no_content_plans text-center">
+         
+          <!-- message -->
+          <h2 class="block margin-bottom-25 margin-top-0 page-title ">{{dataObj.message}}</h2>
+          
+          <!-- image -->
+          <img src="/assets/images/payment_success.png" class="status_image margin-top-5 margin-bottom-25" alt="" title="">
+          
+          <!-- transaction id -->
+          <p class="margin-bottom-0 font-size3 oriya-color1" *ngIf="dataObj.status == 'success'">Transaction ID :  {{dataObj.order_id}}</p>
+          <p class="font-sbold margin-bottom-10 font-size3 oriya-color1"></p> 
+          
+          <!-- price charged -->
+          <p class="margin-bottom-15 font-size3" *ngIf="dataObj.status == 'success'">Price Charged: &nbsp;Rs.{{dataObj.price}}</p>
+          <!-- browse btn -->
+          <div class="inline-block w-100 custom-gradient margin-top-5 margin-bottom-25">
+            <p class="inline radius-button">
+              <a routerLink="/" class="text-uppercase btn-oria btn-oria-big" (click)="tellAndroidSuccess(msg)">Browse</a>
+            </p>
+          </div>
+        
+        </div>        
+    </section>
+  </div>
+
+
+

@@ -13,7 +13,7 @@
     <div class="row">
       <header class="pull-left w-100">
         <div class="header-left">
-          <a routerLink="/" class="logoid"><img src="/assets/images/main_logo.png" alt="Tarang Plus"
+          <a routerLink="/" class="logoid"><img src="./assets/images/main_logo.png" alt="Tarang Plus"
               title="Tarang Plus"></a>
           <nav class="d-none d-xl-block pull-left">
             <ul class="list-none padding-left-0 margin-bottom-0 pull-left w-100">
@@ -43,7 +43,7 @@
             (click)="showPop('signin_pop');" *ngIf="!loginStatus">LogIn</a>
           <a href="javascript:void(0);" class="text-uppercase after_login" *ngIf="loginStatus"
             (click)="toggleUserAccountMenu($event);" (clickElsewhere)="closeAccountMenu()">
-            <img src="/assets/images/profile.svg" alt="" title="">
+            <img src="./assets/images/profile.svg" alt="" title="">
           </a>
           <ul class="list-none margin-bottom-0 pull-left account-menu" *ngIf="userAccountMenu">
             <li class="pull-left w-100"><a routerLink="/users/account_details" class="account_det oriya-color1" id="">Account
@@ -73,10 +73,10 @@
             <i class="fa fa-language" aria-hideen="true"></i>
           </a>
           <a href="javascript:void(0);" class="pull-left text-uppercase mobile_user_account_menu" (click)="mobileToggle('profileMenu')">
-            <img src="/assets/images/profile.svg" alt="" title="">
+            <img src="./assets/images/profile.svg" alt="" title="">
           </a>
           <a href="javascript:void(0);" class="text-uppercase mobile-menu-nav" (click)="mobileToggle('mobileMenu')">
-            <img src="/assets/images/menu.svg" alt="" title="">
+            <img src="./assets/images/menu.svg" alt="" title="">
           </a>
         </div>
       </header>
@@ -88,7 +88,7 @@
 				<header class="pull-left w-100 padding-left-0 padding-right-0">
 					<div class="open-logo pull-left w-100">
 						<div class="pull-left w-100 padding-left-10 padding-right-10">
-							<a href="/" class="pull-left"><img src="/assets/images/main_logo.png" alt="odiyatv" title="odiyatv"></a>
+							<a href="/" class="pull-left"><img src="./assets/images/main_logo.png" alt="odiyatv" title="odiyatv"></a>
 				      <i class="fa fa-times pull-right" aria-hidden="true" (click)="closeMobileMenu()"></i>
 				    </div>
 				  </div>  
@@ -116,7 +116,7 @@
 				<header class="pull-left w-100 padding-left-0 padding-right-0">
 					<div class="open-logo pull-left w-100">
 						<div class="pull-left w-100 padding-left-10 padding-right-10">
-							<a href="/" class="pull-left"><img src="/assets/images/main_logo.png" alt="odiyatv" title="odiyatv"></a>
+							<a href="/" class="pull-left"><img src="./assets/images/main_logo.png" alt="odiyatv" title="odiyatv"></a>
 				      <i class="fa fa-times pull-right" aria-hidden="true" (click)="closeMobileMenu()"></i>
 				    </div>
 				  </div>  
@@ -142,7 +142,7 @@
 				<header class="pull-left w-100 padding-left-0 padding-right-0">
 					<div class="open-logo pull-left w-100">
 						<div class="pull-left w-100 padding-left-10 padding-right-10">
-							<a href="/" class="pull-left"><img src="/assets/images/main_logo.png" alt="odiatv" title="odiatv"></a>
+							<a href="/" class="pull-left"><img src="./assets/images/main_logo.png" alt="odiatv" title="odiatv"></a>
 				      <i class="fa fa-times pull-right" aria-hidden="true" (click)="closeMobileMenu()"></i>
 				    </div>
 				  </div>  
@@ -172,7 +172,7 @@
     <div class="modal-content user_flow">
       <div class="modal-header border-0 padding-left-28 padding-right-28 padding-top-30">
         <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Login</h1>
-        <img src="/assets/images/cancel.svg" alt="" title="" id="signin_close" (click)="closePop('loginform');">
+        <img src="./assets/images/cancel.svg" alt="" title="" id="signin_close" (click)="closePop('loginform');">
       </div>
       <div class="modal-body text-left padding-left-28 padding-right-28 padding-top-0">
         <div class="row">
@@ -209,9 +209,9 @@
                         name="login_email_password" class="form-control login_email_pwd" minlength="6" maxlength="20"
                         value="" #login_email_password="ngModel" [(ngModel)]="userEmailLogin.login_email_password"
                         (focus)="focusEmailLogin()" required>
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
                         title="hide confirm password" *ngIf="!showPassword" (click)="togglePassword();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd"
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd"
                         alt="show confirm password" title="show confirm password" *ngIf="showPassword"
                         (click)="togglePassword();">
                       <span class="input-label"
@@ -269,9 +269,9 @@
                         class="form-control login_mobile_pwd" minlength="6" maxlength="20" value=""
                         #user_mob_password="ngModel" [(ngModel)]="userMobileLogin.user_mob_password"
                         (focus)="focusMobileLogin();" required>
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
                         title="hide confirm password" *ngIf="!showPassword" (click)="togglePassword();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd"
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd"
                         alt="show confirm password" title="show confirm password" *ngIf="showPassword"
                         (click)="togglePassword();">
                       <span class="input-label"
@@ -318,7 +318,7 @@
     <div class="modal-content user_flow">
       <div class="modal-header border-0 padding-left-28 padding-right-28 padding-top-30">
         <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Register</h1>
-        <img src="/assets/images/cancel.svg" alt="" title="" id="register_close" (click)="closePop('registerform');">
+        <img src="./assets/images/cancel.svg" alt="" title="" id="register_close" (click)="closePop('registerform');">
       </div>
 
       <div class="modal-body text-left padding-left-28 padding-right-28 padding-top-0">
@@ -367,9 +367,9 @@
                       <input [type]="showPassword ? 'text' : 'password'" id="register_password" name="register_password"
                         #register_password="ngModel" [(ngModel)]="userEmailRegister.register_password"
                         class="form-control reg_email_pwd" minlength="6" maxlength="20" value="" required>
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
                         title="hide confirm password" *ngIf="!showPassword" (click)="togglePassword();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd"
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd"
                         alt="show confirm password" title="show confirm password" *ngIf="showPassword"
                         (click)="togglePassword();">
                       <span class="input-label"
@@ -445,9 +445,9 @@
                         class="form-control reg_phone_pwd" minlength="6" maxlength="20" value=""
                         #mob_register_password="ngModel" [(ngModel)]="userMobileRegister.mob_register_password"
                         required>
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
                         title="hide confirm password" *ngIf="!showPassword" (click)="togglePassword();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd"
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd"
                         alt="show confirm password" title="show confirm password" *ngIf="showPassword"
                         (click)="togglePassword();">
                       <span class="input-label"
@@ -516,7 +516,7 @@
     <div class="modal-content user_flow">
       <div class="modal-header border-0 padding-left-28 padding-right-28 padding-top-30">
         <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Forgot Password</h1>
-        <img src="/assets/images/cancel.svg" alt="" title="" id="fgt_pwd_close" (click)="closePop('forgotpasswordform')">
+        <img src="./assets/images/cancel.svg" alt="" title="" id="fgt_pwd_close" (click)="closePop('forgotpasswordform')">
       </div>
       <div class="modal-body text-left padding-left-28 padding-right-28 padding-top-0">
         <div class="row">
@@ -624,7 +624,7 @@
 		<div class="modal-content user_flow">
 		<div class="modal-header border-0 padding-left-28 padding-right-28 padding-top-30">
 			<h1 class="pull-left margin-bottom-10 w-100 text-center page-title">Reset Password</h1>
-			<img src="/assets/images/cancel.svg" alt="" title="" id="reset_password_close" (click)="closePop()">
+			<img src="./assets/images/cancel.svg" alt="" title="" id="reset_password_close" (click)="closePop()">
 		</div>
 		
 		<div class="modal-body text-left padding-left-28 padding-right-28 padding-top-0">      
@@ -641,8 +641,8 @@
                 <div class="input-group hide_password_group signup_password_us">
                   <input type="password" id="reset_pwd" name="reset_pwd" class="form-control user_password" maxlength="20" value="" required
                   #reset_pwd="ngModel" [(ngModel)]="resetPassword.reset_pwd"> 
-                  <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword" (click)="togglePassword();">
-                  <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword" (click)="togglePassword();">
+                  <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword" (click)="togglePassword();">
+                  <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword" (click)="togglePassword();">
                   <span class="input-label" [ngClass]="{'input-label-focused': reset_pwd.touched && reset_pwd?.value?.length > 0 }">Password</span>
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_pwd.errors?.required && reset_pwd.touched">Password can't be blank</label>
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_pwd.errors?.minlength && reset_pwd.errors?.maxlength && reset_pwd.touched">Password should be minimum 6 and maximum 20 characters</label>
@@ -650,8 +650,8 @@
                 <div class="input-group hide_password_group signup_password_us">
                   <input type="password" id="reset_con_pwd" name="reset_con_pwd" class="form-control user_password" maxlength="20" value="" required
                   #reset_con_pwd="ngModel" [(ngModel)]="resetPassword.reset_con_pwd"> 
-                  <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword" (click)="togglePassword();">
-                  <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword" (click)="togglePassword();">
+                  <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword" (click)="togglePassword();">
+                  <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword" (click)="togglePassword();">
                   <span class="input-label" [ngClass]="{'input-label-focused': reset_con_pwd.touched && reset_con_pwd?.value?.length > 0 }">Confirm Password</span>
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_con_pwd.errors?.required && reset_con_pwd.touched">Confirm Password can't be blank</label>
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_con_pwd.touched && reset_con_pwd.dirty && reset_pwd.value != reset_con_pwd.value">Password and Confirm Password do not match</label>
@@ -709,7 +709,7 @@
 <div class="toster-message-wrap" id="language_sel" *ngIf="langToast">
     <div class="center-align-content">
       <div class="toster-message">
-        <img src="/assets/images/tick.svg" alt="" title="">
+        <img src="./assets/images/tick.svg" alt="" title="">
         <p id="watch_later_message">
           {{language  == 'en' ? 'English' : ''}} {{language  == 'od' ? 'Odia' : ''}} selected successfully
         </p>
@@ -719,7 +719,7 @@
   <div class="toster-message-wrap" id="watch_history_toast" *ngIf="watchHistoryToast">
     <div class="center-align-content">
       <div class="toster-message">
-        <img src="/assets/images/tick.svg" alt="" title="">
+        <img src="./assets/images/tick.svg" alt="" title="">
         <p id="watch_later_message">
           Your watch history is cleared
         </p>

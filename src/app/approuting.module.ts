@@ -13,6 +13,8 @@ import { ShowcatalogComponent } from './showcatalog/showcatalog.component';
 import { LivetvComponent } from './livetv/livetv.component';
 import { ChannelsComponent } from './channels/channels.component';
 import { AllEpisodesComponent } from './all-episodes/all-episodes.component';
+import { PlanSummaryComponent } from '../app/plan-summary/plan-summary.component';
+import { RazorpayresponseComponent } from './razorpayresponse/razorpayresponse.component';
 
 const appRoutes: Routes = [
   { 'path': '', component: HomeComponent, data: { page: 'homepage'}  },
@@ -22,12 +24,13 @@ const appRoutes: Routes = [
 
   { 'path': 'search', component: SearchComponent },
   { 'path': 'plans', component: PlansComponent },
+  { 'path': 'plans/plans_summary', component: PlanSummaryComponent },
+  { 'path': 'payments/payment_response', component: RazorpayresponseComponent },
   { 'path': 'users/account_details', component: UserComponent, data: { page: 'accountdetails'} },
   { 'path': 'users/update_personal_details', component: UserComponent, data: { page: 'updatepersonaldetails'} },
   { 'path': 'users/change_password', component: UserComponent, data: { page: 'changepassword'} },
   { 'path': 'users/reset_password_email', component: UserComponent, data: { page: 'resetpassword'} },
   { 'path': 'users/watchlist', component: UserComponent, data: { page: 'watchlist'} },
-  { 'path': 'users/favourites', component: UserComponent, data: { page: 'favourites'} },
   { 'path': 'users/continue_watching', component: UserComponent, data: { page: 'continue_watching'} },
   { 'path': 'about-us', component: StaticpageComponent, data: { page: 'about'} },
   { 'path': 'privacy-policy', component: StaticpageComponent, data: { page: 'pp'} },

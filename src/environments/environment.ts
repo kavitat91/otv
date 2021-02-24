@@ -9,6 +9,7 @@ export const environment = {
   //apiURL: "http://13.234.124.5/",
   //apiURL: "http://bhima.tarangplus.in:3006/", //staging
   apiURL: "https://prod.api.tarangplus.in/", //production
+  //apiURL:"http://13.235.165.21:3006/",
   authtoken: "3zZmzoHg8z6SM3wpDoyw" 
 };
 

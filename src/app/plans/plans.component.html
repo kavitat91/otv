@@ -10,6 +10,8 @@
                   <li><a data-toggle="pill" href="#planstab" class="active">Plans</a></li>
                   <li><a data-toggle="pill" href="#transtab" class="">View Transactions</a></li>					  
                 </ul> 
+
+                <!-- Plans tabss................. -->
                 <div id="planstab" class="tab-pane fade in active margin-left-5">
                   <ul class="list-none padding-left-0 margin-bottom-20 plans_options margint-top-15 pull-left w-100">
                       <!-- {{allPlans['title']}} -->
@@ -94,6 +96,9 @@
                   <a href="javascript:void(0);" (click)="plansSubscribe()" class="oriya-btn text-uppercase subs_plans_btn pull-left margint-top-25 margin-bottom-20" id="plan_sub">subscribe</a>
                   
                 </div>
+                
+
+                <!-- transaction tabs..................... -->
                 <div id="transtab" class="tab-pane fade margin-left-5 transactions_tab">
                   <p class="font-sbold font-size3 oriya-color5 trans_text" *ngIf="!activePlans"> No active plans</p>
                   <div class="table-responsive">
@@ -126,7 +131,7 @@
       </div>
     </div>
   </div>
-  <form action="" name="cashfree" method="post" class="cashfree_form">
+  <!-- <form action="" name="cashfree" method="post" class="cashfree_form">
       <input type="hidden" name="signature" value='' id="cashfree_signature">
       <input type="hidden" name="appId" value='' id="cashfree_appid">
       <input type="hidden" name="orderId" value='' id="cashfree_order_id">
@@ -138,5 +143,5 @@
       <input type="hidden" name="orderAmount" value='' id="cashfree_order_amt">
       <input type ="hidden" name="notifyUrl" value='' id="cashfree_notify_url">
       <input type ="hidden" name="returnUrl" value='' id="cashfree_return_url">
-    </form>
+    </form> -->
 </section>
