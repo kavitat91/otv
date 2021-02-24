@@ -40,7 +40,7 @@
                     <h2 class="pull-left text-capitalize carousel-title oriya-color1 font-sbold margin-bottom-0 margin-top-5" id="">Continue Watching</h2>
                     <a routerLink="/users/continue_watching" class="text-capitalize see-all pull-right see-all1">more</a>
                     <a href="javascript:void(0)" class="text-capitalize see-all pull-right see-all2" *ngIf="mobileNav">
-                      <img src="/assets/images/right_arrow.svg" alt="" title="">
+                      <img src="./assets/images/right_arrow.svg" alt="" title="">
                     </a>
                     
                   </div>
@@ -60,7 +60,7 @@
                           </p>
                           <p class="pull-right wathlist_option2 margin-top-5 margin-bottom-0">
                             <span class="pull-right">
-                              <img src="/assets/images/delete.svg" class="home_delete_continue_watch remove cursor-pointer" alt="Delete Continue Watch List" title="Delete Continue Watch List" (click)="deleteContinueWatchPop(item?.listitem_id)">
+                              <img src="./assets/images/delete.svg" class="home_delete_continue_watch remove cursor-pointer" alt="Delete Continue Watch List" title="Delete Continue Watch List" (click)="deleteContinueWatchPop(item?.listitem_id)">
                           </span>
                           </p>
                         </div>
@@ -87,15 +87,15 @@
                           class="text-capitalize see-all pull-right see-all1 all_items_{{i}}" *ngIf="desktopNav && moreLayout == 'vlayout' && list['catalog_list_items'].length > 7">more</a>
                           <a routerLink="{{items[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : '/list'+list['more_url'] }}"
                           class="text-capitalize see-all pull-right see-all2 all_items_{{i}}_mobile" *ngIf="mobileNav && moreLayout == 'hlayout' && list['catalog_list_items'].length > 4">
-                            <img src="/assets/images/right_arrow.svg" alt="" title="">
+                            <img src="./assets/images/right_arrow.svg" alt="" title="">
                           </a>
                           <a routerLink="{{items[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : '/list'+list['more_url'] }}"
                           class="text-capitalize see-all pull-right see-all2 all_items_{{i}}_mobile" *ngIf="mobileNav && moreLayout == 'mlayout' && list['catalog_list_items'].length > 2">
-                            <img src="/assets/images/right_arrow.svg" alt="" title="">
+                            <img src="./assets/images/right_arrow.svg" alt="" title="">
                           </a>
                           <a routerLink="{{items[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : '/list'+list['more_url'] }}"
                           class="text-capitalize see-all pull-right see-all2 all_items_{{i}}_mobile" *ngIf="mobileNav && moreLayout == 'vlayout' && list['catalog_list_items'].length > 5">
-                            <img src="/assets/images/right_arrow.svg" alt="" title="">
+                            <img src="./assets/images/right_arrow.svg" alt="" title="">
                           </a>
 
                       </div>
@@ -161,7 +161,7 @@
               <div class="toster-message-wrap" id="reset_password_sucs" *ngIf="resetPasswordToast">
                   <div class="center-align-content">
                     <div class="toster-message">
-                      <img src="/assets/images/tick.svg" alt="" title="">
+                      <img src="./assets/images/tick.svg" alt="" title="">
                       <p id="watch_later_message">
                         Password reset successfully
                       </p>
@@ -172,7 +172,7 @@
                 <div class="toster-message-wrap" id="continue_delet_toast" *ngIf="continueDeleteToast">
                   <div class="center-align-content">
                     <div class="toster-message">
-                      <img src="/assets/images/tick.svg" alt="" title="">
+                      <img src="./assets/images/tick.svg" alt="" title="">
                       <p id="watch_later_message">
                         Item deleted successfully
                       </p>

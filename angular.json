@@ -133,5 +133,8 @@
       }
     }
   },
-  "defaultProject": "oriatv"
+  "defaultProject": "oriatv",
+  "cli": {
+    "analytics": "ea8cc143-6b84-426b-b7be-ebfe6cc2276d"
+  }
 }
