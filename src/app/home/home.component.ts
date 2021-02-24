@@ -213,8 +213,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     navSpeed: 1000,
     stagePadding: 50,
     navText: [
-      '<span aria-label="' + 'Previous' + '"><img src="/assets/images/left_arrow.svg" alt="" title="" /></span>',
-    '<span aria-label="' + 'Next' + '"><img src="/assets/images/right_arrow.svg" alt="" title="" /></span>',
+      '<span aria-label="' + 'Previous' + '"><img src="./assets/images/left_arrow.svg" alt="" title="" /></span>',
+    '<span aria-label="' + 'Next' + '"><img src="./assets/images/right_arrow.svg" alt="" title="" /></span>',
     '<div class="carousel-shadow">&nbsp;</div>'
     ],
     responsiveClass: true,
@@ -249,8 +249,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     navSpeed: 1000,
     stagePadding: 50,
     navText: [
-      '<span aria-label="' + 'Previous' + '"><img src="/assets/images/left_arrow.svg" alt="" title="" /></span>',
-    '<span aria-label="' + 'Next' + '"><img src="/assets/images/right_arrow.svg" alt="" title="" /></span>',
+      '<span aria-label="' + 'Previous' + '"><img src="./assets/images/left_arrow.svg" alt="" title="" /></span>',
+    '<span aria-label="' + 'Next' + '"><img src="./assets/images/right_arrow.svg" alt="" title="" /></span>',
     '<div class="carousel-shadow">&nbsp;</div>'
     ],
     responsiveClass: true,
@@ -285,8 +285,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     navSpeed: 1000,
     stagePadding: 50,
     navText: [
-      '<span aria-label="' + 'Previous' + '"><img src="/assets/images/left_arrow.svg" alt="" title="" /></span>',
-    '<span aria-label="' + 'Next' + '"><img src="/assets/images/right_arrow.svg" alt="" title="" /></span>',
+      '<span aria-label="' + 'Previous' + '"><img src="./assets/images/left_arrow.svg" alt="" title="" /></span>',
+    '<span aria-label="' + 'Next' + '"><img src="./assets/images/right_arrow.svg" alt="" title="" /></span>',
     '<div class="carousel-shadow">&nbsp;</div>'
     ],
     responsiveClass: true,

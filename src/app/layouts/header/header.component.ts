@@ -107,7 +107,8 @@ public resetPasswordToast: boolean = false;
     } 
     localStorage.removeItem("resetPasswordToast");
     this.getMenu();
-    this.language = localStorage.getItem('language');
+    this.language = 'en';
+    localStorage.setItem('language', 'en');
     this.radioSelected = this.language;    
     /* console.log("this.language"+localStorage.getItem('language'));
     console.log("this.radioSelected"+localStorage.getItem('language')); */

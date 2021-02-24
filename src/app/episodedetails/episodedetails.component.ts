@@ -80,6 +80,7 @@ export class EpisodedetailsComponent implements OnInit {
     
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
+        console.log(location.path());
         let a = location.path().split("/");      
         this.catalogName = a[1]; 
         this.showName = a[2]; 
@@ -308,8 +309,8 @@ export class EpisodedetailsComponent implements OnInit {
     navSpeed: 1000,
     stagePadding: 50,
     navText: [
-      '<span aria-label="' + 'Previous' + '"><img src="/assets/images/left_arrow.svg" alt="" title="" /></span>',
-    '<span aria-label="' + 'Next' + '"><img src="/assets/images/right_arrow.svg" alt="" title="" /></span>',
+      '<span aria-label="' + 'Previous' + '"><img src="./assets/images/left_arrow.svg" alt="" title="" /></span>',
+    '<span aria-label="' + 'Next' + '"><img src="./assets/images/right_arrow.svg" alt="" title="" /></span>',
     '<div class="carousel-shadow">&nbsp;</div>'
     ],
     responsiveClass: true,
