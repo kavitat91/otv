@@ -163,7 +163,6 @@ export class EpisodedetailsComponent implements OnInit {
         )
         this.pageService.getAllEpisodes(this.language, this.catalogName, this.showName).subscribe(
           (tvshow_response) => {
-            debugger;
             this.allEpisodes = tvshow_response["data"]["items"];
             this.allEpisodesFirst = this.allEpisodes[1];
             if(this.allEpisodes.length > 0) {

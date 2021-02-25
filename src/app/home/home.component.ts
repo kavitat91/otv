@@ -98,21 +98,25 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   }
 
   getContinueWatching() {
+    
     this.loadingIndicator = true;
-    this.userService.getContinueWatching(this.sessionId).subscribe(
-      (data) => {
-        this.continueWatchItem = data['data']['items'];
-        localStorage.setItem('continueWatchItem', this.continueWatchItem.length);
-        for(var x=0; x < this.continueWatchItem.length; x++) {
-          this.continueWatchItem[x]['itemURL'] = this.commonService.getItemURL(this.continueWatchItem[x]);
-          console.log(this.continueWatchItem[x]['itemURL']);
+    if(this.sessionId){
+      this.userService.getContinueWatching(this.sessionId).subscribe(
+        (data) => {
+          this.continueWatchItem = data['data']['items'];
+          localStorage.setItem('continueWatchItem', this.continueWatchItem.length);
+          for(var x=0; x < this.continueWatchItem.length; x++) {
+            this.continueWatchItem[x]['itemURL'] = this.commonService.getItemURL(this.continueWatchItem[x]);
+            console.log(this.continueWatchItem[x]['itemURL']);
+          }
+          
+        },
+        (error) => {
+          console.log(error);
         }
-        
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+      )
+    }
+    
   }
   deleteContinueWatchPop(itemId: string) {
     $('#ctn_watch_delete_pop').modal('show');

@@ -3,6 +3,6 @@ export const environment = {
   // apiURL: "http://13.233.16.182/",
   // authtoken: "3zZmzoHg8z6SM3wpDoyw" 
   //apiURL: "http://bhima.tarangplus.in:3006/",
-  apiURL: "https://prod.api.tarangplus.in/", //production
+  apiURL: "http://13.235.165.21:3006/", //production
   authtoken: "3zZmzoHg8z6SM3wpDoyw"  
 };
