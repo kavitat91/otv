@@ -1,0 +1,24 @@
+.search-box-wrap{
+    position: relative;
+}
+
+#search{
+    background-color: #f2f2f2;
+    border: 0px;
+    border-radius: 20px;
+    color: #212121;
+    float: left;
+    margin-bottom: 5px;
+    padding: 15px 30px;
+    width: 100%;
+}
+
+.search-box-wrap .fa-times{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 30px;
+    -webkit-text-stroke: 4px #f2f2f2;
+    color: #666;
+    cursor: pointer;
+}

@@ -17,6 +17,8 @@ export class SearchComponent implements OnInit {
   searchError: boolean = false;
   search_results1: boolean = false;
   language: any;
+  closeIcon: boolean = false;
+
   constructor(private service: SearchService, private commonService: CommonService, private router: Router, private route: ActivatedRoute, 
     //private spinner: NgxSpinnerService
     ) { }
@@ -27,6 +29,7 @@ export class SearchComponent implements OnInit {
   }
 
   getTrendingSearch() {
+    this.search_results1 = false;
     this.loadingIndicator = true;
     this.language = localStorage.getItem('language');
     this.service.getTrendingSearch(this.language).subscribe(
@@ -47,6 +50,7 @@ export class SearchComponent implements OnInit {
   onSearch(val: string) {
     this.language = localStorage.getItem('language');
     if(val.length != 0) {
+      this.closeIcon = true;
       this.searchError = false;
       this.loadingIndicator = true;
       this.service.getSearchResults(val, this.language).subscribe(
@@ -54,6 +58,7 @@ export class SearchComponent implements OnInit {
           this.loadingIndicator = false;
           this.search_results1 = true;
           this.search_results = response.data.items;
+          
           //console.log(this.search_results);
         },     
         (error: any) => {
@@ -61,15 +66,26 @@ export class SearchComponent implements OnInit {
           //console.log(error);
           this.statusMessage = error;
           this.search_results1 = true;
+          this.search_results.length = 0;
         }
         );   
     } 
     else {
-      this.searchError = true;
+      //$('.search-box-wrap .fa-times').css('display', 'none');
+      //this.searchError = true;
       //console.log("yes")
-      this.search_results.length = 0;
-      this.search_results = []; 
+      // this.search_results.length = 0;
+      // this.search_results = []; 
+      this.closeIcon = false;
+      this.getTrendingSearch();
       //console.log(this.search_results);
     }
+  }
+
+  clearSearch(){
+    $('#search').val('');
+    this.closeIcon =false;
+    this.getTrendingSearch();
+    
   }
 }

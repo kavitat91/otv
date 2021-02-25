@@ -184,11 +184,13 @@ public resetPasswordToast: boolean = false;
       this.countryCodeStatus = false;   
     }
     if(prevtabType == 'emaillregister') {
-      this.emailRegisterForm.reset();      
+      this.emailRegisterForm.reset();  
+      this.errorStatus = false;    
     }
     if(prevtabType == 'mobileregister') {
       this.mobileRegisterForm.reset();   
-      this.countryCodeStatus = false;   
+      this.countryCodeStatus = false;  
+      this.errorStatus = false; 
     }
     if(prevtabType == 'emailforgot') {
       this.mobileForgotForm.reset(); 
@@ -306,7 +308,8 @@ public resetPasswordToast: boolean = false;
       (res: Response) => {
         this.loadingIndicator = false;
         this.commonService.removeOtvUserLocalStorage();
-        window.location.href = "/";
+        this.closePop('logoutform');
+        this.router.navigate(['/']);
       },
       (error: any) => {
         this.loadingIndicator = false;

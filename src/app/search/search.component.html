@@ -14,9 +14,10 @@
       <div class="wrapper min-height-div" [ngStyle]="{'min-height': contentHeight+'px'}">
         <div class="pull-left w-100 search-page padding-top-20 padding-bottom-40">
           <div class="search-box-wrap pull-left w-100 margin-bottom-15">
-            <input type="search" id="search" name="searchval" class="item_search" placeholder="Search for movies, songs &amp; more …" value="" #box (keyup)="onSearch(box.value)">
+            <input id="search" name="searchval" class="item_search" placeholder="Search for movies, songs &amp; more …" value="" #box (keyup)="onSearch(box.value)">
             <span class="search_errors" *ngIf="searchError">Please enter Search text</span>
             <!-- {{box.value.length}} -->
+            <i (click)="clearSearch()" *ngIf="closeIcon" class="fa fa-times" aria-hidden="true"></i>
           </div>
           <div class="pull-left w-100">
 						<h1 class="page-title pull-left w-100 margin-bottom-15" id="trending_search" *ngIf="!search_results1">Trending Search</h1>
