@@ -199,9 +199,9 @@
                         [ngClass]="{'input-label-focused': login_email.touched && login_email.value.length > 0 }">Email
                         ID</span>
                       <label class="error" id="login_email_error"
-                        *ngIf="login_email.errors?.required && login_email.touched">Please enter the email id</label>
+                        *ngIf="login_email.errors.required && login_email.touched">Please enter the email id</label>
                       <label class="error" id="login_email_error"
-                        *ngIf="login_email.errors?.pattern && login_email.touched">Email is invalid </label>
+                        *ngIf="login_email.errors.pattern && login_email.touched">Email is invalid </label>
                     </div>
                     <div class="input-group hide_password_group signup_password_us"
                       [ngClass]="{ 'has-error': login_email_password.touched && login_email_password.invalid }">
@@ -228,7 +228,7 @@
                         [disabled]="emailLoginForm.invalid">
                     </div>
                     <div class="text-center margin-bottom-10 margin-top-20 pull-left w-100 form_bottom">
-                      <a href="javascript:void(0);"
+                      <a
                         class="inline-block text-uppercase margin-bottom-15 font-semibold forgot_pass_tag margin-bottom-30 oriya-color4 "
                         id="forgot_pass_email" (click)="showPop('forgot_password_pop', 'loginform')">forgot password ?</a>
                     </div>
@@ -386,8 +386,8 @@
                       <input type="checkbox" id="email_agree_terms" name="email_agree_terms"
                         #email_agree_terms="ngModel" [(ngModel)]="userEmailRegister.email_agree_terms" required>
                       <label class="overflow-control-description custom-checkbox" for="email_agree_terms">I agree to the
-                        <a href="/terms_and_condtions" class="text-uppercase oriya-color4" target="blank">terms of use
-                        </a>and <a href="/privacy_policy" class="text-uppercase oriya-color4" target="blank">privacy
+                        <a (click)="redirectToTermsAndConditions()" class="text-uppercase oriya-color4" target="blank">terms of use
+                        </a>and <a (click)="redirectToPrivacyPolicy()" class="text-uppercase oriya-color4" target="blank">privacy
                           policy</a></label>
                       <label class="error" id="email_terms_check_error"
                         *ngIf="email_agree_terms.touched && email_agree_terms.invalid">Please check the terms of
@@ -464,8 +464,8 @@
                       <input type="checkbox" id="phone_agree_terms" name="phone_agree_terms"
                         #phone_agree_terms="ngModel" [(ngModel)]="userMobileRegister.phone_agree_terms" required>
                       <label class="overflow-control-description custom-checkbox" for="phone_agree_terms">I agree to the
-                        <a href="/terms_and_condtions" class="text-uppercase oriya-color4" target="blank">terms of use
-                        </a>and <a href="/privacy_policy" class="text-uppercase oriya-color4" target="blank">privacy
+                        <a (click)="redirectToTermsAndConditions()" class="text-uppercase oriya-color4" target="blank">terms of use
+                        </a>and <a (click)="redirectToPrivacyPolicy()" class="text-uppercase oriya-color4" target="blank">privacy
                           policy</a></label>
                       <label class="error" id="phone_terms_check_error"
                         *ngIf="phone_agree_terms.touched && phone_agree_terms.invalid">Please check the terms of
@@ -579,7 +579,7 @@
                       </label>
                     </div>
                     <div class="text-center margin-bottom-20 margin-top-25 light fgt_confirm_sec" *ngIf="!otpStep2">
-                      <input type="button" class="text-uppercase btn-oria btn-oria-big fgt_pwd_sub" value="Confirm" [disabled]="mobileForgotForm.invalid" (click)="onMobileForgotPassword1(userMobileForgot)">
+                      <input type="button" class="text-uppercase btn-oria btn-oria-big fgt_pwd_sub" value="Confirm" [disabled]="mobileForgotForm.invalid" (click)="onUserMobileForgotPassword(userMobileForgot)">
                     </div>
                     <div class="input-group fgt_opt_sec otp_step2" *ngIf="otpStep2">
                       <input type="number" pattern="^[0-9_-]{4}$" id="frgt_pwd_otp" name="frgt_pwd_otp" class="form-control"

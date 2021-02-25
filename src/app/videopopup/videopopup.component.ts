@@ -90,7 +90,7 @@ export class VideopopupComponent implements OnInit {
         localStorage.setItem("otv_user_sub_status", resp.user_sub_status);
         localStorage.setItem("otv_user_played_time", resp.user_play_back_time);
         if(resp.list_id != undefined && resp.list_id.length != 0){
-          $(".watch_later_icon").attr("src","/assets/images/watchlater_added.svg")
+          $(".watch_later_icon").attr("src","./assets/images/watchlater_added.svg")
           $('.add_watch_later').data('listitemid',resp.list_id);
           console.log(resp.user_sub_status);          
         }

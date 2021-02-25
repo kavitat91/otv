@@ -162,6 +162,7 @@ public resetPasswordToast: boolean = false;
     if(popupType == 'forgotpasswordform') {
       this.emailForgotForm.reset();
       this.mobileForgotForm.reset();
+      this.otpStep2 = false;
       this.countryCodeStatus = false;
     } 
     if(popupType == 'logoutform'){
@@ -190,10 +191,12 @@ public resetPasswordToast: boolean = false;
       this.countryCodeStatus = false;   
     }
     if(prevtabType == 'emailforgot') {
-      this.emailForgotForm.reset();      
+      this.mobileForgotForm.reset(); 
+      this.otpStep2 = false;
+
     }
     if(prevtabType == 'mobileforgot') {
-      this.mobileForgotForm.reset();   
+      this.emailForgotForm.reset();   
       this.countryCodeStatus = false;   
     }
   }
@@ -672,5 +675,15 @@ public resetPasswordToast: boolean = false;
     )
   }
 
+  redirectToTermsAndConditions(){
+    this.router.navigate(['/terms_and_conditions']);
+    this.closePop('registerform');
+    
+  }
+
+  redirectToPrivacyPolicy(){
+    this.router.navigate(['/privacy_policy']);
+    this.closePop('registerform');
+  }
  
 }

@@ -141,7 +141,7 @@
   <div class="toster-message-wrap" id="update_personal_details_toast" *ngIf="updateUserToast">
     <div class="center-align-content">
       <div class="toster-message">
-        <img src="/assets/images/tick.svg" alt="" title="">
+        <img src="./assets/images/tick.svg" alt="" title="">
         <p id="watch_later_message">
           Profile details updated successfully
         </p>
@@ -179,8 +179,8 @@
                     
                     <div class="input-group hide_password_group">
                       <input [type]="showPassword1 ? 'text' : 'password'" id="old_change_password" name="old_change_password" class="form-control" #old_change_password="ngModel" [(ngModel)]="changePassword.old_change_password" minlength="6" maxlength="20" required> 
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword1" (click)="togglePassword1();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword1"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword1" (click)="togglePassword1();">
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword1"
                       (click)="togglePassword1();">
                       <span class="input-label" [ngClass]="{'input-label-focused': old_change_password.touched && old_change_password?.value?.length > 0 }">Old Password</span>
                       <label class="error" id="change_password_error" *ngIf="old_change_password.errors?.required && old_change_password.touched">Please Enter the Old password</label>
@@ -189,8 +189,8 @@
   
                     <div class="input-group hide_password_group">
                       <input [type]="showPassword2 ? 'text' : 'password'" id="new_change_password" name="new_change_password" class="form-control" #new_change_password="ngModel" [(ngModel)]="changePassword.new_change_password" minlength="6" maxlength="20" required> 
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword2" (click)="togglePassword2();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword2"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword2" (click)="togglePassword2();">
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword2"
                       (click)="togglePassword2();">
                       <span class="input-label" [ngClass]="{'input-label-focused': new_change_password.touched && new_change_password?.value?.length > 0 }">New Password</span>
                       <label class="error" id="new_change_password_error" *ngIf="new_change_password.errors?.required && new_change_password.touched">Please Enter the new password</label>
@@ -199,8 +199,8 @@
   
                     <div class="input-group hide_password_group margin-bottom-5">
                       <input [type]="showPassword3 ? 'text' : 'password'" id="new_change_confirm_password" name="new_change_confirm_password" class="form-control" #new_change_confirm_password="ngModel" [(ngModel)]="changePassword.new_change_confirm_password" minlength="6" maxlength="20" required> 
-                      <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password" title="hide confirm password" *ngIf="!showPassword3" (click)="togglePassword3();">
-                      <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show confirm password" title="show confirm password" *ngIf="showPassword3"
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password" title="hide confirm password" *ngIf="!showPassword3" (click)="togglePassword3();">
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show confirm password" title="show confirm password" *ngIf="showPassword3"
                       (click)="togglePassword3();">
                       <span class="input-label" [ngClass]="{'input-label-focused': new_change_confirm_password.touched && new_change_confirm_password?.value?.length > 0 }">Confirm New Password</span>
                       <label class="error" id="new_change_confirm_password_error" *ngIf="new_change_confirm_password.errors?.required && new_change_confirm_password.touched">Please Enter the new confirm password</label>
@@ -225,7 +225,7 @@
   <div class="toster-message-wrap change_passowrd_toast" id="change_passowrd_toast" *ngIf="changePasswordToast">
     <div class="center-align-content">
       <div class="toster-message">
-        <img src="/assets/images/wrong_mark.svg" alt="user account update" title="user account update">
+        <img src="./assets/images/tick.svg" alt="user account update" title="user account update">
         <p class="change_password_message">
           <!-- Old and New passwords are the same. Please enter a different 'New Password' -->
           {{statusMessage}}
@@ -253,8 +253,8 @@
                         <div class="input-group hide_password_group signup_password_us">
                           <input [type]="showPassword4 ? 'text' : 'password'" id="reset_pwd" name="reset_pwd" class="form-control user_password" maxlength="20" value="" required
                           #reset_pwd="ngModel" [(ngModel)]="resetPassword.reset_pwd"> 
-                          <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword4" (click)="togglePassword4();">
-                          <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword4" (click)="togglePassword4();">
+                          <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword4" (click)="togglePassword4();">
+                          <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword4" (click)="togglePassword4();">
                           <span class="input-label" [ngClass]="{'input-label-focused': reset_pwd.touched && reset_pwd?.value?.length > 0 }">Password</span>
                           <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_pwd.errors?.required && reset_pwd.touched">Password can't be blank</label>
                           <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_pwd.errors?.minlength && reset_pwd.errors?.maxlength && reset_pwd.touched">Password should be minimum 6 and maximum 20 characters</label>
@@ -262,8 +262,8 @@
                         <div class="input-group hide_password_group signup_password_us">
                           <input [type]="showPassword5 ? 'text' : 'password'" id="reset_con_pwd" name="reset_con_pwd" class="form-control user_password" maxlength="20" value="" required
                           #reset_con_pwd="ngModel" [(ngModel)]="resetPassword.reset_con_pwd"> 
-                          <img src="/assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword5" (click)="togglePassword5();">
-                          <img src="/assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword5" (click)="togglePassword5();">
+                          <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword5" (click)="togglePassword5();">
+                          <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword5" (click)="togglePassword5();">
                           <span class="input-label" [ngClass]="{'input-label-focused': reset_con_pwd.touched && reset_con_pwd?.value?.length > 0 }">Confirm Password</span>
                           <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_con_pwd.errors?.required && reset_con_pwd.touched">Confirm Password can't be blank</label>
                           <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_con_pwd.touched && reset_con_pwd.dirty && reset_pwd.value != reset_con_pwd.value">Password and Confirm Password do not match</label>
@@ -285,7 +285,7 @@
      <div class="toster-message-wrap reset_passowrd_toast" id="reset_passowrd_toast" *ngIf="resetPasswordToast">
         <div class="center-align-content">
           <div class="toster-message">
-            <img src="/assets/images/wrong_mark.svg" alt="user account update" title="user account update">
+            <img src="./assets/images/wrong_mark.svg" alt="user account update" title="user account update">
             <p class="change_password_message">
               <!-- Old and New passwords are the same. Please enter a different 'New Password' -->
               {{statusMessage}}
@@ -320,7 +320,7 @@
                           </p>
                           <p class="pull-right wathlist_option2 margin-top-5">
                             <span class="pull-right">
-                              <img src="/assets/images/delete.svg" (click)="removeWatchList(w['listitem_id'])" class="remove delete_watch_item cursor-pointer" alt="Delete Watch List" title="Delete Watch List" id='{{w["listitem_id"]}}'>
+                              <img src="./assets/images/delete.svg" (click)="removeWatchList(w['listitem_id'])" class="remove delete_watch_item cursor-pointer" alt="Delete Watch List" title="Delete Watch List" id='{{w["listitem_id"]}}'>
                             </span>
                           </p>
                         </div>
@@ -347,7 +347,7 @@
             <div class="toster-message-wrap" id="watch_list_delete_toast" *ngIf="deleteWatchlist">
               <div class="center-align-content">
                 <div class="toster-message">
-                  <img src="/assets/images/tick.svg" alt="" title="">
+                  <img src="./assets/images/tick.svg" alt="" title="">
                   <p id="watch_later_message">
                     Item  deleted successfully
                   </p>
@@ -389,7 +389,7 @@
                           </p>
                           <p class="pull-right wathlist_option2 margin-top-5">
                             <span class="pull-right">
-                              <img src="/assets/images/delete.svg" (click)="removeFavourite(w['listitem_id'])" class="remove delete_watch_item cursor-pointer" alt="Delete Watch List" title="Delete Watch List" id='{{w["listitem_id"]}}'>
+                              <img src="./assets/images/delete.svg" (click)="removeFavourite(w['listitem_id'])" class="remove delete_watch_item cursor-pointer" alt="Delete Watch List" title="Delete Watch List" id='{{w["listitem_id"]}}'>
                             </span>
                           </p>
                         </div>
@@ -416,7 +416,7 @@
             <div class="toster-message-wrap" id="watch_list_delete_toast" *ngIf="deleteWatchlist">
               <div class="center-align-content">
                 <div class="toster-message">
-                  <img src="/assets/images/tick.svg" alt="" title="">
+                  <img src="./assets/images/tick.svg" alt="" title="">
                   <p id="watch_later_message">
                     Item  deleted successfully
                   </p>

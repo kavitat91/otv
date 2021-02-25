@@ -44,7 +44,7 @@
                   <span>Watch Later</span>
                 </a>
               </li>
-              <li class="pull-left d-none d-xl-block">
+              <li class="pull-left d-none d-xl-block" *ngIf="this.theme != 'live'">
                 <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 video_play" (click)="addToFavourites()">
                   <i class="fa fa-heart-o pull-left margin-right-10" aria-hidden="true"></i> Favourite
                 </a>	

@@ -92,16 +92,12 @@ export class ItemdetailsComponent implements OnInit {
         this.catalogName = a[1]; 
         this.showName = a[2]; 
         this.getItemDetails();
-      }
-
-      
+      }   
     });    
     
   }
 
   ngOnInit() {    
-    
-
     this.short_desc = true;
     this.desc_show_more_icon = true;  
     this.sessionId = localStorage.getItem('otv_user_id');  
@@ -328,7 +324,7 @@ export class ItemdetailsComponent implements OnInit {
         (res) => {
           if(this.playlistid.length != 0){
             this.playlistid = '';
-            $(".watch_later_icon").attr("src","/assets/images/watchlater_add.svg");
+            $(".watch_later_icon").attr("src","./assets/images/watchlater_add.svg");
             this.watchLaterPop = false;
             this.watchLaterRemovePop = true;
             setTimeout(function() {
@@ -348,7 +344,7 @@ export class ItemdetailsComponent implements OnInit {
         (res) => {
           this.playlistid = res["data"][0]["listitem_id"];
           
-          $(".watch_later_icon").attr("src","/assets/images/watchlater_added.svg");
+          $(".watch_later_icon").attr("src","./assets/images/watchlater_added.svg");
           this.watchLaterRemovePop = false;
           this.watchLaterPop = true;  
           setTimeout(function() {
