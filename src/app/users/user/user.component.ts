@@ -43,6 +43,9 @@ export class UserComponent implements OnInit {
     user_profile_name: null,
     user_mobile_number: null,
     user_email_address: null,
+    user_address: null,
+    user_status: null,
+    user_country: null,
     datepicker: null
   }
   changePassword: any = {
@@ -54,7 +57,8 @@ export class UserComponent implements OnInit {
     reset_pwd: null,
     reset_con_pwd: null
   }
-  constructor(private userService: UserService, private commonService: CommonService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private userService: UserService, private commonService: CommonService, private route: ActivatedRoute, private router: Router) { 
+  }
 
   ngOnInit() {
     this.backendMessageStatus = false;
@@ -137,6 +141,9 @@ export class UserComponent implements OnInit {
           user_profile_name: this.user.firstname,
           user_mobile_number: this.user.mobile_number,
           user_email_address: this.user.email_id,
+          user_address: this.user.address,
+          user_status: this.user.status,
+          user_country: this.user.country,
           datepicker: this.user.birthdate
         }   
       },
@@ -318,3 +325,5 @@ export class UserComponent implements OnInit {
   }
 
 }
+
+

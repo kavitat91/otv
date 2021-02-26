@@ -43,6 +43,27 @@
                   </span>
                 </div>
                 <div class="pull-left w-100 margin-bottom-25">
+                  <label class="margin-bottom-0 margin-left-10">Address</label>
+                  <br>
+                  <span class="margin-left-10">
+                    {{ user?.address?.length > 0 ? user?.address : "-" }}
+                  </span>
+                </div>
+                <div class="pull-left w-100 margin-bottom-25">
+                  <label class="margin-bottom-0 margin-left-10">State</label>
+                  <br>
+                  <span class="margin-left-10">
+                    {{ user?.state?.length > 0 ? user?.state : "-" }}
+                  </span>
+                </div>
+                <div class="pull-left w-100 margin-bottom-25">
+                  <label class="margin-bottom-0 margin-left-10">Country</label>
+                  <br>
+                  <span class="margin-left-10">
+                    {{ user?.country?.length > 0 ? user?.country : "-" }}
+                  </span>
+                </div>
+                <div class="pull-left w-100 margin-bottom-25">
                   <label class="margin-bottom-0 margin-left-10">Birth Date</label>
                   <br>
                   <span class="margin-left-10">{{ user?.birthdate?.length > 0 ? user?.birthdate : "-" }}</span>
@@ -94,31 +115,64 @@
                     </div>
                     <input type="hidden" id="reg" name="user_region" value="IN">
                     <div class="input-group name country">
-                      <input type="text" name="country_code_details"
-                        class="country_code country_code_details form-control" value="+91" readonly *ngIf="countryCodeStatus">
+                      <!-- <input type="text" name="country_code_details"
+                        class="country_code country_code_details form-control" value="+91" readonly *ngIf="countryCodeStatus"> -->
                       <input type="number" id="user_mobile_number" name="user_mobile_number" class="form-control"
-                        [attr.readonly]="isMobileReadOnly" value="{{ user?.mobile_number }}" #user_mobile_number="ngModel"
+                        value="{{ user?.mobile_number }}" #user_mobile_number="ngModel"
                         [(ngModel)]="updateUser.user_mobile_number" (focus)="focusCountryLogin();"
-                        (focusout)="focusOutCountryLogin($event)">
+                        (focusout)="focusOutCountryLogin($event)" required>
                       <span class="input-label" [ngClass]="{'input-label-focused': (user_mobile_number.touched && user_mobile_number?.value) || (user?.mobile_number?.length > 0) }">Mobile Number</span>
                       <label class="error" id="user_mobile_error"
                         *ngIf="user_mobile_number.touched && user_mobile_number.invalid">This field is mandatory</label>
                     </div>
                     <div class="input-group name edit_profile_name">
                       <input type="email" id="user_email_address" name="user_email_address" class="form-control"
-                        [attr.readonly]="isEmailReadOnly" value="{{ user?.email_id }}" #user_email_address="ngModel"
+                        value="{{ user?.email_id }}" #user_email_address="ngModel" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$"
                         [(ngModel)]="updateUser.user_email_address">
                       <span class="input-label"
                         [ngClass]="{'input-label-focused': (user_email_address.touched && user_email_address?.value?.length > 0) || (user?.email_id?.length > 0) }">Email</span>
                       <label class="error" id="user_email_error"
-                        *ngIf="user_email_address.touched && user_email_address.invalid">This field is mandatory</label>
+                        *ngIf="user_email_address.touched && user_email_address.invalid">Email is invalid</label>
+                      
                     </div>
-                    <div class="input-group margin-bottom-5">
-                      <input type="text" id="datepicker" name="datepicker" class="form-control" value="{{ user?.birthdate }}"
-                        #datepicker="ngModel" [(ngModel)]="updateUser.datepicker">
+                    <div class="input-group name edit_profile_name">
+                      <input type="text" id="user_address" name="user_address" class="form-control"
+                        value="{{ user?.address }}" #user_address="ngModel"
+                        [(ngModel)]="updateUser.user_address">
                       <span class="input-label"
+                        [ngClass]="{'input-label-focused': (user_address.touched && user_address?.value?.length > 0) || (user?.address?.length > 0) }">Address</span>
+                      <label class="error" id="user_address_error"
+                        *ngIf="user_address.touched && user_address.invalid">This field is mandatory</label>
+                    </div>
+                    <div class="input-group name edit_profile_name">
+                      <input type="text" id="user_state" name="user_state" class="form-control"
+                        value="{{ user?.state }}" #user_state="ngModel"
+                        [(ngModel)]="updateUser.user_state">
+                      <span class="input-label"
+                        [ngClass]="{'input-label-focused': (user_state.touched && user_state?.value?.length > 0) || (user?.state?.length > 0) }">State</span>
+                      <label class="error" id="user_state_error"
+                        *ngIf="user_address.touched && user_address.invalid">This field is mandatory</label>
+                    </div>
+                    <div class="input-group name edit_profile_name">
+                      <input type="text" id="user_country" name="user_country" class="form-control"
+                        value="{{ user?.country }}" #user_country="ngModel"
+                        [(ngModel)]="updateUser.user_country">
+                      <span class="input-label"
+                        [ngClass]="{'input-label-focused': (user_country.touched && user_country?.value?.length > 0) || (user?.country?.length > 0) }">Country</span>
+                      <label class="error" id="user_country_error"
+                        *ngIf="user_country.touched && user_country.invalid">This field is mandatory</label>
+                    </div>
+                    
+                    <div class="input-group margin-bottom-5">
+                      <mat-form-field>
+                      <input type="text" id="datepicker" name="datepicker" class="form-control" value="{{ user?.birthdate }}"
+                        #datepicker="ngModel" [(ngModel)]="updateUser.datepicker" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <!-- <span class="input-label"
                         [ngClass]="{'input-label-focused': (datepicker.touched && datepicker?.value?.length > 0) || (user?.birthdate.length > 0) }">Birth
-                        Date</span>
+                        Date</span> -->
                       <!-- <label class="error" id="user_dob_error" *ngIf="datepicker.touched && datepicker.invalid">This field is mandatory</label> -->
                     </div>
                     <div class="margin-bottom-10 input-group center-align-content">

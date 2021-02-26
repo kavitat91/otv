@@ -161,7 +161,6 @@ export class CommonService {
     //sign_smarturl(response['play_url']['saranyu']['url'])
     console.log(response);
     let play_url = '';
-    
     /* var url = response['play_url']['saranyu']['url'];
     console.log("url"+url); */
     if(response["theme"] == "live" || response["theme"] == "linear") {
@@ -180,7 +179,7 @@ export class CommonService {
       this.new_play_url = this.encryptPlayUrl(play_url)
     }
       
-    return this.new_play_url
+    return this.new_play_url;
     //return url;
   }
   encryptPlayUrl(url: string): string {

@@ -76,6 +76,7 @@ export class SearchComponent implements OnInit {
       //console.log("yes")
       // this.search_results.length = 0;
       // this.search_results = []; 
+      this.search_results1 = false;
       this.closeIcon = false;
       this.getTrendingSearch();
       //console.log(this.search_results);
@@ -84,6 +85,7 @@ export class SearchComponent implements OnInit {
 
   clearSearch(){
     $('#search').val('');
+    this.search_results1 = false;
     this.closeIcon =false;
     this.getTrendingSearch();
     

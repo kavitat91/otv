@@ -1,0 +1,14 @@
+mat-form-field{
+    width: 100%;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix{
+    margin: 0!important;
+    padding: 0!important;
+}
+
+mat-form-field input{
+    margin: 0;
+    border: 0;
+    height: 15px;
+}

@@ -46,6 +46,7 @@ import { PaymentresponseComponent } from './paymentresponse/paymentresponse.comp
 import { VideopopupComponent } from './videopopup/videopopup.component';
 import { PlanSummaryComponent } from './plan-summary/plan-summary.component';
 import { RazorpayresponseComponent } from './razorpayresponse/razorpayresponse.component';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 //import {Md5} from 'ts-md5/dist/md5';
 
 
@@ -83,7 +84,10 @@ import { RazorpayresponseComponent } from './razorpayresponse/razorpayresponse.c
     HttpClientModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-    OwlModule
+    OwlModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     //NgxSpinnerModule
   ],
   providers: [PageService, AllitmesserviceService, SearchService, UserService, PlansService, CommonService, SEOService

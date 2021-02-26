@@ -78,6 +78,7 @@ export class ItemdetailsComponent implements OnInit {
   contentHeight: number;
   addToFavouritesList: boolean = false;
   removeFromFavourites: boolean = false;
+  showContentId: string;
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
 
@@ -122,7 +123,6 @@ export class ItemdetailsComponent implements OnInit {
     this.language = localStorage.getItem('language');
   	this.pageService.getItemDetails(this.language, this.catalogName, this.showName).subscribe(
   	(response) => {
-      
       /* this.router.events.subscribe((ev) => {
         this.seoService.updateTitle(response['title']);
           this.seoService.updateKeywords(response['keywords']);
@@ -138,8 +138,8 @@ export class ItemdetailsComponent implements OnInit {
         
         this.layoutScheme = response["data"]["catalog_object"]["layout_scheme"]
         this.itemDetails = response["data"]
-        this.theme = this.itemDetails["theme"]
-        
+        this.theme = this.itemDetails["theme"];
+        this.showContentId = this.itemDetails["content_id"];
         this.contentId = this.itemDetails["content_id"];
         this.videoPreview = this.itemDetails["preview"];
         this.appShareUrl = this.itemDetails['internal_share_url'].split("?")[1];
@@ -148,7 +148,7 @@ export class ItemdetailsComponent implements OnInit {
         this.language1 = this.itemDetails['language'];
         this.itemCategory = "NA";
         this.genre = this.itemDetails['genres'][0];
-        this.contentId = this.itemDetails['content_id'];
+        //this.contentId = this.itemDetails['content_id'];
         this.titleCategory = this.itemDetails['title']+"|"+this.itemDetails['content_id']+"|"+this.itemDetails['catalog_object']['plan_category_type']+"|"+this.itemDetails['language']+"|"+this.itemDetails['genres'][0]+"|"+"episode";
         this.videoDuration = this.itemDetails['duration_string'];
         this.title = this.itemDetails['title'];
@@ -296,7 +296,7 @@ export class ItemdetailsComponent implements OnInit {
     var favouritesParams = {};
     favouritesParams["listitem"] = {};
     favouritesParams["listitem"]["catalog_id"] = this.catalogId;
-    favouritesParams["listitem"]["content_id"] = this.contentId;
+    favouritesParams["listitem"]["content_id"] = this.showContentId;
     this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
       (res) => {
         this.addToFavouritesList = true;
@@ -316,7 +316,7 @@ export class ItemdetailsComponent implements OnInit {
     var watchlaterParams = {};
     watchlaterParams["listitem"] = {};
     watchlaterParams["listitem"]["catalog_id"] = this.catalogId;
-    watchlaterParams["listitem"]["content_id"] = this.contentId;
+    watchlaterParams["listitem"]["content_id"] = this.showContentId;
     watchlaterParams["listitem"]["playlist_id"] = "";
     console.log("this.playlistid"+this.playlistid);
     if(this.playlistid && this.playlistid.length != 0) {

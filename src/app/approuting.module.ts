@@ -31,6 +31,7 @@ const appRoutes: Routes = [
   { 'path': 'users/change_password', component: UserComponent, data: { page: 'changepassword'} },
   { 'path': 'users/reset_password_email', component: UserComponent, data: { page: 'resetpassword'} },
   { 'path': 'users/watchlist', component: UserComponent, data: { page: 'watchlist'} },
+  { 'path': 'users/favourites', component: UserComponent, data: { page: 'favourites'} },
   { 'path': 'users/continue_watching', component: UserComponent, data: { page: 'continue_watching'} },
   { 'path': 'about-us', component: StaticpageComponent, data: { page: 'about'} },
   { 'path': 'privacy_policy', component: StaticpageComponent, data: { page: 'pp'} },

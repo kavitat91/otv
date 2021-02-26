@@ -89,8 +89,8 @@
             <span class="full_desc" *ngIf="full_desc">{{episodeDetails?.short_description}}</span>
             <!-- <ng-container *ngIf="episodeDetails.short_description.length > 200"> -->
               <ng-container>
-                <a href="javascript:void(0);" class="read_more desc_show_more_icon" (click)="readMore()">Read More</a>
-                <a href="javascript:void(0);" class="read_more desc_show_less_icon" (click)="readLess()">Read Less</a>
+                <a href="javascript:void(0);" class="read_more desc_show_more_icon" (click)="readMore()" *ngIf="desc_show_more_icon">Read More</a>
+                <a href="javascript:void(0);" class="read_more desc_show_less_icon" (click)="readLess()" *ngIf="desc_show_less_icon">Read Less</a>
               <!-- <a href="javascript:void(0);" class="read_more desc_show_more_icon" (click)="readMore()" *ngIf="desc_show_more_icon">Read More</a> -->
               <!-- <a href="javascript:void(0);" class="read_more desc_show_less_icon" (click)="readLess()" *ngIf="desc_show_less_icon">Read Less</a>    	      -->
             </ng-container>

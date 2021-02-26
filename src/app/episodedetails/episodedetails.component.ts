@@ -72,6 +72,7 @@ export class EpisodedetailsComponent implements OnInit {
   videoURL: string;
   signed_url: any;
   contentHeight: number;
+  tvShowContentId: string;
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
 
@@ -165,6 +166,7 @@ export class EpisodedetailsComponent implements OnInit {
           (tvshow_response) => {
             this.allEpisodes = tvshow_response["data"]["items"];
             this.allEpisodesFirst = this.allEpisodes[1];
+            this.tvShowContentId = tvshow_response.data.content_id;
             if(this.allEpisodes.length > 0) {
               //this.contentId = this.allEpisodes.first['content_id']
               //this.new_play_url = this.get_play_url_key(this.allEpisodes.first)
@@ -205,7 +207,7 @@ export class EpisodedetailsComponent implements OnInit {
     var favouritesParams = {};
     favouritesParams["listitem"] = {};
     favouritesParams["listitem"]["catalog_id"] = this.catalogId;
-    favouritesParams["listitem"]["content_id"] = this.contentId;
+    favouritesParams["listitem"]["content_id"] = this.tvShowContentId;
     this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
       (res) => {
         this.addToFavouritesList = true;
@@ -225,7 +227,7 @@ export class EpisodedetailsComponent implements OnInit {
     var watchlaterParams = {};
     watchlaterParams["listitem"] = {};
     watchlaterParams["listitem"]["catalog_id"] = this.catalogId;
-    watchlaterParams["listitem"]["content_id"] = this.contentId;
+    watchlaterParams["listitem"]["content_id"] = this.tvShowContentId;
     watchlaterParams["listitem"]["playlist_id"] = "";
     console.log("this.playlistid"+this.playlistid);
     if(this.playlistid && this.playlistid.length != 0) {

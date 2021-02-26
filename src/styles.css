@@ -1863,10 +1863,13 @@ body {
     padding-left: 5px;
     padding-right: 0px;  
   }
-  .input-group.country .input-label{
+  /* .input-group.country .input-label{
     margin-left:  38px;
-  }
-  #user_register_mobile, #login_mobile, #forgot_pass_mobile_number, #user_mobile_number,#frgt_pwd_mobile_no {
+  } */
+  /* #user_register_mobile, #login_mobile, #forgot_pass_mobile_number, #user_mobile_number,#frgt_pwd_mobile_no {
+    padding-left: 0;
+  } */
+  #user_register_mobile, #login_mobile, #forgot_pass_mobile_number, #frgt_pwd_mobile_no {
     padding-left: 0;
   }
   .form_bottom a, .form_bottom span {
@@ -2888,3 +2891,5 @@ body {
     }
   }
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

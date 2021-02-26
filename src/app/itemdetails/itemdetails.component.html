@@ -189,7 +189,7 @@
                   <div id="episodes-carousel" class="owl-carousel owl-theme episodes-carousel margin-bottom-0">
                     <owl-carousel [options]="carouselOptions2" [items]="allEpisodes" [carouselClasses]="['owl-theme owl-carousel margin-bottom-0']">   
                       <div class="item" *ngFor="let e of allEpisodes">  
-                        <a href="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
+                        <a routerLink="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
                           <img src="{{e['thumbnails']['medium_16_9']['url']}}">
                         </a>
                           

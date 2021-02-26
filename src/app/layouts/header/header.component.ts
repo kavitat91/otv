@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   loginStatus: boolean = false;
   errorStatus: boolean = false;
   statusMessage: any;
-  backendErrorStatus: boolean = false;
+  backendErrorStatus: boolean = true;
   loadingIndicator: boolean = false;
   userEmailLogin: any = {
     login_email: null,
@@ -177,11 +177,14 @@ public resetPasswordToast: boolean = false;
 
   tabChange(prevtabType: string) {
     if(prevtabType == 'emaillogin') {
-      this.emailLoginForm.reset();      
+      this.emailLoginForm.reset();   
+      this.statusMessage = '';  
+      this.errorStatus = false; 
     }
     if(prevtabType == 'mobilelogin') {
       this.mobileNoLoginForm.reset();   
-      this.countryCodeStatus = false;   
+      this.countryCodeStatus = false; 
+      this.errorStatus = false;  
     }
     if(prevtabType == 'emaillregister') {
       this.emailRegisterForm.reset();  
@@ -264,11 +267,11 @@ public resetPasswordToast: boolean = false;
   }
 
   focusEmailLogin() { /* Hide the backend emaile login error message when one of email form input is focused in */
-    this.backendErrorStatus = false;
+    this.backendErrorStatus = true;
   }
 
   focusMobileLogin() { /* Hide the backend mobile login error message when one of mobile form input is focused */
-    this.backendErrorStatus = false;
+    this.backendErrorStatus = true;
   }
   
   focusCountryLogin() { /* Show country code when mobile number is focused and mobile number */
@@ -371,9 +374,9 @@ public resetPasswordToast: boolean = false;
           this.loadingIndicator = false;
           this.errorStatus = true;
           this.statusMessage = error.server_error_messsage;       
-          setTimeout(function() {
-            this.errorStatus = false;
-          }.bind(this), 4500);
+          // setTimeout(function() {
+          //   this.errorStatus = false;
+          // }.bind(this), 4500);
         }
       )
         
@@ -382,9 +385,9 @@ public resetPasswordToast: boolean = false;
         this.loadingIndicator = false;
         this.errorStatus = true;
         this.statusMessage = error.server_error_messsage;
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
+        // setTimeout(function() {
+        //   this.errorStatus = false;
+        // }.bind(this), 4500);
       }
     );
   }
