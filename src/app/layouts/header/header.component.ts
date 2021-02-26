@@ -235,7 +235,7 @@ public resetPasswordToast: boolean = false;
       this.langOptions = false;
     }.bind(this), 500);          
     setTimeout(function() {
-      window.location.reload();
+      //window.location.reload();
     }.bind(this), 2000);        
   }
 
@@ -312,7 +312,9 @@ public resetPasswordToast: boolean = false;
         this.loadingIndicator = false;
         this.commonService.removeOtvUserLocalStorage();
         this.closePop('logoutform');
+        this.loginStatus = false;
         this.router.navigate(['/']);
+        
       },
       (error: any) => {
         this.loadingIndicator = false;

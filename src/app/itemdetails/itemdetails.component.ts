@@ -98,7 +98,7 @@ export class ItemdetailsComponent implements OnInit {
     
   }
 
-  ngOnInit() {    
+  ngOnInit() {   
     this.short_desc = true;
     this.desc_show_more_icon = true;  
     this.sessionId = localStorage.getItem('otv_user_id');  

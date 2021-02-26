@@ -48,7 +48,7 @@
                       <a routerLink="{{ catalogItems[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : list['more_url'] }}" 
                       class="text-capitalize see-all pull-right see-all1 all_items_" *ngIf="desktopNav && moreLayout == 'vlayout' && list['catalog_list_items'].length > 7">more</a>
                       <a routerLink="{{catalogItems[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : list['more_url'] }}" 
-                        class="text-capitalize  see-all pull-right see-all2 all_items_{{i}}_mobile" *ngIf="mobileNav && moreLayout == 'hlayout' && list['catalog_list_items'].length > 4">
+                        class="text-capitalize  see-all pull-right see-all2 all_items_{{i}}_mobile" *ngIf="mobileNav && moreLayout == 'hlayout' && list['catalog_list_items'].length > 5">
                         <img src="./assets/images/right_arrow.svg" alt="" title="">
                       </a>
                       <a routerLink="{{catalogItems[i]['layout_type'] == 't_16_9_big_without_meta' ? '/channels' : list['more_url'] }}" 

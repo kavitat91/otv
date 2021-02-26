@@ -196,7 +196,7 @@
                     <ng-container>
                     <a routerLink="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
                     class="text-capitalize see-all see-all1 pull-right">more</a>
-                    <a href="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
+                    <a routerLink="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
                     class="text-capitalize see-all see-all2 pull-right">
                     <img src="./assets/images/right_arrow.svg" alt="" title=""></a>
                     <!-- <a routerLink="/{{allEpisodes[0]['catalog_object']['friendly_id']}}/{{allEpisodes[0]['show_object']['friendly_id']}}/episodes" 
@@ -210,7 +210,7 @@
                 <div id="episodes-carousel" class="owl-carousel owl-theme episodes-carousel margin-bottom-0">
                   <owl-carousel [options]="carouselOptions2" [items]="allEpisodes" [carouselClasses]="['owl-theme owl-carousel horizontal-carousel margin-bottom-15']">   
                     <div class="item" *ngFor="let e of allEpisodes">  
-                      <a href="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
+                      <a routerLink="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
                         <img src="{{e['thumbnails']['medium_16_9']['url']}}" class="carousel-slide-image">
                       </a>
                         
@@ -229,8 +229,8 @@
             <div class="row">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10">
                 <h2 class="margin-bottom-0 margin-top-5 text-capitalize pull-left carousel-title oriya-color1 font-sbold" *ngIf="other_items.length > 0">Other shows</h2>
-                <a href="/{{catalogName}}/others/all" class="text-capitalize see-all see-all1 pull-right" *ngIf="desktopNav && other_items.length > 4">more</a>
-                <a href="/{{catalogName}}/others/all" class="text-capitalize see-all see-all2 pull-right" *ngIf="mobileNav && other_items.length > 4">
+                <a routerLink="/{{catalogName}}/others/all" class="text-capitalize see-all see-all1 pull-right" *ngIf="desktopNav && other_items.length > 4">more</a>
+                <a routerLink="/{{catalogName}}/others/all" class="text-capitalize see-all see-all2 pull-right" *ngIf="mobileNav && other_items.length > 4">
                   <img src="./assets/images/right_arrow.svg" alt="" title=""></a>
               </div>   
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-">

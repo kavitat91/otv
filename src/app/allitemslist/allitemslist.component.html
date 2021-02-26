@@ -39,7 +39,7 @@
           
             <div class="thumbnail-list-box margin-bottom-20 relative-content" *ngFor="let tvs of allTvshows; let i = index;">
               <div class="item horizontal-carousel 122">
-                <a href="{{tvs['itemUrl']}}">
+                <a routerLink="{{tvs['itemUrl']}}">
                   <img src="{{ tvs['thumbnails']['medium_16_9']['url'] }}" class="carousel-slide-image">
                 </a>
           
@@ -67,7 +67,7 @@
           
             <div class="thumbnail-list-box margin-bottom-20 relative-content" *ngFor="let gen of genreAll; let i = index;">
               <div class="item horizontal-carousel 123">
-                <a href="{{gen['itemUrl']}}">
+                <a routerLink="{{gen['itemUrl']}}">
                   <img src="{{ gen['thumbnails']['medium_16_9']['url'] }}" class="carousel-slide-image">
                 </a>
           
