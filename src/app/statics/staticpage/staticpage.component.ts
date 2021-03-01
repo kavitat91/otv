@@ -23,7 +23,10 @@ export class StaticpageComponent implements OnInit {
   contentHeight: number; 
   contentHeight5: number; 
   contactToast: boolean = false;
+
   constructor(private route: ActivatedRoute, private service: UserService, private commonService: CommonService) { }
+
+
 
   ngOnInit() {
     this.sub = this.route.data
@@ -71,6 +74,15 @@ onContactSubmit(contact: any) {
 
 ngOnDestroy() {
   this.sub.unsubscribe();
+}
+
+onContctInputFocusOut(e){
+  // if(e.target.value.length > 0){
+  //   e.target.setAttribute('class', 'actives');
+  // }else{
+
+  // }
+  
 }
 
 }

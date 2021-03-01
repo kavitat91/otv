@@ -22,3 +22,7 @@
     color: #666;
     cursor: pointer;
 }
+
+#search_all_results{
+    height: 100%;
+}

@@ -32,10 +32,10 @@ export class UserService {
   emailLogin(userLogin: any) {
     var signin_params = {};
     signin_params["user"] = {};
-    signin_params["user"]["email_id"] = userLogin.login_email;
+    signin_params["user"]["email_id"] = userLogin.controls.login_email.value;
     signin_params["user"]["mobile_no"] = "";
     signin_params["user"]["type"] = "email";
-    signin_params["user"]["password"] = userLogin.login_email_password;
+    signin_params["user"]["password"] = userLogin.controls.login_email_password.value;
     signin_params["user"]["region"] = "IN";
 
     return this.http.post<any>(environment.apiURL+"users/sign_in?region=IN&auth_token="+environment.authtoken, JSON.stringify(signin_params), this.options)

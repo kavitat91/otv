@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { PageService } from '../shared/services/page.service';
 import { UserService } from '../shared/services/user.service';
@@ -73,8 +73,12 @@ export class EpisodedetailsComponent implements OnInit {
   signed_url: any;
   contentHeight: number;
   tvShowContentId: string;
+  addedToFavouritesIcon: boolean;
+  deleteWatchlist:boolean = false
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
+  @Output() fireLogin = new EventEmitter<any>();
+  @Output() fireWatchLogin = new EventEmitter<any>();
 
   constructor(private pageService: PageService, private commonService: CommonService, private userService: UserService,
     private router: Router, private route: ActivatedRoute, location: Location) { 
@@ -112,7 +116,7 @@ export class EpisodedetailsComponent implements OnInit {
     }  
     
     //this.getEpisodeDetails();
-    
+
   }
   getEpisodeDetails() {
     this.loadingIndicator = true;
@@ -126,6 +130,7 @@ export class EpisodedetailsComponent implements OnInit {
         this.videoPreview = this.episodeDetails["preview"];
         this.appShareUrl = this.episodeDetails['internal_share_url'].split("?")[1];
         this.catalogId = this.episodeDetails['catalog_id'];
+        this.tvShowContentId = response.data.content_id;
         
         this.application = "Tarangplus-web";
         this.language1 = this.episodeDetails['language'];
@@ -143,11 +148,14 @@ export class EpisodedetailsComponent implements OnInit {
         /* this.new_play_url = this.commonService.getPlayUrlKey(this.episodeDetails);
         console.log("this.new_play_url"+this.new_play_url); */
         //this.videoURL = "https://www.tarangplus.in/odiyatv_player/demo/embed.html?contenturl=ydUll0+UkrHTPrZCQ56A0P/E+JM3zdCJwgnp59m48R4yP4CkZCwmtn0mDVfOmagNfLk7QltalupeD6nYr971XSLDKRzbVCSY+6SzDFj4m2ALP6/PfYuwxS4N9hq7HC6J|key=uFNtbotlPCR7OlKdbtdaSg==|image=https://d18yh0jkm7grap.cloudfront.net/images/Agyan-Mind-Kale-Ki/5eb264b219521d5da6000013/large_16_9/1589262111.jpg?1589262111|title=Agyan%20Mind%20Kale%20Ki|theme_type=movie|channel_logo=|catalog_id=5d6789edbabd8163a0000016|content_id=5eb264bc3326af455e000090|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]|mid_role_ad=http://adex.adchakra.net/KIRTI/openx-2.8.9/www/delivery/fc.php?script=bannerTypeHtml:vastInlineBannerTypeHtml:vastInlineHtml&zones=pre-roll:0.0-0=1&nz=1&source=&r=1234&block=1&format=vast&charset=UTF-8&version=3.0|mid_role_pos=";
-        this.videoURL = "http://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image="+this.episodeDetails['thumbnails']['xl_image_16_9']['url']+"|title="+this.title+"|theme_type=movie|channel_logo=|catalog_id="+this.catalogId+"|content_id="+this.contentId+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.episodeDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.episodeDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.episodeDetails['access_control']['mid_role_settings']['midroll_position'].join("$")+"|app_user_id=";
+        //workaroud 
+        //this.videoURL = "http://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image="+this.episodeDetails['thumbnails']['xl_image_16_9']['url']+"|title="+this.title+"|theme_type=movie|channel_logo=|catalog_id="+this.catalogId+"|content_id="+this.contentId+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.episodeDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.episodeDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.episodeDetails['access_control']['mid_role_settings']['midroll_position'].join("$")+"|app_user_id="; 
+        this.videoURL ="https://www.tarangplus.in/odiyatv_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image=https://d18yh0jkm7grap.cloudfront.net/images/Puni-Gadbad-%7C-Ep-296/5e73746719521d2685000012/xl_image_16_9/1584624792.jpg?1584624792|title=Puni%20Gadbad%20|%20Ep-296|theme_type=movie|channel_logo=|catalog_id=5d6789edbabd8163a0000016|content_id=5e737472babd8136e9000089|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=|mid_role_ad=|mid_role_pos=267$534$801$1068$1335|app_user_id=%20url";
         //this.videoURL="http://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=8HmcN1Lm5Cjr9tCAnFFVw4r6LOwZOVrTAiEa26fXLLtQQ1TNSYC4vt8mtNSvj4c9EMdbtMaPGswdQrtBxNNeQlj4Wpyrz7Pp4UUwXiIZtOP059L8UtjLYKwD5WeL8IUh|key=7zHFlC48y5hx2QR/+0vPhA==|image=https://d18yh0jkm7grap.cloudfront.net/images/A-Ki-Prema-Helare/5d6a02bc19521d7e8400006b/large_16_9/1584603678.jpg?1584603678|title=A Ki Prema Helare|theme_type=movie|channel_logo=|catalog_id=5d529839babd81605300004b|content_id=5d6a02bcbabd8163a00005a1|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad=https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]|mid_role_ad=http://adex.adchakra.net/KIRTI/openx-2.8.9/www/delivery/fc.php?script=bannerTypeHtml:vastInlineBannerTypeHtml:vastInlineHtml&zones=pre-roll:0.0-0=1&nz=1&source=&r=1234&block=1&format=vast&charset=UTF-8&version=3.0|mid_role_pos=|app_user_id=";
 
         this.pageService.getCatalogDetails(this.language, this.catalogName).subscribe(
           (catResponse) => {
+            
             this.other_items = catResponse["data"]["items"];
             this.catalog_name = catResponse["data"]["name"];
             this.tvshow_name = response["data"]["show_name"];
@@ -166,7 +174,7 @@ export class EpisodedetailsComponent implements OnInit {
           (tvshow_response) => {
             this.allEpisodes = tvshow_response["data"]["items"];
             this.allEpisodesFirst = this.allEpisodes[1];
-            this.tvShowContentId = tvshow_response.data.content_id;
+            this.addedToFavouritesIcon;
             if(this.allEpisodes.length > 0) {
               //this.contentId = this.allEpisodes.first['content_id']
               //this.new_play_url = this.get_play_url_key(this.allEpisodes.first)
@@ -203,76 +211,125 @@ export class EpisodedetailsComponent implements OnInit {
     this.child.showVideoPopChild();  
   }
 
+  showFavPop(popId){
+    this.fireLogin.emit();
+  }
+
+  closePop(){
+    this.displayPopStatus = 'none';
+    $('.modal').modal('hide');
+  }
+
+  showWatchPop(popId){
+    this.fireWatchLogin.emit();
+  }
+
   addToFavourites(){
-    var favouritesParams = {};
-    favouritesParams["listitem"] = {};
-    favouritesParams["listitem"]["catalog_id"] = this.catalogId;
-    favouritesParams["listitem"]["content_id"] = this.tvShowContentId;
-    this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
-      (res) => {
-        this.addToFavouritesList = true;
-        this.removeFromFavourites = true;
-        setTimeout(function(){
-          this.addToFavouritesList = false;
-          this.removeFromFavourites = false;
-        }.bind(this), 1200);
-      }, 
+    if(!localStorage.getItem('otv_user_id')){
+      $('.modal').modal('hide');
+      $('#fav_login_confirm_pop').modal('show');
+    } else {
+      var favouritesParams = {};
+      favouritesParams["listitem"] = {};
+      favouritesParams["listitem"]["catalog_id"] = this.catalogId;
+      favouritesParams["listitem"]["content_id"] = this.tvShowContentId;
+      this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
+        (res) => {
+          this.addedToFavouritesIcon = !this.addedToFavouritesIcon;
+          this.addToFavouritesList = true;
+          this.removeFromFavourites = true;
+          setTimeout(function(){
+            this.addToFavouritesList = false;
+            this.removeFromFavourites = false;
+          }.bind(this), 1200);
+        }, 
+        (error) => {
+          console.log(error);
+        }
+      ) 
+    }
+  }
+
+  removeFavourite(itemId: any) {
+    this.loadingIndicator = true;
+    this.userService.removeFavourite(this.sessionId, itemId).subscribe(
+      (response) => {
+        this.loadingIndicator = false;
+        console.log(response);
+        $("#item_"+itemId).hide();
+        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+        //$("#watch_list_delete_toast").show().fadeOut(4500);
+        this.deleteWatchlist = true;
+        setTimeout(function() {
+          this.deleteWatchlist = false;
+        }.bind(this), 4500);  
+        var item_cnt = response.items_count;
+        if(item_cnt == 0){
+          window.location.reload();
+        }
+      },
       (error) => {
-        console.log(error);
+        console.log(error);      
+        this.loadingIndicator = false;  
+        //this.statusMessage = error.server_error_messsage;
       }
-    )
+    )      
   }
 
   addWatchLater() {
-    var watchlaterParams = {};
-    watchlaterParams["listitem"] = {};
-    watchlaterParams["listitem"]["catalog_id"] = this.catalogId;
-    watchlaterParams["listitem"]["content_id"] = this.tvShowContentId;
-    watchlaterParams["listitem"]["playlist_id"] = "";
-    console.log("this.playlistid"+this.playlistid);
-    if(this.playlistid && this.playlistid.length != 0) {
-      this.userService.removeWatchlist(this.sessionId, this.playlistid).subscribe(
-        (res) => {
-          if(this.playlistid.length != 0){
-            this.playlistid = '';
-            $(".watch_later_icon").attr("src","./assets/images/watchlater_add.svg");
-            this.watchLaterPop = false;
-            this.watchLaterRemovePop = true;
-            setTimeout(function() {
+    if(!localStorage.getItem('otv_user_id')){
+      $('.modal').modal('hide');
+      $('#watch_login_confirm_pop').modal('show');
+    } else {
+      var watchlaterParams = {};
+      watchlaterParams["listitem"] = {};
+      watchlaterParams["listitem"]["catalog_id"] = this.catalogId;
+      watchlaterParams["listitem"]["content_id"] = this.tvShowContentId;
+      watchlaterParams["listitem"]["playlist_id"] = "";
+      console.log("this.playlistid"+this.playlistid);
+      if(this.playlistid && this.playlistid.length != 0) {
+        this.userService.removeWatchlist(this.sessionId, this.playlistid).subscribe(
+          (res) => {
+            if(this.playlistid.length != 0){
+              this.playlistid = '';
+              $(".watch_later_icon").attr("src","./assets/images/watchlater_add.svg");
               this.watchLaterPop = false;
-              this.watchLaterRemovePop = false;
-            }.bind(this), 1200);                     
+              this.watchLaterRemovePop = true;
+              setTimeout(function() {
+                this.watchLaterPop = false;
+                this.watchLaterRemovePop = false;
+              }.bind(this), 1200);                     
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-    else {
-      this.userService.addWatchLater(this.sessionId, watchlaterParams).subscribe(
-        (res) => {
-          this.playlistid = res["data"][0]["listitem_id"];
-          $(".watch_later_icon").attr("src","./assets/images/watchlater_added.svg");
-          this.watchLaterRemovePop = false;
-          this.watchLaterPop = true;     
-          setTimeout(function() {
+        );
+      }
+      else {
+        this.userService.addWatchLater(this.sessionId, watchlaterParams).subscribe(
+          (res) => {
+            this.playlistid = res["data"][0]["listitem_id"];
+            $(".watch_later_icon").attr("src","./assets/images/watchlater_added.svg");
             this.watchLaterRemovePop = false;
-            this.watchLaterPop = false;            
-          }.bind(this), 1200);        
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-   
+            this.watchLaterPop = true;     
+            setTimeout(function() {
+              this.watchLaterRemovePop = false;
+              this.watchLaterPop = false;            
+            }.bind(this), 1200);        
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
   
   shareToggleVideo() {
     this.shareEnable = !this.shareEnable;
   }
+
   closeShareVideo() {
     this.shareEnable = false;
   }
@@ -302,6 +359,7 @@ export class EpisodedetailsComponent implements OnInit {
     this.full_desc = false;
     this.short_desc = true;    
   }
+
   carouselOptions2 = {
     loop:false,
     margin: 12,
@@ -337,4 +395,5 @@ export class EpisodedetailsComponent implements OnInit {
       }
     }
   }
+
 }

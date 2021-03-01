@@ -39,7 +39,7 @@
                   <label class=" margin-bottom-0 margin-left-10">Email</label>
                   <br>
                   <span class="margin-left-10">
-                    {{ user?.email_id?.length > 0 ? user?.email_id : "-" }}
+                    {{ user?.user_email_id?.length > 0 ? user?.user_email_id : "-" }}
                   </span>
                 </div>
                 <div class="pull-left w-100 margin-bottom-25">
@@ -166,10 +166,11 @@
                     <div class="input-group margin-bottom-5">
                       <mat-form-field>
                       <input type="text" id="datepicker" name="datepicker" class="form-control" value="{{ user?.birthdate }}"
-                        #datepicker="ngModel" [(ngModel)]="updateUser.datepicker" matInput [matDatepicker]="picker">
+                        #datepicker="ngModel" [(ngModel)]="updateUser.datepicker" matInput [matDatepicker]="picker" placeholder="Birth Date">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                       </mat-form-field>
+                      <!-- <span class="input-label" [ngClass]="{'input-label-focused': (datepicker.touched && datepicker?.value?.length > 0) || (user?.birthdate.length > 0) }">Birth Date</span> -->
                       <!-- <span class="input-label"
                         [ngClass]="{'input-label-focused': (datepicker.touched && datepicker?.value?.length > 0) || (user?.birthdate.length > 0) }">Birth
                         Date</span> -->
@@ -237,7 +238,7 @@
                       <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword1"
                       (click)="togglePassword1();">
                       <span class="input-label" [ngClass]="{'input-label-focused': old_change_password.touched && old_change_password?.value?.length > 0 }">Old Password</span>
-                      <label class="error" id="change_password_error" *ngIf="old_change_password.errors?.required && old_change_password.touched">Please Enter the Old password</label>
+                      <label class="error" id="change_password_error" *ngIf="old_change_password.errors?.required && old_change_password.touched || inavlid_changePasswordForm.old_change_password">Please Enter the Old password</label>
                       <label class="error" id="change_password_error" *ngIf="old_change_password.errors?.minlength && old_change_password.errors?.maxlength && new_change_confirm_password.touched">Old Password should be minimum 6 and maximum 20 characters</label>
                     </div>
   
@@ -247,7 +248,7 @@
                       <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword2"
                       (click)="togglePassword2();">
                       <span class="input-label" [ngClass]="{'input-label-focused': new_change_password.touched && new_change_password?.value?.length > 0 }">New Password</span>
-                      <label class="error" id="new_change_password_error" *ngIf="new_change_password.errors?.required && new_change_password.touched">Please Enter the new password</label>
+                      <label class="error" id="new_change_password_error" *ngIf="new_change_password.errors?.required && new_change_password.touched || inavlid_changePasswordForm.new_change_password">Please Enter the new password</label>
                       <label class="error" id="new_change_password_error" *ngIf="new_change_password.errors?.minlength && new_change_password.errors?.maxlength && new_change_confirm_password.touched">New Password should be minimum 6 and maximum 20 characters</label>
                     </div>
   
@@ -257,13 +258,13 @@
                       <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show confirm password" title="show confirm password" *ngIf="showPassword3"
                       (click)="togglePassword3();">
                       <span class="input-label" [ngClass]="{'input-label-focused': new_change_confirm_password.touched && new_change_confirm_password?.value?.length > 0 }">Confirm New Password</span>
-                      <label class="error" id="new_change_confirm_password_error" *ngIf="new_change_confirm_password.errors?.required && new_change_confirm_password.touched">Please Enter the new confirm password</label>
+                      <label class="error" id="new_change_confirm_password_error" *ngIf="new_change_confirm_password.errors?.required && new_change_confirm_password.touched || inavlid_changePasswordForm.new_change_confirm_password">Please Enter the new confirm password</label>
                       <label class="error" id="new_change_confirm_password_error" *ngIf="new_change_confirm_password.errors?.minlength && new_change_confirm_password.errors?.maxlength && new_change_confirm_password.touched">New Confirm Password should be minimum 6 and maximum 20 characters</label>
                       <label class="error" id="new_change_confirm_password_error" *ngIf="new_change_confirm_password.touched && new_change_confirm_password.dirty && new_change_password.value != new_change_confirm_password.value">New Password and Confirm new Password do not match</label>
                     </div>
   
                     <div class="margin-bottom-10 input-group center-align-content">
-                      <input type="submit" class="text-uppercase btn-oria btn-oria-big" id="change_pwd_sub" value="confirm" [disabled]="changePasswordForm.invalid">     
+                      <input type="submit" class="text-uppercase btn-oria btn-oria-big" id="change_pwd_sub" value="confirm">     
                     </div>
 
                   </form>  

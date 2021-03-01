@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UserService } from './../../shared/services/user.service';
 import { CommonService } from '../../shared/services/common.service';
+import { FormBuilder, Validators, FormGroup  } from '@angular/forms'
 //import { ClickElsewhereDirective } from '../../shared/directives/click-outside.directive.directive';
 @Component({
   selector: 'app-header',
@@ -19,10 +20,10 @@ export class HeaderComponent implements OnInit, OnChanges {
   statusMessage: any;
   backendErrorStatus: boolean = true;
   loadingIndicator: boolean = false;
-  userEmailLogin: any = {
-    login_email: null,
-    login_email_password: null
-  }
+  userEmailLogin = this.fb.group({
+    login_email: ['', [Validators.required, Validators.email]],
+    login_email_password: ['', Validators.required]
+  });
   userMobileLogin: any = {
     login_mobile: null,
     user_mob_password: null
@@ -90,7 +91,7 @@ public resetPasswordToast: boolean = false;
   @ViewChild('mobileRegisterForm', {static: false}) public mobileRegisterForm: NgForm;
   @ViewChild('emailForgotForm', {static: false}) public emailForgotForm: NgForm;
   @ViewChild('mobileForgotForm', {static: false}) public mobileForgotForm: NgForm;
-  constructor(private userService: UserService, private commonService: CommonService, private router: Router, private route: ActivatedRoute) { 
+  constructor(private userService: UserService, private commonService: CommonService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) { 
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
         this.mobileMenu = false;
@@ -443,6 +444,9 @@ public resetPasswordToast: boolean = false;
     )
   }
 
+  showLogin(){
+    this.showPop('signin_pop', null);
+  }
 
   onUserEmailRegister(userEmailRegister: any) { /* user login by email */
     console.log(userEmailRegister);
@@ -693,5 +697,7 @@ public resetPasswordToast: boolean = false;
     this.router.navigate(['/privacy_policy']);
     this.closePop('registerform');
   }
+
+  
  
 }

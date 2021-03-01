@@ -21,6 +21,7 @@ export class PlansComponent implements OnInit {
   constructor(private titleService: Title, private metaService: Meta, private commonService: CommonService, private plansService: PlansService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
+    
     this.contentHeight = this.commonService.pageHeight();        
     this.getAllPlans();
     this.language = localStorage.getItem('language');        
@@ -64,6 +65,7 @@ export class PlansComponent implements OnInit {
   }
 
   plansSubscribe() {
+    $('.modal').modal('hide');
     this.loadingIndicator = true;
     var sePlan = $(".plan_selction:checked").data("plan-info");
     console.log("Plans componenet : sePlan - "+sePlan);
@@ -82,5 +84,10 @@ export class PlansComponent implements OnInit {
     // )
     //this.router.navigate(['./plans/plans_summary', { 'sePlan': sePlan}]);
     this.router.navigate(['/plans/plans_summary'], {state: {sePlan}})
+  }
+
+  showPlansSubscribePop(){
+    $('.modal').modal('hide');
+      $('#plans_subscribe_pop').modal('show');
   }
 }

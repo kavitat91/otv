@@ -1796,7 +1796,7 @@ body {
     color: #212121;
     float: left;
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 400;
     padding: 8px 27px;
   }
   .nav-pills li a.active {
@@ -1893,7 +1893,7 @@ body {
   .password_toggle {
     cursor: pointer;
     position: absolute;
-    right: 3px;
+    right: 10px;
     top: 15px;
     width: 16px;
     z-index: 111;
@@ -2893,3 +2893,43 @@ body {
   
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.form-group{
+  position: relative;
+}
+
+.alert-danger {
+  color: #d60909;
+  background-color: transparent;
+  border-color: transparent;
+  
+}
+
+.alert {
+  position: relative;
+  padding: 0;
+  margin-bottom: 0;
+  border: 1px solid transparent;
+  border-radius: 0;
+  position: absolute;
+  top: 100%;
+  font-size: 12px;
+}
+
+span.input-label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.form-control{
+  color: #212121;
+  transition: 0.3s all;
+}
+
+.form-control:focus+.input-label, .input-label.touched {
+  top: -12px;
+  left: 0;
+  font-size: 12px;
+  transition: 0.3s all;
+}

@@ -20,7 +20,7 @@
               <li *ngFor="let m of header_tabs; let i = index;">
                 <ng-container *ngIf="m['display_title'] != 'Movies' && m['display_title'] != 'Jatras'">
                   <a routerLink="{{m['display_title'].toLowerCase() == 'all' ? '/' : m['home_link']}}" 
-                  routerLinkActive="active-menu" [routerLinkActiveOptions]="{ exact: true }" class="oriya-color1" id="{{m['home_link']}}">
+                  routerLinkActive="active-menu" class="oriya-color1" id="{{m['home_link']}}">
                     {{m['display_title'].toLowerCase() == "all" ? "Home" : m['display_title']}}
                   </a>
                  </ng-container>
@@ -38,7 +38,7 @@
           <a href="javascript:void(0);" class="language-menu" (click)="toggleLangOptions();">
             <i class="fa fa-language" aria-hidden="true"></i>
           </a>
-          <a routerLink="/plans" class="text-uppercase login" id="" routerLinkActive="active">Plans</a>
+          <a routerLink="/plans"  class="text-uppercase login" id="" routerLinkActive="active-menu">Plans</a>
           <a href="javascript:void(0);" class="text-uppercase before_login login" id="user_login"
             (click)="showPop('signin_pop');" *ngIf="!loginStatus">LogIn</a>
           <a href="javascript:void(0);" class="text-uppercase after_login" *ngIf="loginStatus"
@@ -189,19 +189,56 @@
                     *ngIf="errorStatus">{{statusMessage}}</label> -->
                 </div>
                 <div id="EmailSignIn" class="tab-pane fade in active">
-                  <form #emailLoginForm="ngForm" (ngSubmit)="onUserEmailLogin(userEmailLogin)">
-                    <div class="input-group signup_email_us us_show"
-                      [ngClass]="{ 'has-error': login_email.touched && login_email.invalid }">
-                      <input type="email" id="login_email" name="login_email" class="form-control" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$" value="" #login_email="ngModel"
-                        [(ngModel)]="userEmailLogin.login_email" (focus)="focusEmailLogin()" required>
-                      <span class="input-label" [ngClass]="{'input-label-focused': login_email.touched && login_email?.value?.length > 0 }">Email ID</span>
+                  <form [formGroup]="userEmailLogin" (ngSubmit)="onUserEmailLogin(userEmailLogin)">
+                    <div class="form-group signup_email_us us_show">
+                      <!-- <label for="name">Email ID</label> -->
+                      <input type="email" id="login_email" name="login_email" class="form-control" value="" formControlName="login_email" (focus)="focusEmailLogin()" required>
+                      <span [ngClass]="{touched: userEmailLogin.controls.login_email.value.length > 0}" class="input-label">Email ID</span>
                       <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter the email id</label> -->
-                      <label class="error" id="login_email_error"
+                      <!-- <label class="error" id="login_email_error"
                         *ngIf="login_email.required && login_email.touched">Please enter the email id</label>
                       <label class="error" id="login_email_error"
-                        *ngIf="login_email.pattern && login_email.touched">Email is invalid </label>
+                        *ngIf="login_email.pattern && login_email.touched">Email is invalid </label> -->
+                        <div class="alert alert-danger" *ngIf="!userEmailLogin.controls.login_email.valid && (userEmailLogin.controls.login_email.dirty ||userEmailLogin.controls.login_email.touched)">
+                          <div [hidden]="!userEmailLogin.controls.login_email.errors.required">
+                            Please enter the Email Id
+                          </div>
+                          <div [hidden]="!userEmailLogin.errors.email">
+                            Email is invalid
+                          </div>
+                        </div>
                     </div>
-                    <div class="input-group hide_password_group signup_password_us"
+                    <div class="form-group signup_email_us us_show">
+                      <!-- <label for="name">Password</label> -->
+                      <input [type]="showPassword ? 'text' : 'password'" id="login_email_password" name="login_email_password" class="form-control" value="" formControlName="login_email_password"
+                        (focus)="focusEmailLogin()" required>
+                      <span [ngClass]="{touched: userEmailLogin.controls.login_email_password.value.length > 0}" class="input-label">Password</span>
+                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
+                        title="hide confirm password" *ngIf="!showPassword" (click)="togglePassword();">
+                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd"
+                        alt="show confirm password" title="show confirm password" *ngIf="showPassword"
+                        (click)="togglePassword();">
+                        <div class="alert alert-danger" *ngIf="!userEmailLogin.controls.login_email_password.valid && (userEmailLogin.controls.login_email_password.dirty ||userEmailLogin.controls.login_email_password.touched)">
+                          <div [hidden]="!userEmailLogin.controls.login_email_password.errors.required">
+                            Please enter the password
+                          </div>
+                        </div>
+                    </div>
+                    <div class="text-center margin-bottom-15 margin-top-25 pull-left w-100 light">
+                      <input type="submit" class="text-uppercase btn-oria btn-oria-big login_sub" id="" value="Login">
+                    </div>
+                    <div class="text-center margin-bottom-10 margin-top-20 pull-left w-100 form_bottom">
+                      <a
+                        class="inline-block text-uppercase margin-bottom-15 font-semibold forgot_pass_tag margin-bottom-30 oriya-color4 "
+                        id="forgot_pass_email" (click)="showPop('forgot_password_pop', 'loginform')">forgot password ?</a>
+                    </div>
+                    <div class="text-center margin-bottom-25 margin-top-0 pull-left w-100 form_bottom">
+                      <span>Not a member?</span>
+                      <a href="javascript:void(0)" id="user_register1"
+                        class="inline-block text-uppercase oriya-color4 reg_user"
+                        (click)="showPop('register_pop', 'loginform');">&nbsp;Register</a>
+                    </div>
+                    <!-- <div class="input-group hide_password_group signup_password_us"
                       [ngClass]="{ 'has-error': login_email_password.touched && login_email_password.invalid }">
                       <input [type]="showPassword ? 'text' : 'password'" id="login_email_password"
                         name="login_email_password" class="form-control login_email_pwd" minlength="6" maxlength="20"
@@ -235,7 +272,7 @@
                       <a href="javascript:void(0)" id="user_register1"
                         class="inline-block text-uppercase oriya-color4 reg_user"
                         (click)="showPop('register_pop', 'loginform');">&nbsp;Register</a>
-                    </div>
+                    </div> -->
                     <!-- <div class="margin-bottom-20 margin-top-10 pull-left w-100 form_bottom center-align-content">
                   <a href="/auth/facebook" class="facebook_login"><img src="/assets/facebook_login" class="pull-left margin-right-15">Login with Facebook</a>
                 </div>	 -->
@@ -253,7 +290,7 @@
                       <span class="input-label"
                         [ngClass]="{'input-label-focused': login_mobile.touched && login_mobile?.value }">Mobile
                         Number</span>
-                      <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter mobile number</label>
+                      <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter mobile number</label> -->
                       <label class="error" id="login_mobile_error"
                         *ngIf="login_mobile.errors?.required && login_mobile.touched">Please enter your Mobile
                         Number </label>
@@ -275,7 +312,7 @@
                         (click)="togglePassword();">
                       <span class="input-label"
                         [ngClass]="{'input-label-focused': user_mob_password.touched && user_mob_password?.value?.length > 0 }">Password</span>
-                      <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please Enter Password</label>
+                      <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please Enter Password</label> -->
                       <label class="error" id="login_mobile_pwd_error"
                         *ngIf="user_mob_password.errors?.required && user_mob_password.touched">Please enter the
                         password</label>
@@ -726,3 +763,7 @@
       </div>
     </div>
   </div> 
+
+<!-- <app-episodedetails (fireLogin)="showLogin()" (fireWatchLogin)="showLogin()"></app-episodedetails>
+
+<app-itemdetails (fireLogin)="showLogin()" (fireWatchLogin)="showLogin()"></app-itemdetails> -->

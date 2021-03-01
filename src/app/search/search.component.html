@@ -24,7 +24,7 @@
 						
 						<!-- <h1 class="page-title pull-left w-100 margin-bottom-15" id="search_heading">Search Results(<span class="search_item_cnt"><%=@search_results.count%></span>)</h1>
 						<%end%>-->
-						<h1 class="page-title pull-left w-100 margin-bottom-15" id="search_heading" *ngIf="search_results1 && box.value.length != 0">Search Results(<span class="search_item_cnt">{{search_results.length}}</span>)</h1> 
+						<h1 class="page-title pull-left w-100 margin-bottom-15" id="search_heading" *ngIf="search_results1 && box.value.length != 0 && search_results.length > 0">Search Results(<span class="search_item_cnt">{{search_results.length}}</span>)</h1> 
 					</div>
           <div *ngIf="box.value.length !=0 && search_results?.length == 0" class="thumbnail-list-wrap shows-list-page pull-left w-100">
             <div id="search_all_results" class="thumbnail-list-wrap shows-list-page pull-left w-100">

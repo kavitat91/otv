@@ -1,0 +1,7 @@
+#plans_subscribe_pop .modal-dialog {
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}

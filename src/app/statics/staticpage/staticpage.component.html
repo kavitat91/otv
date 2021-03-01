@@ -24,24 +24,24 @@
                     <form #contactForm="ngForm" (ngSubmit)="onContactSubmit(contact)">
                       <div class="input-group query_type margin-bottom-25 margin-top-25">
                         <div class="custom-select">
-                          <select id="contact_us_query" name="contact_us_query" [(ngModel)]="contact.contact_us_query">
-                            <option value=""></option>
+                          <select id="contact_us_query" #contact_us_query="ngModel" name="contact_us_query" [(ngModel)]="contact.contact_us_query">
+                            <!-- <option value=""></option> -->
                             <option value="Billing">Billing</option>
                             <option value="Content Issue">Content Issue</option>
                             <option value="Account Information">Account Information</option>
                             <option value="Others">Others</option>
                           </select>
-                          <span class="input-label">Subscription</span>
+                          <span class="input-label" [ngClass]="{'input-label-focused': contact_us_query.touched && contact_us_query?.value?.length > 0 }">Subscription</span>
                         </div>
                       </div>
-                      <div class="input-group country"
-                        [ngClass]="{ 'has-error': contact_mobile.touched && contact_mobile.invalid }">
-                        <input type="text" id="" name="country_code" class="form-control country_code" value="+91"
-                          readonly="" autocomplete="new-countrycode">
-                        <input type="number" id="contact_mobile" name="contact_mobile" pattern="^[0-9_-]{10}$"
+                      <div class="input-group country">
+                        <!-- <input type="text" id="" name="country_code" class="form-control country_code" value="+91"
+                          readonly="" autocomplete="new-countrycode"> -->
+                        <input type="number" id="contact_mobile" name="contact_mobile" pattern="^[0-9_-]{10}$" class="form-control" #contact_mobile="ngModel" [(ngModel)]="contact.contact_mobile" required> 
+                          <!-- <input type="number" id="contact_mobile" name="contact_mobile" pattern="^[0-9_-]{10}$"
                           #contact_mobile="ngModel" [(ngModel)]="contact.contact_mobile" class="form-control" value=""
-                          required>
-                        <span class="input-label">Your Mobile Number</span>
+                          required> -->
+                        <span class="input-label" [ngClass]="{'input-label-focused': contact_mobile.touched && contact_mobile?.value?.length > 0 }">Your Mobile Number</span>
                         <label class="error" id="mobile_error"
                           *ngIf="contact_mobile.errors?.required && contact_mobile.touched">Please enter your Mobile
                           Number </label>
@@ -50,9 +50,8 @@
                           Please enter 10 digit mobile number
                         </label>
                       </div>
-                      <div class="input-group contact-email margin-bottom-15"
-                        [ngClass]="{ 'has-error': contact_email.touched && contact_email.invalid }">
-                        <input type="email" id="contact_email" name="contact_email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$" class="form-control"
+                      <div class="input-group contact-email margin-bottom-15">
+                        <input type="email" id="contact_email" name="contact_email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$" class="form-control email"
                           #contact_email="ngModel" [(ngModel)]="contact.contact_email" required value="">
                         <span class="input-label">Your Email ID</span>
                         <label class="error" id="email_error"
@@ -62,7 +61,7 @@
                       </div>
                       <div class="input-group query_description margin-bottom-35"
                         [ngClass]="{ 'has-error': query_description.touched && query_description.invalid }">
-                        <textarea id="query_description" class="form-control rounded margin-bottom-5"
+                        <textarea id="query_description" class="form-control rounded margin-bottom-5 querry"
                           name="query_description" #query_description="ngModel" [(ngModel)]="contact.query_description"
                           required="true" rows="2" resize="false" value=""></textarea>
                         <span class="input-label" style="top: 37px;">Enter Your Query</span>

@@ -57,6 +57,7 @@ export class UserComponent implements OnInit {
     reset_pwd: null,
     reset_con_pwd: null
   }
+  inavlid_changePasswordForm: any = {};
   constructor(private userService: UserService, private commonService: CommonService, private route: ActivatedRoute, private router: Router) { 
   }
 
@@ -140,7 +141,7 @@ export class UserComponent implements OnInit {
         this.updateUser = {
           user_profile_name: this.user.firstname,
           user_mobile_number: this.user.mobile_number,
-          user_email_address: this.user.email_id,
+          user_email_address: this.user.user_email_id,
           user_address: this.user.address,
           user_status: this.user.status,
           user_country: this.user.country,
@@ -175,24 +176,35 @@ export class UserComponent implements OnInit {
   }
 
   onChangePassword(changePassword: any) {
-    this.userService.changePassword(changePassword, this.sessionId).subscribe(
-      (user) => {
-        //this.updatePasswordToast = true;
-        this.changePasswordToast = true;
-        this.statusMessage = user['data']['message'];
-        setTimeout(() => {
-          this.router.navigate(['/users/account_details']);
-        }, 2500);
-      },
-      (error) => {
-        console.log(error);
-        this.changePasswordToast = true;
-        setTimeout(() => {
-          this.changePasswordToast = false;
-        }, 2500);
-        this.statusMessage = error.server_error_messsage;
-      }
-    )
+    if(!changePassword.old_change_password){
+      this.inavlid_changePasswordForm.old_change_password = true;
+    } else if(!changePassword.new_change_password){
+      this.inavlid_changePasswordForm.old_change_password = false;
+      this.inavlid_changePasswordForm.new_change_password = true;
+    } else if(!changePassword.new_change_confirm_password){
+      this.inavlid_changePasswordForm.new_change_password = false;
+      this.inavlid_changePasswordForm.new_change_confirm_password = true;
+    } else {
+      this.inavlid_changePasswordForm.new_change_confirm_password = false;
+      this.userService.changePassword(changePassword, this.sessionId).subscribe(
+        (user) => {
+          //this.updatePasswordToast = true;
+          this.changePasswordToast = true;
+          this.statusMessage = user['data']['message'];
+          setTimeout(() => {
+            this.router.navigate(['/users/account_details']);
+          }, 2500);
+        },
+        (error) => {
+          console.log(error);
+          this.changePasswordToast = true;
+          setTimeout(() => {
+            this.changePasswordToast = false;
+          }, 2500);
+          this.statusMessage = error.server_error_messsage;
+        }
+      )
+    }
   }
 
   onResetPassword(resetPassword: any) {

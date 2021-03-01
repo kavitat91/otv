@@ -93,7 +93,7 @@
                       ଦ୍ରଷ୍ଟବ୍ୟ: ଆପଣଙ୍କ ପ୍ଳାନ ଚୟନ କରନ୍ତୁ ଏବଂ ସବ୍ସକ୍ରାଇବ କରନ୍ତୁ ଏହାର ନିର୍ଦ୍ଧାରିତ ଦେୟ ପାଇଁ | ଏଠାର ଦେୟ ପ୍ରକ୍ରିୟା ସଂପୂର୍ଣ୍ଣ ସୁରକ୍ଷିତ ଅଟେ
                     </p>
                     </div>
-                  <a href="javascript:void(0);" (click)="plansSubscribe()" class="oriya-btn text-uppercase subs_plans_btn pull-left margint-top-25 margin-bottom-20" id="plan_sub">subscribe</a>
+                  <a href="javascript:void(0);" (click)="showPlansSubscribePop()" class="oriya-btn text-uppercase subs_plans_btn pull-left margint-top-25 margin-bottom-20" id="plan_sub">subscribe</a>
                   
                 </div>
                 
@@ -107,7 +107,7 @@
                         <tr>
                           <th class="text-uppercase">Date</th>
                           <th class="text-uppercase">Description</th>
-                          <th class="text-uppercase">Service Peroid</th>
+                          <th class="text-uppercase">Service Period</th>
                           <th class="text-uppercase">amount</th>
                         </tr>	
                       </thead>
@@ -145,3 +145,19 @@
       <input type ="hidden" name="returnUrl" value='' id="cashfree_return_url">
     </form> -->
 </section>
+
+<div class="modal small-popup" id="plans_subscribe_pop">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-left padding-left-30 padding-right-30">
+        <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Plan Summary</h1>
+        <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">
+          <span style="float:left;">12 months premium plan</span><span style="float:right;">₹ 365</span>
+        </p>
+        <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+          <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="plansSubscribe()">Proceed</a>          
+        </div>
+      </div>   
+    </div>
+  </div>
+</div>

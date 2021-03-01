@@ -47,7 +47,9 @@
             </li>
             <li class="pull-left d-none d-xl-block">
               <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 video_play" (click)="addToFavourites()">
-                <i class="fa fa-heart-o pull-left margin-right-10" aria-hidden="true"></i> Favourite
+                <i class="fa fa-heart-o pull-left margin-right-10" aria-hidden="true" *ngIf="!addedToFavouritesIcon"></i>
+                <i class="fa fa-heart pull-left margin-right-10" aria-hidden="true" *ngIf="addedToFavouritesIcon"></i>
+                Favourite
               </a>	
             </li>
             <li class="pull-left relative-content share_social_icons" (clickElsewhere)="closeShareVideo()">
@@ -147,7 +149,7 @@
       </div> 
     </div>
     
-    <div class="toster-message-wrap" id="removeFromFavourites" *ngIf="copyLinkPop">
+    <div class="toster-message-wrap" id="removeFromFavourites" *ngIf="deleteWatchlist">
       <div class="toster-message-wrap">
         <div class="center-align-content">
           <div class="toster-message">
@@ -259,4 +261,38 @@
       
 
     </div>
-  </section>        
+  </section>    
+  
+  <div class="modal small-popup" id="fav_login_confirm_pop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-left padding-left-30 padding-right-30">
+          <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Login</h1>
+          <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">
+            You have to login to add to favourites
+          </p>
+          <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop()">cancel</a>
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showFavPop('fav_login_confirm_pop')">Proceed</a>          
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  <div class="modal small-popup" id="watch_login_confirm_pop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-left padding-left-30 padding-right-30">
+          <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Login</h1>
+          <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">
+            You have to login to add to watchlist
+          </p>
+          <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop()">cancel</a>
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showWatchPop('watch_login_confirm_pop')">Proceed</a>          
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div>

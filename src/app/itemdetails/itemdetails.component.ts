@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { filter } from 'rxjs/operators';
@@ -81,6 +81,8 @@ export class ItemdetailsComponent implements OnInit {
   showContentId: string;
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
+  @Output() fireLogin = new EventEmitter<any>();
+  @Output() fireWatchLogin = new EventEmitter<any>();
 
   constructor(private pageService: PageService, private commonService: CommonService, private userService: UserService,
     private router: Router, private route: ActivatedRoute, location: Location, private titleService: Title, private metaService: Meta,
@@ -275,8 +277,9 @@ export class ItemdetailsComponent implements OnInit {
         this.videoLoginCheck = response["data"]["access_control"]["login_required"];
         this.videoPremiumCheck = response["data"]["access_control"]["is_free"];     
       }
-      this.videoURL = "https://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key="+ +"==|image="+this.itemDetails['thumbnails']['large_16_9']['url']+"|title="+this.itemDetails['title']+"|theme_type="+this.theme_type+"|channel_logo=|catalog_id="+this.itemDetails['catalog_id']+"|content_id="+this.itemDetails['content_id']+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.itemDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.itemDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.itemDetails['access_control']['mid_role_settings']['midroll_position'];
-      
+      //workaround
+      //this.videoURL = "https://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key="+ +"==|image="+this.itemDetails['thumbnails']['large_16_9']['url']+"|title="+this.itemDetails['title']+"|theme_type="+this.theme_type+"|channel_logo=|catalog_id="+this.itemDetails['catalog_id']+"|content_id="+this.itemDetails['content_id']+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.itemDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.itemDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.itemDetails['access_control']['mid_role_settings']['midroll_position'];
+      this.videoURL = "https://www.tarangplus.in/odiyatv_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image=https://d18yh0jkm7grap.cloudfront.net/images/Puni-Gadbad-%7C-Ep-296/5e73746719521d2685000012/xl_image_16_9/1584624792.jpg?1584624792|title=Puni%20Gadbad%20|%20Ep-296|theme_type=movie|channel_logo=|catalog_id=5d6789edbabd8163a0000016|content_id=5e737472babd8136e9000089|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=|mid_role_ad=|mid_role_pos=267$534$801$1068$1335|app_user_id=%20url";
       console.log("this.videoLoginCheck"+this.videoLoginCheck+"this.videoPremiumCheck"+this.videoPremiumCheck); 
     },  
     (error) => {
@@ -288,75 +291,92 @@ export class ItemdetailsComponent implements OnInit {
   showVideoPop() {
     this.child.showVideoPopChild(); 
   }
-  closePop() {
-    this.displayPopStatus = 'none';   
+
+  showFavPop(popId){
+    this.fireLogin.emit();
+  }
+
+  closePop(){
+    this.displayPopStatus = 'none';
+  }
+
+  showWatchPop(popId){
+    this.fireWatchLogin.emit();
   }
 
   addToFavourites(){
-    var favouritesParams = {};
-    favouritesParams["listitem"] = {};
-    favouritesParams["listitem"]["catalog_id"] = this.catalogId;
-    favouritesParams["listitem"]["content_id"] = this.showContentId;
-    this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
-      (res) => {
-        this.addToFavouritesList = true;
-        this.removeFromFavourites = true;
-        setTimeout(function(){
-          this.addToFavouritesList = false;
-          this.removeFromFavourites = false;
-        }.bind(this), 1200);
-      }, 
-      (error) => {
-        console.log(error);
-      }
-    )
+    if(!localStorage.getItem('otv_user_id')){
+      $('.modal').modal('hide');
+      $('#fav_login_confirm_pop').modal('show');
+    } else {
+      var favouritesParams = {};
+      favouritesParams["listitem"] = {};
+      favouritesParams["listitem"]["catalog_id"] = this.catalogId;
+      favouritesParams["listitem"]["content_id"] = this.showContentId;
+      this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
+        (res) => {
+          this.addToFavouritesList = true;
+          this.removeFromFavourites = true;
+          setTimeout(function(){
+            this.addToFavouritesList = false;
+            this.removeFromFavourites = false;
+          }.bind(this), 1200);
+        }, 
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
   }
 
   addWatchLater() {
-    var watchlaterParams = {};
-    watchlaterParams["listitem"] = {};
-    watchlaterParams["listitem"]["catalog_id"] = this.catalogId;
-    watchlaterParams["listitem"]["content_id"] = this.showContentId;
-    watchlaterParams["listitem"]["playlist_id"] = "";
-    console.log("this.playlistid"+this.playlistid);
-    if(this.playlistid && this.playlistid.length != 0) {
-      this.userService.removeWatchlist(this.sessionId, this.playlistid).subscribe(
-        (res) => {
-          if(this.playlistid.length != 0){
-            this.playlistid = '';
-            $(".watch_later_icon").attr("src","./assets/images/watchlater_add.svg");
-            this.watchLaterPop = false;
-            this.watchLaterRemovePop = true;
-            setTimeout(function() {
+    if(!localStorage.getItem('otv_user_id')){
+      $('.modal').modal('hide');
+      $('#watch_login_confirm_pop').modal('show');
+    } else {
+      var watchlaterParams = {};
+      watchlaterParams["listitem"] = {};
+      watchlaterParams["listitem"]["catalog_id"] = this.catalogId;
+      watchlaterParams["listitem"]["content_id"] = this.showContentId;
+      watchlaterParams["listitem"]["playlist_id"] = "";
+      console.log("this.playlistid"+this.playlistid);
+      if(this.playlistid && this.playlistid.length != 0) {
+        this.userService.removeWatchlist(this.sessionId, this.playlistid).subscribe(
+          (res) => {
+            if(this.playlistid.length != 0){
+              this.playlistid = '';
+              $(".watch_later_icon").attr("src","./assets/images/watchlater_add.svg");
               this.watchLaterPop = false;
-              this.watchLaterRemovePop = false;
-            }.bind(this), 1200);              
+              this.watchLaterRemovePop = true;
+              setTimeout(function() {
+                this.watchLaterPop = false;
+                this.watchLaterRemovePop = false;
+              }.bind(this), 1200);              
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-          
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-    else {
-      this.userService.addWatchLater(this.sessionId, watchlaterParams).subscribe(
-        (res) => {
-          this.playlistid = res["data"][0]["listitem_id"];
-          
-          $(".watch_later_icon").attr("src","./assets/images/watchlater_added.svg");
-          this.watchLaterRemovePop = false;
-          this.watchLaterPop = true;  
-          setTimeout(function() {
+        );
+      }
+      else {
+        this.userService.addWatchLater(this.sessionId, watchlaterParams).subscribe(
+          (res) => {
+            this.playlistid = res["data"][0]["listitem_id"];
+            
+            $(".watch_later_icon").attr("src","./assets/images/watchlater_added.svg");
             this.watchLaterRemovePop = false;
-            this.watchLaterPop = false;            
-          }.bind(this), 1200);  
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-   
+            this.watchLaterPop = true;  
+            setTimeout(function() {
+              this.watchLaterRemovePop = false;
+              this.watchLaterPop = false;            
+            }.bind(this), 1200);  
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
 
