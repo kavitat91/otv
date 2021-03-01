@@ -20,7 +20,7 @@
               <li *ngFor="let m of header_tabs; let i = index;">
                 <ng-container *ngIf="m['display_title'] != 'Movies' && m['display_title'] != 'Jatras'">
                   <a routerLink="{{m['display_title'].toLowerCase() == 'all' ? '/' : m['home_link']}}" 
-                  routerLinkActive="active-menu" class="oriya-color1" id="{{m['home_link']}}">
+                  routerLinkActive="active-menu" [routerLinkActiveOptions]="{exact:true}" class="oriya-color1" id="{{m['home_link']}}">
                     {{m['display_title'].toLowerCase() == "all" ? "Home" : m['display_title']}}
                   </a>
                  </ng-container>
