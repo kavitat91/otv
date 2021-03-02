@@ -21,7 +21,7 @@
                     us</h1>
                   <div class="contact-form-wrap">
                     <input type="hidden" id="user_region" name="" value="IN">
-                    <form #contactForm="ngForm" (ngSubmit)="onContactSubmit(contact)">
+                    <form #contact="ngForm" (ngSubmit)="onContactSubmit(contact)">
                       <div class="input-group query_type margin-bottom-25 margin-top-25">
                         <div class="custom-select">
                           <select id="contact_us_query" #contact_us_query="ngModel" name="contact_us_query" [(ngModel)]="contact.contact_us_query">
@@ -34,7 +34,7 @@
                           <span class="input-label" [ngClass]="{'input-label-focused': contact_us_query.touched && contact_us_query?.value?.length > 0 }">Subscription</span>
                         </div>
                       </div>
-                      <div class="input-group country">
+                      <div class="input-group name">
                         <!-- <input type="text" id="" name="country_code" class="form-control country_code" value="+91"
                           readonly="" autocomplete="new-countrycode"> -->
                         <input type="number" id="contact_mobile" name="contact_mobile" pattern="^[0-9_-]{10}$" class="form-control" #contact_mobile="ngModel" [(ngModel)]="contact.contact_mobile" required> 
@@ -43,10 +43,10 @@
                           required> -->
                         <span class="input-label" [ngClass]="{'input-label-focused': contact_mobile.touched && contact_mobile?.value?.length > 0 }">Your Mobile Number</span>
                         <label class="error" id="mobile_error"
-                          *ngIf="contact_mobile.errors?.required && contact_mobile.touched">Please enter your Mobile
+                          *ngIf="contact_mobile.touched && contact_mobile?.value?.length < 0">Please enter your Mobile
                           Number </label>
                         <label class="error" id="mobile_error"
-                          *ngIf="contact_mobile.errors?.pattern && contact_mobile.touched">
+                          *ngIf="contact_mobile.invalid && contact_mobile.touched && contact_mobile?.value?.length > 0">
                           Please enter 10 digit mobile number
                         </label>
                       </div>
@@ -55,9 +55,9 @@
                           #contact_email="ngModel" [(ngModel)]="contact.contact_email" required value="">
                         <span class="input-label">Your Email ID</span>
                         <label class="error" id="email_error"
-                          *ngIf="contact_email.errors?.required && contact_email.touched">Please enter your Email ID </label>
+                          *ngIf="contact_email.required && contact_email.touched">Please enter your Email ID </label>
                           <label class="error" id="email_error"
-                          *ngIf="contact_email.errors?.pattern && contact_email.touched">Email is invalid </label>
+                          *ngIf="contact_email.pattern && contact_email.touched">Email is invalid </label>
                       </div>
                       <div class="input-group query_description margin-bottom-35"
                         [ngClass]="{ 'has-error': query_description.touched && query_description.invalid }">

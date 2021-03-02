@@ -130,7 +130,7 @@
                         value="{{ user?.email_id }}" #user_email_address="ngModel" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$"
                         [(ngModel)]="updateUser.user_email_address">
                       <span class="input-label"
-                        [ngClass]="{'input-label-focused': (user_email_address.touched && user_email_address?.value?.length > 0) || (user?.email_id?.length > 0) }">Email</span>
+                        [ngClass]="{'input-label-focused': (user_email_address.touched && user_email_address?.value?.length > 0) || (user_email_address?.value?.length > 0) }">Email</span>
                       <label class="error" id="user_email_error"
                         *ngIf="user_email_address.touched && user_email_address.invalid">Email is invalid</label>
                       
@@ -452,7 +452,7 @@
                     </ng-container>                      
                   </div>
 
-                  <div class="row" id="no_search_results_wrap" *ngIf="watch_list_items_count == 0">
+                  <div class="row" id="no_search_results_wrap" *ngIf="favourite_list_items_count == 0">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- no-content-wrap text-center" id="no_search_results">
                       <p class="margin-bottom-5 font-medium ms-color2"><strong>Create your list now!</strong></p>
                       <p class="font-light margin-bottom-25 ms-color5">Add movies, shows and songs to your Watchlist by pressing the 'Watch Later' button.</p>

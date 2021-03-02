@@ -73,8 +73,11 @@ export class EpisodedetailsComponent implements OnInit {
   signed_url: any;
   contentHeight: number;
   tvShowContentId: string;
-  addedToFavouritesIcon: boolean;
+  addedToFavouritesIcon: boolean = false;
   deleteWatchlist:boolean = false
+  showContentId: string;
+  favouritesList: any;
+  currentItem_listitem_id: string;
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
   @Output() fireLogin = new EventEmitter<any>();
@@ -105,6 +108,7 @@ export class EpisodedetailsComponent implements OnInit {
     localStorage.removeItem('otv_user_sub_status');
     localStorage.removeItem('otv_user_played_time');
     localStorage.removeItem('loginPop');
+    this.favouritesList = JSON.parse(localStorage.getItem('favouritesList'));
     if(window.outerWidth < 1200) {
       this.mobileNav = true;
       console.log("mobileNav"+this.mobileNav);
@@ -131,6 +135,7 @@ export class EpisodedetailsComponent implements OnInit {
         this.appShareUrl = this.episodeDetails['internal_share_url'].split("?")[1];
         this.catalogId = this.episodeDetails['catalog_id'];
         this.tvShowContentId = response.data.content_id;
+        this.currentItem_listitem_id = response.data.listitem_id;
         
         this.application = "Tarangplus-web";
         this.language1 = this.episodeDetails['language'];
@@ -145,6 +150,14 @@ export class EpisodedetailsComponent implements OnInit {
         this.userPlanType = "NA";
         this.userPlan = "NA";
         this.analyticUserId = "NA";
+        let favList = JSON.parse(localStorage.getItem('favouritesList'));
+        for(let i=0; i<favList.length; i++){
+          if(favList[i].content_id == this.tvShowContentId){
+            this.addedToFavouritesIcon = true;
+          //  this.currentItem_listitem_id = favList[i].listitem_id;
+            break;
+          } 
+        }
         /* this.new_play_url = this.commonService.getPlayUrlKey(this.episodeDetails);
         console.log("this.new_play_url"+this.new_play_url); */
         //this.videoURL = "https://www.tarangplus.in/odiyatv_player/demo/embed.html?contenturl=ydUll0+UkrHTPrZCQ56A0P/E+JM3zdCJwgnp59m48R4yP4CkZCwmtn0mDVfOmagNfLk7QltalupeD6nYr971XSLDKRzbVCSY+6SzDFj4m2ALP6/PfYuwxS4N9hq7HC6J|key=uFNtbotlPCR7OlKdbtdaSg==|image=https://d18yh0jkm7grap.cloudfront.net/images/Agyan-Mind-Kale-Ki/5eb264b219521d5da6000013/large_16_9/1589262111.jpg?1589262111|title=Agyan%20Mind%20Kale%20Ki|theme_type=movie|channel_logo=|catalog_id=5d6789edbabd8163a0000016|content_id=5eb264bc3326af455e000090|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]|mid_role_ad=http://adex.adchakra.net/KIRTI/openx-2.8.9/www/delivery/fc.php?script=bannerTypeHtml:vastInlineBannerTypeHtml:vastInlineHtml&zones=pre-roll:0.0-0=1&nz=1&source=&r=1234&block=1&format=vast&charset=UTF-8&version=3.0|mid_role_pos=";
@@ -152,6 +165,9 @@ export class EpisodedetailsComponent implements OnInit {
         //this.videoURL = "http://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image="+this.episodeDetails['thumbnails']['xl_image_16_9']['url']+"|title="+this.title+"|theme_type=movie|channel_logo=|catalog_id="+this.catalogId+"|content_id="+this.contentId+"|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad="+this.episodeDetails['access_control']['pre_role_settings']['mobile_ads_url']+"|mid_role_ad="+this.episodeDetails['access_control']['mid_role_settings']['mobile_ads_url']+"|mid_role_pos="+this.episodeDetails['access_control']['mid_role_settings']['midroll_position'].join("$")+"|app_user_id="; 
         this.videoURL ="https://www.tarangplus.in/odiyatv_player/demo/embed.html?contenturl=kDsOUyP4l17bDz3kIA6Yp73j8DMg1SdVQClYjWdIsl+LNJtj3tF+VxAxChyEI+17ioXdV+FaX8kmTLTNXIcTJJhV+gYbwcD5dqhOsPGgvTaHaaYfB2c760y5ZnHpby5Y|key=cOfRBBPaW2kIZQWQ6NiFbw==|image=https://d18yh0jkm7grap.cloudfront.net/images/Puni-Gadbad-%7C-Ep-296/5e73746719521d2685000012/xl_image_16_9/1584624792.jpg?1584624792|title=Puni%20Gadbad%20|%20Ep-296|theme_type=movie|channel_logo=|catalog_id=5d6789edbabd8163a0000016|content_id=5e737472babd8136e9000089|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=|mid_role_ad=|mid_role_pos=267$534$801$1068$1335|app_user_id=%20url";
         //this.videoURL="http://instaott-videos.s3-ap-southeast-1.amazonaws.com/asianet_player/demo/embed.html?contenturl=8HmcN1Lm5Cjr9tCAnFFVw4r6LOwZOVrTAiEa26fXLLtQQ1TNSYC4vt8mtNSvj4c9EMdbtMaPGswdQrtBxNNeQlj4Wpyrz7Pp4UUwXiIZtOP059L8UtjLYKwD5WeL8IUh|key=7zHFlC48y5hx2QR/+0vPhA==|image=https://d18yh0jkm7grap.cloudfront.net/images/A-Ki-Prema-Helare/5d6a02bc19521d7e8400006b/large_16_9/1584603678.jpg?1584603678|title=A Ki Prema Helare|theme_type=movie|channel_logo=|catalog_id=5d529839babd81605300004b|content_id=5d6a02bcbabd8163a00005a1|genre=crime|language=hindi|category=bollywood classic|preview_avail=false|is_premium=false|pre_role_ad=https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]|mid_role_ad=http://adex.adchakra.net/KIRTI/openx-2.8.9/www/delivery/fc.php?script=bannerTypeHtml:vastInlineBannerTypeHtml:vastInlineHtml&zones=pre-roll:0.0-0=1&nz=1&source=&r=1234&block=1&format=vast&charset=UTF-8&version=3.0|mid_role_pos=|app_user_id=";
+
+
+        
 
         this.pageService.getCatalogDetails(this.language, this.catalogName).subscribe(
           (catResponse) => {
@@ -225,55 +241,75 @@ export class EpisodedetailsComponent implements OnInit {
   }
 
   addToFavourites(){
-    if(!localStorage.getItem('otv_user_id')){
+    let sId = localStorage.getItem('otv_user_id');
+    if(!sId){
       $('.modal').modal('hide');
       $('#fav_login_confirm_pop').modal('show');
     } else {
-      var favouritesParams = {};
-      favouritesParams["listitem"] = {};
-      favouritesParams["listitem"]["catalog_id"] = this.catalogId;
-      favouritesParams["listitem"]["content_id"] = this.tvShowContentId;
-      this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
-        (res) => {
-          this.addedToFavouritesIcon = !this.addedToFavouritesIcon;
-          this.addToFavouritesList = true;
-          this.removeFromFavourites = true;
-          setTimeout(function(){
-            this.addToFavouritesList = false;
-            this.removeFromFavourites = false;
-          }.bind(this), 1200);
-        }, 
-        (error) => {
-          console.log(error);
-        }
-      ) 
+      if(!this.addedToFavouritesIcon){
+        var favouritesParams = {};
+        favouritesParams["listitem"] = {};
+        favouritesParams["listitem"]["catalog_id"] = this.catalogId;
+        favouritesParams["listitem"]["content_id"] = this.tvShowContentId;
+        this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
+          (res) => {
+            this.addedToFavouritesIcon = true;
+            this.addToFavouritesList = true;
+            //this.removeFromFavourites = true;
+            setTimeout(function(){
+              this.addToFavouritesList = false;
+              //this.removeFromFavourites = false;
+            }.bind(this), 1200);
+
+            this.getFavourites(sId);
+          }, 
+          (error) => {
+            console.log(error);
+          }
+        ) 
+      } else {
+        this.removeFavourites(sId);
+      }
     }
   }
 
-  removeFavourite(itemId: any) {
-    this.loadingIndicator = true;
-    this.userService.removeFavourite(this.sessionId, itemId).subscribe(
-      (response) => {
-        this.loadingIndicator = false;
-        console.log(response);
-        $("#item_"+itemId).hide();
-        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-        //$("#watch_list_delete_toast").show().fadeOut(4500);
-        this.deleteWatchlist = true;
-        setTimeout(function() {
-          this.deleteWatchlist = false;
-        }.bind(this), 4500);  
-        var item_cnt = response.items_count;
-        if(item_cnt == 0){
-          window.location.reload();
+  getFavourites(sId){
+    this.userService.favourites(sId).subscribe(
+      (res) => {
+        let favourite_list_items = res.data.items;
+        console.log("favourites", favourite_list_items);
+        localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
+        this.addedToFavouritesIcon = false;
+        for(let i=0; i<favourite_list_items.length; i++){
+          if(favourite_list_items[i].content_id == this.tvShowContentId){
+            this.addedToFavouritesIcon = true;
+          //  this.currentItem_listitem_id = favourite_list_items[i].listitem_id;
+            break;
+          }
         }
       },
       (error) => {
-        console.log(error);      
-        this.loadingIndicator = false;  
-        //this.statusMessage = error.server_error_messsage;
+        console.log(error.server_error_messsage);
       }
-    )      
+    )
+  }
+
+  removeFavourites(sId) {
+    this.userService.removeFavourite(this.sessionId, this.currentItem_listitem_id).subscribe(
+      (response) => {   
+        console.log(response);
+        //$("#watch_list_delete_toast").show().fadeOut(4500);
+        this.deleteWatchlist = true;
+        this.addedToFavouritesIcon = false;
+        setTimeout(function() {
+          this.deleteWatchlist = false;
+        }.bind(this), 4500);  
+        this.getFavourites(sId);
+      },
+      (error) => {
+        console.log(error.server_error_messsage);
+      }
+    )         
   }
 
   addWatchLater() {

@@ -38,9 +38,9 @@
 					</div>
           <div class="thumbnail-list-wrap shows-list-page pull-left w-100" id="trending_results">			
             
-            <div *ngFor="let s of search_results; let i=index;" class="thumbnail-search-list-box margin-bottom-20 relative-content">	
+            <div *ngFor="let s of search_results; let i=index;" (click)="onClickSearchResult(s)" class="thumbnail-search-list-box margin-bottom-20 relative-content">	
               <div class="item-image">
-                  <a href="">
+                  <a>
                     <img class="img-fluid" [src]="s.thumbnails?.medium_16_9?.url">
                   </a>
                 </div>

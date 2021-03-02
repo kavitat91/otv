@@ -9,6 +9,7 @@ import { SEOService } from '../shared/services/seo.service';
 import { Location } from "@angular/common";
 import { globals } from '../globals/globals';
 import { VideopopupComponent } from './../videopopup/videopopup.component';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 
 @Component({
   selector: 'app-itemdetails',
@@ -79,6 +80,10 @@ export class ItemdetailsComponent implements OnInit {
   addToFavouritesList: boolean = false;
   removeFromFavourites: boolean = false;
   showContentId: string;
+  favouritesList: any;
+  addedToFavouritesIcon: boolean = false;
+  deleteWatchlist: boolean = false;
+  currentItem_listitem_id: string;
 
   @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
   @Output() fireLogin = new EventEmitter<any>();
@@ -107,7 +112,7 @@ export class ItemdetailsComponent implements OnInit {
     this.fbKey = globals.FACEBOOK_APP_KEY; 
     this.site = globals.site;
     this.contentHeight = this.commonService.pageHeight() + 81;        
-
+    this.favouritesList = JSON.parse(localStorage.getItem('favouritesList'));
     if(window.outerWidth < 1200) {
       this.mobileNav = true;
       console.log("mobileNav"+this.mobileNav);
@@ -118,6 +123,8 @@ export class ItemdetailsComponent implements OnInit {
       console.log("mobileNav"+this.mobileNav);
     }         
   }
+
+  
   
   getItemDetails() {
     console.log("1111111")
@@ -125,6 +132,7 @@ export class ItemdetailsComponent implements OnInit {
     this.language = localStorage.getItem('language');
   	this.pageService.getItemDetails(this.language, this.catalogName, this.showName).subscribe(
   	(response) => {
+
       /* this.router.events.subscribe((ev) => {
         this.seoService.updateTitle(response['title']);
           this.seoService.updateKeywords(response['keywords']);
@@ -160,6 +168,14 @@ export class ItemdetailsComponent implements OnInit {
         this.userPlan = "NA";
         this.analyticUserId = "NA";
         this.loadingIndicator = true;
+        let favList = JSON.parse(localStorage.getItem('favouritesList'));
+        for(let i=0; i<favList; i++){
+          if(favList[i].content_id == this.contentId){
+            this.addedToFavouritesIcon = true;
+            this.currentItem_listitem_id = favList[i].listitem_id;
+            break;
+          } 
+        }
         
         this.pageService.getCatalogDetails(this.language, this.catalogName).subscribe(
           (catResponse) => {
@@ -305,28 +321,75 @@ export class ItemdetailsComponent implements OnInit {
   }
 
   addToFavourites(){
-    if(!localStorage.getItem('otv_user_id')){
+    let sId = localStorage.getItem('otv_user_id');
+    if(!sId){
       $('.modal').modal('hide');
       $('#fav_login_confirm_pop').modal('show');
     } else {
-      var favouritesParams = {};
-      favouritesParams["listitem"] = {};
-      favouritesParams["listitem"]["catalog_id"] = this.catalogId;
-      favouritesParams["listitem"]["content_id"] = this.showContentId;
-      this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
-        (res) => {
-          this.addToFavouritesList = true;
-          this.removeFromFavourites = true;
-          setTimeout(function(){
-            this.addToFavouritesList = false;
-            this.removeFromFavourites = false;
-          }.bind(this), 1200);
-        }, 
-        (error) => {
-          console.log(error);
-        }
-      )
+      if(!this.addedToFavouritesIcon){
+        var favouritesParams = {};
+        favouritesParams["listitem"] = {};
+        favouritesParams["listitem"]["catalog_id"] = this.catalogId;
+        favouritesParams["listitem"]["content_id"] = this.showContentId;
+        this.userService.addToFavourites(this.sessionId, favouritesParams).subscribe(
+          (res) => {
+            this.addToFavouritesList = true;
+            //this.removeFromFavourites = true;
+            setTimeout(function(){
+              this.addToFavouritesList = false;
+            //  this.removeFromFavourites = false;
+            }.bind(this), 1200);
+            this.getFavourites(sId);
+
+          }, 
+          (error) => {
+            console.log(error);
+          }
+        )
+      } else {
+        this.removeFavourites(sId);
+      }
     }
+  }
+
+  getFavourites(sId){
+    this.userService.favourites(sId).subscribe(
+      (res) => {
+        let favourite_list_items = res.data.items;
+        console.log("favourites", favourite_list_items);
+        localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
+        for(let i=0; i<favourite_list_items.length; i++){
+          if(favourite_list_items[i].content_id == this.showContentId){
+            this.addedToFavouritesIcon = true;
+            this.currentItem_listitem_id = favourite_list_items[i].listitem_id;
+            break;
+          } else {
+            this.addedToFavouritesIcon = false;
+          }
+        }
+      },
+      (error) => {
+        console.log(error.server_error_messsage);
+      }
+    )
+  }
+
+  removeFavourites(sId){
+    this.userService.removeFavourite(this.sessionId, this.currentItem_listitem_id).subscribe(
+      (response) => {   
+        console.log(response);
+        //$("#watch_list_delete_toast").show().fadeOut(4500);
+        this.deleteWatchlist = true;
+        this.addedToFavouritesIcon = false;
+        setTimeout(function() {
+          this.deleteWatchlist = false;
+        }.bind(this), 4500);  
+        this.getFavourites(sId);
+      },
+      (error) => {
+        console.log(error.server_error_messsage);
+      }
+    )    
   }
 
   addWatchLater() {

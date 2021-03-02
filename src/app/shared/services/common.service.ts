@@ -63,6 +63,9 @@ export class CommonService {
     localStorage.removeItem('otv_user_login_id');
     localStorage.removeItem('otv_user_login_type');
     localStorage.removeItem('otv_user_pack_status');
+    localStorage.removeItem('favouritesList');
+    localStorage.removeItem('rzp_device_id');
+    localStorage.removeItem('continueWatchItem');
   }
   getItemURL(i: any) {
     //console.log(i);

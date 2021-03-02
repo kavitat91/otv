@@ -3,7 +3,6 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UserService } from './../../shared/services/user.service';
 import { CommonService } from '../../shared/services/common.service';
-import { FormBuilder, Validators, FormGroup  } from '@angular/forms'
 //import { ClickElsewhereDirective } from '../../shared/directives/click-outside.directive.directive';
 @Component({
   selector: 'app-header',
@@ -20,38 +19,44 @@ export class HeaderComponent implements OnInit, OnChanges {
   statusMessage: any;
   backendErrorStatus: boolean = true;
   loadingIndicator: boolean = false;
-  userEmailLogin = this.fb.group({
-    login_email: ['', [Validators.required, Validators.email]],
-    login_email_password: ['', Validators.required]
-  });
+  userEmailLogin: any = {
+    login_email: null,
+    login_email_password: null
+  }
+  userEmailLoginInvalid: any = {}
   userMobileLogin: any = {
     login_mobile: null,
     user_mob_password: null
   }
+  userMobileLoginInvalid: any = {}
   userEmailRegister: any = {
     register_name: null,
     register_password: null,
     email_agree_terms: null    
   }
+  userEmailRegisterInvalid: any = {}
   userMobileRegister: any = {
     user_register_mobile: null,
     mob_register_password: null,    
     phone_agree_terms: null,
     registerMobileOTP: null
   }
+  userMobileRegisterInvalid: any = {}
   emailForgotPassword: any = {
     frgt_pwd_email_id: null
   }
+  emailForgotPasswordInvalid: any = {}
   userMobileForgot: any = {
     frgt_pwd_mobile_no: null,
     frgt_pwd_otp: null
   }
+  userMobileForgotInvalid: any = {}
   resetPassword: any = {
     reset_otp: null,
     reset_pwd: null,
     reset_con_pwd: null
   }
-
+  resetPasswordInvalid: any = {}
   user_det: any;
   userAccountMenu: any = false;
   langOptions: any = false;
@@ -91,7 +96,7 @@ public resetPasswordToast: boolean = false;
   @ViewChild('mobileRegisterForm', {static: false}) public mobileRegisterForm: NgForm;
   @ViewChild('emailForgotForm', {static: false}) public emailForgotForm: NgForm;
   @ViewChild('mobileForgotForm', {static: false}) public mobileForgotForm: NgForm;
-  constructor(private userService: UserService, private commonService: CommonService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder) { 
+  constructor(private userService: UserService, private commonService: CommonService, private router: Router, private route: ActivatedRoute) { 
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
         this.mobileMenu = false;
@@ -177,13 +182,15 @@ public resetPasswordToast: boolean = false;
   }
 
   tabChange(prevtabType: string) {
+    $('label.error').remove();
     if(prevtabType == 'emaillogin') {
-      this.emailLoginForm.reset();   
+      this.mobileNoLoginForm.reset();
       this.statusMessage = '';  
       this.errorStatus = false; 
     }
     if(prevtabType == 'mobilelogin') {
-      this.mobileNoLoginForm.reset();   
+      this.emailLoginForm.reset(); 
+         
       this.countryCodeStatus = false; 
       this.errorStatus = false;  
     }
@@ -348,62 +355,20 @@ public resetPasswordToast: boolean = false;
   }
 
   onUserEmailLogin(userLogin: any) { /* user login by email */
-    this.loadingIndicator = true;
+    if(!userLogin.form.controls.login_email.value){
+      this.userEmailLoginInvalid.login_email = true;
+    } else if(!userLogin.form.controls.login_email_password.value){
+      this.userEmailLoginInvalid.login_email = false;
+      this.userEmailLoginInvalid.login_email_password = true;
+    } else{
+      this.userEmailLoginInvalid.login_email_password = false;
+      this.loadingIndicator = true;
     this.userService.emailLogin(userLogin).subscribe(
       (response) => {
         var userId = response['data']['session'];
         
-      this.userService.userDetails(response['data']['session']).subscribe(
-        (user) => {
-          this.loadingIndicator = false;
-          if(user["data"]["login_type"] == "msisdn") {
-            var type = "mobileno";
-          }
-          else {
-            var type = "email";
-          }
-          this.user_det = {
-            status: true,
-            user_id: userId,
-            user_login_type: type,
-            user_login_id: user["data"]["primary_id"],
-            user_analy_id: user['data']['user_id'],
-            user_sub_st: user['data']['is_subscribed']
-          }
-          this.commonService.setOtvUserLocalStorage(this.user_det);
-          window.location.reload();
-        },
-        (error: any) => {
-          this.loadingIndicator = false;
-          this.errorStatus = true;
-          this.statusMessage = error.server_error_messsage;       
-          // setTimeout(function() {
-          //   this.errorStatus = false;
-          // }.bind(this), 4500);
-        }
-      )
-        
-      },
-      (error: any) => {
-        this.loadingIndicator = false;
-        this.errorStatus = true;
-        this.statusMessage = error.server_error_messsage;
-        // setTimeout(function() {
-        //   this.errorStatus = false;
-        // }.bind(this), 4500);
-      }
-    );
-  }
-
-  onUserMobileLogin(userLogin: any) { /* user login by mobile number */
-    console.log(userLogin);
-    this.loadingIndicator = true;
-    this.userService.mobileLogin(userLogin).subscribe(
-      (response: Response) => {
-        var userId = response['data']['session'];
         this.userService.userDetails(response['data']['session']).subscribe(
           (user) => {
-            console.log("user:"+user);
             this.loadingIndicator = false;
             if(user["data"]["login_type"] == "msisdn") {
               var type = "mobileno";
@@ -420,28 +385,103 @@ public resetPasswordToast: boolean = false;
               user_sub_st: user['data']['is_subscribed']
             }
             this.commonService.setOtvUserLocalStorage(this.user_det);
+            this.getFavourites();
             window.location.reload();
           },
           (error: any) => {
             this.loadingIndicator = false;
             this.errorStatus = true;
-            this.statusMessage = error.server_error_messsage;
-            setTimeout(function() {
-              this.errorStatus = false;
-            }.bind(this), 4500);
+            this.statusMessage = error.server_error_messsage;       
+            // setTimeout(function() {
+            //   this.errorStatus = false;
+            // }.bind(this), 4500);
           }
         )
+          
+        },
+        (error: any) => {
+          this.loadingIndicator = false;
+          this.errorStatus = true;
+          this.statusMessage = error.server_error_messsage;
+          // setTimeout(function() {
+          //   this.errorStatus = false;
+          // }.bind(this), 4500);
+        }
+      );
+    }
+  }
 
+  getFavourites(){
+    let sId = localStorage.getItem('otv_user_id');
+    let favContentIds = [];
+    this.userService.favourites(sId).subscribe(
+      (res) => {
+        let favourite_list_items = res.data.items;
+        console.log("favourites", favourite_list_items);
+        localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
       },
-      (error: any) => {
-        this.loadingIndicator = false;
-        this.errorStatus = true;
+      (error) => {
         this.statusMessage = error.server_error_messsage;
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
       }
     )
+  }
+
+  onUserMobileLogin(userLogin: any) { /* user login by mobile number */
+    if(!userLogin.login_mobile){
+      this.userMobileLoginInvalid.login_mobile = true;
+    } else if(!userLogin.user_mob_password){
+      this.userMobileLoginInvalid.login_mobile = false;
+      this.userMobileLoginInvalid.user_mob_password = true;
+    } else{
+      this.userMobileLoginInvalid.user_mob_password = false;
+      console.log(userLogin);
+      this.loadingIndicator = true;
+      this.userService.mobileLogin(userLogin).subscribe(
+        (response: Response) => {
+          var userId = response['data']['session'];
+          this.userService.userDetails(response['data']['session']).subscribe(
+            (user) => {
+              console.log("user:"+user);
+              this.loadingIndicator = false;
+              if(user["data"]["login_type"] == "msisdn") {
+                var type = "mobileno";
+              }
+              else {
+                var type = "email";
+              }
+              this.user_det = {
+                status: true,
+                user_id: userId,
+                user_login_type: type,
+                user_login_id: user["data"]["primary_id"],
+                user_analy_id: user['data']['user_id'],
+                user_sub_st: user['data']['is_subscribed']
+              }
+              this.commonService.setOtvUserLocalStorage(this.user_det);
+              this.getFavourites();
+              window.location.reload();
+            },
+            (error: any) => {
+              this.loadingIndicator = false;
+              this.errorStatus = true;
+              this.statusMessage = error.server_error_messsage;
+              setTimeout(function() {
+                this.errorStatus = false;
+              }.bind(this), 4500);
+            }
+          )
+
+        },
+        (error: any) => {
+          this.loadingIndicator = false;
+          this.errorStatus = true;
+          this.statusMessage = error.server_error_messsage;
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
+        }
+      )
+    }
   }
 
   showLogin(){
@@ -449,46 +489,74 @@ public resetPasswordToast: boolean = false;
   }
 
   onUserEmailRegister(userEmailRegister: any) { /* user login by email */
-    console.log(userEmailRegister);
-    this.loadingIndicator = true;
-    this.userService.emailRegister(userEmailRegister).subscribe(
-      (response) => {
-        console.log(response);
-        this.errorStatus = true;
-        this.statusMessage = "Confirmation email is sent to your email address";
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
-      },
-      (error) => {
-        console.log(error);
-        this.loadingIndicator = false;
-        this.errorStatus = true;
-        this.statusMessage = error.server_error_messsage;
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
+    if(!userEmailRegister.register_name){
+      this.userEmailRegisterInvalid.register_name = true;
+    } else if(!userEmailRegister.user_register_email){
+      this.userEmailRegisterInvalid.register_name = false;
+      this.userEmailRegisterInvalid.user_register_email = true;
+    } else if(!userEmailRegister.register_password){
+      this.userEmailRegisterInvalid.user_register_email = false;
+      this.userEmailRegisterInvalid.register_password = true;
+    } else if(!userEmailRegister.email_agree_terms){
+      this.userEmailRegisterInvalid.register_password = false;
+      this.userEmailRegisterInvalid.email_agree_terms = true;
+    } else{
+      this.userEmailRegisterInvalid.email_agree_terms = false;
+      console.log(userEmailRegister);
+      this.loadingIndicator = true;
+      this.userService.emailRegister(userEmailRegister).subscribe(
+        (response) => {
+          console.log(response);
+          this.errorStatus = true;
+          this.statusMessage = "Confirmation email is sent to your email address";
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
+        },
+        (error) => {
+          console.log(error);
+          this.loadingIndicator = false;
+          this.errorStatus = true;
+          this.statusMessage = error.server_error_messsage;
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
+        }
+        );
       }
-      );
   }   
   onUserMobileRegister(userMobileRegister: any) { 
-    console.log(userMobileRegister);
-    this.loadingIndicator = true;
-    this.userService.mobileRegister1(userMobileRegister).subscribe(
-      (response) => {
-        this.loadingIndicator = false;
-        console.log(response);
-        this.registerStep2 = true;
-        this.errorStatus = true;
-        this.statusMessage = "Otp sent successfully";
-      },
-      (error) => {
-        console.log(error);
-        this.loadingIndicator = false;
-        this.errorStatus = true;
-        this.statusMessage = error.server_error_messsage;
+    if(!userMobileRegister.mob_register_name){
+      this.userMobileRegisterInvalid.mob_register_name = true;
+    } else if(!userMobileRegister.user_register_mobile){
+      this.userMobileRegisterInvalid.mob_register_name = false;
+      this.userMobileRegisterInvalid.user_register_mobile = true;
+    } else if(!userMobileRegister.mob_register_password){
+      this.userMobileRegisterInvalid.user_register_mobile = false;
+      this.userMobileRegisterInvalid.mob_register_password = true;
+    } else if(!userMobileRegister.phone_agree_terms){
+      this.userMobileRegisterInvalid.mob_register_password = false;
+      this.userMobileRegisterInvalid.phone_agree_terms = true;
+    } else{
+      this.userMobileRegisterInvalid.phone_agree_terms = false;
+      console.log(userMobileRegister);
+      this.loadingIndicator = true;
+      this.userService.mobileRegister1(userMobileRegister).subscribe(
+        (response) => {
+          this.loadingIndicator = false;
+          console.log(response);
+          this.registerStep2 = true;
+          this.errorStatus = true;
+          this.statusMessage = "Otp sent successfully";
+        },
+        (error) => {
+          console.log(error);
+          this.loadingIndicator = false;
+          this.errorStatus = true;
+          this.statusMessage = error.server_error_messsage;
+        }
+        );
       }
-      );
   }   
 
   onUserMobileResendOTP(userMobileRegister: any) {
@@ -569,29 +637,34 @@ public resetPasswordToast: boolean = false;
 
 
   onUserMobileForgotPassword(userMobileForgot: any) {
-    this.loadingIndicator = true;
-    this.userService.mobileForgotPassword1(userMobileForgot).subscribe(
-      (resp: any) => {
-        this.loadingIndicator = false;
-        console.log(resp);
-        this.otpStep2 = true;
-        this.errorStatus = true;
-        this.statusMessage = "Otp sent successfully";
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
-      },
-      (error: any) => {
-        console.log(error);
-        this.loadingIndicator = false;
-        this.otpStep2 = false;
-        this.errorStatus = true;
-        this.statusMessage = error.server_error_messsage;
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
-      }
-    )
+    if(!userMobileForgot.frgt_pwd_mobile_no){
+      this.userMobileForgotInvalid.frgt_pwd_mobile_no = true;
+    } else {
+      this.userMobileForgotInvalid.frgt_pwd_mobile_no = false;
+      this.loadingIndicator = true;
+      this.userService.mobileForgotPassword1(userMobileForgot).subscribe(
+        (resp: any) => {
+          this.loadingIndicator = false;
+          console.log(resp);
+          this.otpStep2 = true;
+          this.errorStatus = true;
+          this.statusMessage = "Otp sent successfully";
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
+        },
+        (error: any) => {
+          console.log(error);
+          this.loadingIndicator = false;
+          this.otpStep2 = false;
+          this.errorStatus = true;
+          this.statusMessage = error.server_error_messsage;
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
+        }
+      )
+    }
   }
 
 
@@ -672,19 +745,26 @@ public resetPasswordToast: boolean = false;
   }
 
   onUserEmailForgotPassword(emailForgotPassword: any) {
-    this.loadingIndicator = true;    
-    this.userService.emailForgotPassword(emailForgotPassword).subscribe(
-      (resp) => {
-        this.loadingIndicator = false; 
-        this.errorStatus = true;
-        this.statusMessage = "Email has been sent to your registered email address"
-      },
-      (error) => {
-        this.loadingIndicator = false; 
-        this.errorStatus = true;
-        this.statusMessage = error.server_error_messsage;
-      }
-    )
+    
+    if(!emailForgotPassword.frgt_pwd_email_id){
+      this.emailForgotPasswordInvalid.frgt_pwd_email_id = true;
+    } else {
+      this.emailForgotPasswordInvalid.frgt_pwd_email_id = false;
+      this.loadingIndicator = true;    
+      this.userService.emailForgotPassword(emailForgotPassword).subscribe(
+        (resp) => {
+          this.loadingIndicator = false; 
+          this.errorStatus = true;
+          this.statusMessage = "Email has been sent to your registered email address"
+        },
+        (error) => {
+          this.loadingIndicator = false; 
+          this.errorStatus = true;
+          this.statusMessage = error.server_error_messsage;
+        }
+      )
+    }
+    
   }
 
   redirectToTermsAndConditions(){

@@ -46,7 +46,9 @@
               </li>
               <li class="pull-left d-none d-xl-block" *ngIf="this.theme != 'live'">
                 <a href="javascript:void(0);" class="text-uppercase font-sbold oriya-color3 watch-now margin-left-0 video_play" (click)="addToFavourites()">
-                  <i class="fa fa-heart-o pull-left margin-right-10" aria-hidden="true"></i> Favourite
+                  <i class="fa fa-heart-o pull-left margin-right-10" aria-hidden="true" *ngIf="!addedToFavouritesIcon"></i>
+                  <i class="fa fa-heart pull-left margin-right-10" aria-hidden="true" *ngIf="addedToFavouritesIcon"></i> 
+                  Favourite
                 </a>	
               </li>
               <li class="pull-left relative-content share_social_icons" (clickElsewhere)="closeShareVideo()">
@@ -135,18 +137,19 @@
         </div> 
       </div>
       
-      <div class="toster-message-wrap" id="removeFromFavourites" *ngIf="copyLinkPop">
+      <div class="toster-message-wrap" id="removeFromFavourites" *ngIf="deleteWatchlist">
         <div class="toster-message-wrap">
           <div class="center-align-content">
             <div class="toster-message">
               <img src="./assets/images/tick.svg" alt="" title="">
               <p id="watch_later_message" class="watch_later_msg1">
-                Favourites removed successfully
+                Removed from favourites successfully
               </p>
             </div>
           </div>
         </div> 
       </div>
+
   
       <div class="toster-message-wrap" id="copy_link_pop" *ngIf="copyLinkPop">
         <div class="center-align-content">

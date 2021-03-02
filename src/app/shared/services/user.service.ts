@@ -32,10 +32,10 @@ export class UserService {
   emailLogin(userLogin: any) {
     var signin_params = {};
     signin_params["user"] = {};
-    signin_params["user"]["email_id"] = userLogin.controls.login_email.value;
+    signin_params["user"]["email_id"] = userLogin.form.controls.login_email.value;
     signin_params["user"]["mobile_no"] = "";
     signin_params["user"]["type"] = "email";
-    signin_params["user"]["password"] = userLogin.controls.login_email_password.value;
+    signin_params["user"]["password"] = userLogin.form.controls.login_email_password.value;
     signin_params["user"]["region"] = "IN";
 
     return this.http.post<any>(environment.apiURL+"users/sign_in?region=IN&auth_token="+environment.authtoken, JSON.stringify(signin_params), this.options)
@@ -130,7 +130,10 @@ export class UserService {
     user_params["user"]["firstname"] = updateUser.user_profile_name;
     user_params["user"]["birthdate"] = updateUser.datepicker;
     user_params["user"]["user_email_id"] = updateUser.user_email_address;
-    user_params["user"]["mobile_number"] = updateUser.user_mobile_number;    
+    user_params["user"]["mobile_number"] = updateUser.user_mobile_number; 
+    user_params["user"]["address"] = updateUser.user_address;
+    user_params["user"]["state"] = updateUser.user_state;
+    user_params["user"]["country"] = updateUser.user_country;
     console.log(user_params);
     return this.http.put<any>(environment.apiURL+"users/"+sessionId+"/account?region=IN&auth_token="+environment.authtoken, JSON.stringify(user_params), this.options)
     .pipe(

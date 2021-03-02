@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
     user_mobile_number: null,
     user_email_address: null,
     user_address: null,
-    user_status: null,
+    user_state: null,
     user_country: null,
     datepicker: null
   }
@@ -143,7 +143,7 @@ export class UserComponent implements OnInit {
           user_mobile_number: this.user.mobile_number,
           user_email_address: this.user.user_email_id,
           user_address: this.user.address,
-          user_status: this.user.status,
+          user_state: this.user.state,
           user_country: this.user.country,
           datepicker: this.user.birthdate
         }   
@@ -320,6 +320,8 @@ export class UserComponent implements OnInit {
           this.deleteWatchlist = false;
         }.bind(this), 4500);  
         var item_cnt = response.items_count;
+        this.getFavourites(this.sessionId);
+
         if(item_cnt == 0){
           window.location.reload();
         }
@@ -330,6 +332,19 @@ export class UserComponent implements OnInit {
         this.statusMessage = error.server_error_messsage;
       }
     )      
+  }
+
+  getFavourites(sId){
+    this.userService.favourites(sId).subscribe(
+      (res) => {
+        let favourite_list_items = res.data.items;
+        console.log("favourites", favourite_list_items);
+        localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
+      },
+      (error) => {
+        console.log(error.server_error_messsage);
+      }
+    )
   }
 
   ngOnDestroy() {

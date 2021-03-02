@@ -90,4 +90,22 @@ export class SearchComponent implements OnInit {
     this.getTrendingSearch();
     
   }
+
+  onClickSearchResult(s){
+    console.log('search Item Click', s);
+    if(!this.search_results1){
+      //Trending Search
+      window.open('https://play.google.com/store/apps/details?id=com.otl.tarangplus');
+    } else {
+      //Search Item
+      //if(s.media_type == 'episode'){
+        let str = s['catalog_object']['friendly_id'] + '/' + s['show_object']['friendly_id'] + '/' + s['friendly_id'];
+        console.log('str', str);
+        this.router.navigate([str]);
+      
+      // } else {
+
+      // }
+    }
+  }
 }

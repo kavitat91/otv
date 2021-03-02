@@ -185,60 +185,24 @@
             <div class="pull-left w-100 padding-left-0 padding-right-0 margin-top-0">
               <div class="pull-left w-100 padding-bottom-0 padding-top-45 relative-content">
                 <div class="w-100 all_error padding-left-0 padding-right-0">
-                  <!-- <label class="error" id="signin_resp_error_msg"
-                    *ngIf="errorStatus">{{statusMessage}}</label> -->
+                  <label class="error" id="signin_resp_error_msg"
+                    *ngIf="errorStatus">{{statusMessage}}</label>
                 </div>
                 <div id="EmailSignIn" class="tab-pane fade in active">
-                  <form [formGroup]="userEmailLogin" (ngSubmit)="onUserEmailLogin(userEmailLogin)">
-                    <div class="form-group signup_email_us us_show">
-                      <!-- <label for="name">Email ID</label> -->
-                      <input type="email" id="login_email" name="login_email" class="form-control" value="" formControlName="login_email" (focus)="focusEmailLogin()" required>
-                      <span [ngClass]="{touched: userEmailLogin.controls.login_email.value.length > 0}" class="input-label">Email ID</span>
-                      <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter the email id</label> -->
-                      <!-- <label class="error" id="login_email_error"
-                        *ngIf="login_email.required && login_email.touched">Please enter the email id</label>
+                  <form #userEmailLogin="ngForm" (ngSubmit)="onUserEmailLogin(userEmailLogin)">
+                    
+                    <div class="input-group"
+                      [ngClass]="{ 'has-error': login_email.touched && login_email.invalid }">
+                      <input type="text" id="login_email" name="login_email" #login_email="ngModel" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-0-.]+$"
+                        [(ngModel)]="userEmailLogin.login_email" class="form-control" required>
+                      <span class="input-label"
+                        [ngClass]="{'input-label-focused': login_email.touched && login_email?.value?.length > 0 }">Email Id</span>
                       <label class="error" id="login_email_error"
-                        *ngIf="login_email.pattern && login_email.touched">Email is invalid </label> -->
-                        <div class="alert alert-danger" *ngIf="!userEmailLogin.controls.login_email.valid && (userEmailLogin.controls.login_email.dirty ||userEmailLogin.controls.login_email.touched)">
-                          <div [hidden]="!userEmailLogin.controls.login_email.errors.required">
-                            Please enter the Email Id
-                          </div>
-                          <div [hidden]="!userEmailLogin.errors.email">
-                            Email is invalid
-                          </div>
-                        </div>
+                        *ngIf="login_email.touched && login_email?.value?.length < 1 || login_email?.value?.length < 1 && userEmailLoginInvalid.login_email">Please enter the email id</label>
+                      <label class="error" id="login_email_error"
+                        *ngIf="login_email.invalid && login_email.touched && login_email?.value?.length > 0">Email is invalid </label>
                     </div>
-                    <div class="form-group signup_email_us us_show">
-                      <!-- <label for="name">Password</label> -->
-                      <input [type]="showPassword ? 'text' : 'password'" id="login_email_password" name="login_email_password" class="form-control" value="" formControlName="login_email_password"
-                        (focus)="focusEmailLogin()" required>
-                      <span [ngClass]="{touched: userEmailLogin.controls.login_email_password.value.length > 0}" class="input-label">Password</span>
-                      <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide confirm password"
-                        title="hide confirm password" *ngIf="!showPassword" (click)="togglePassword();">
-                      <img src="./assets/images/show_password.svg" class="password_toggle show_pwd"
-                        alt="show confirm password" title="show confirm password" *ngIf="showPassword"
-                        (click)="togglePassword();">
-                        <div class="alert alert-danger" *ngIf="!userEmailLogin.controls.login_email_password.valid && (userEmailLogin.controls.login_email_password.dirty ||userEmailLogin.controls.login_email_password.touched)">
-                          <div [hidden]="!userEmailLogin.controls.login_email_password.errors.required">
-                            Please enter the password
-                          </div>
-                        </div>
-                    </div>
-                    <div class="text-center margin-bottom-15 margin-top-25 pull-left w-100 light">
-                      <input type="submit" class="text-uppercase btn-oria btn-oria-big login_sub" id="" value="Login">
-                    </div>
-                    <div class="text-center margin-bottom-10 margin-top-20 pull-left w-100 form_bottom">
-                      <a
-                        class="inline-block text-uppercase margin-bottom-15 font-semibold forgot_pass_tag margin-bottom-30 oriya-color4 "
-                        id="forgot_pass_email" (click)="showPop('forgot_password_pop', 'loginform')">forgot password ?</a>
-                    </div>
-                    <div class="text-center margin-bottom-25 margin-top-0 pull-left w-100 form_bottom">
-                      <span>Not a member?</span>
-                      <a href="javascript:void(0)" id="user_register1"
-                        class="inline-block text-uppercase oriya-color4 reg_user"
-                        (click)="showPop('register_pop', 'loginform');">&nbsp;Register</a>
-                    </div>
-                    <!-- <div class="input-group hide_password_group signup_password_us"
+                    <div class="input-group hide_password_group signup_password_us"
                       [ngClass]="{ 'has-error': login_email_password.touched && login_email_password.invalid }">
                       <input [type]="showPassword ? 'text' : 'password'" id="login_email_password"
                         name="login_email_password" class="form-control login_email_pwd" minlength="6" maxlength="20"
@@ -252,11 +216,11 @@
                       <span class="input-label"
                         [ngClass]="{'input-label-focused': login_email_password.touched && login_email_password?.value?.length > 0 }">Password</span>
                       <label class="error" id="login_email_pwd_error"
-                        *ngIf="login_email_password.errors?.required && login_email_password.touched">Please enter the
+                        *ngIf=" login_email_password.touched && login_email_password?.value?.length < 1 || login_email_password?.value?.length < 1 && userEmailLoginInvalid.login_email_password">Please enter the
                         password</label>
-                        <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter the password</label>
+                      <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter the password</label> -->
                       <label class="error" id="login_email_pwd_error"
-                        *ngIf="login_email_password.errors?.minlength && login_email_password.touched">Password Minimum
+                        *ngIf="login_email_password.invalid && login_email_password.touched && login_email_password?.value?.length > 0">Password Minimum
                         length is 6 characters</label>
                     </div>
                     <div class="text-center margin-bottom-15 margin-top-25 pull-left w-100 light">
@@ -272,10 +236,9 @@
                       <a href="javascript:void(0)" id="user_register1"
                         class="inline-block text-uppercase oriya-color4 reg_user"
                         (click)="showPop('register_pop', 'loginform');">&nbsp;Register</a>
-                    </div> -->
-                    <!-- <div class="margin-bottom-20 margin-top-10 pull-left w-100 form_bottom center-align-content">
-                  <a href="/auth/facebook" class="facebook_login"><img src="/assets/facebook_login" class="pull-left margin-right-15">Login with Facebook</a>
-                </div>	 -->
+                    </div>
+                    
+                   
                   </form>
                 </div>
                 <div id="MobileNoSignIn" class="tab-pane fade">
@@ -284,18 +247,19 @@
                       [ngClass]="{ 'has-error': login_mobile.touched && login_mobile.invalid }">
                       <!-- <input type="text" name="country_code" class="form-control country_code" value="+91"
                         readonly="true" *ngIf="countryCodeStatus"> -->
+                      <input type="text" name="country_code" class="country_code form-control" value="+91" readonly *ngIf="countryCodeStatus">
                       <input type="number" id="login_mobile" name="login_mobile" class="form-control"
                         pattern="^[0-9_-]{10}$" #login_mobile="ngModel" [(ngModel)]="userMobileLogin.login_mobile"
                         (focus)="focusCountryLogin();" (focusout)="focusOutCountryLogin($event)" required>
                       <span class="input-label"
-                        [ngClass]="{'input-label-focused': login_mobile.touched && login_mobile?.value }">Mobile
+                        [ngClass]="{'input-label-focused': login_mobile.touched && login_mobile?.value?.length > 0 }">Mobile
                         Number</span>
                       <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please enter mobile number</label> -->
                       <label class="error" id="login_mobile_error"
-                        *ngIf="login_mobile.errors?.required && login_mobile.touched">Please enter your Mobile
+                        *ngIf="login_mobile.touched && login_mobile?.value?.length < 1 ||login_mobile?.value?.length < 1 && userMobileLoginInvalid.login_mobile">Please enter your Mobile
                         Number </label>
                       <label class="error" id="mobile_error"
-                        *ngIf="login_mobile.errors?.pattern && login_mobile.touched">
+                        *ngIf="login_mobile.invalid && login_mobile.touched && login_mobile?.value?.length > 0">
                         Please enter 10 digit mobile number
                       </label>
                     </div>
@@ -314,10 +278,10 @@
                         [ngClass]="{'input-label-focused': user_mob_password.touched && user_mob_password?.value?.length > 0 }">Password</span>
                       <!-- <label class="error" id="signin_resp_error_msg" *ngIf="errorStatus">Please Enter Password</label> -->
                       <label class="error" id="login_mobile_pwd_error"
-                        *ngIf="user_mob_password.errors?.required && user_mob_password.touched">Please enter the
+                        *ngIf="user_mob_password.touched && user_mob_password?.value?.length < 0 || user_mob_password?.value?.length < 0 && userMobileLoginInvalid.user_mob_password">Please enter the
                         password</label>
                       <label class="error" id="login_mobile_pwd_error"
-                        *ngIf="user_mob_password.errors?.minlength && user_mob_password.touched">Password Minimum
+                        *ngIf="user_mob_password.minlength && user_mob_password.touched && user_mob_password?.value?.length > 0">Password Minimum
                         length is 6 characters</label>
                     </div>
                     <div class="text-center margin-bottom-15 margin-top-25 light pull-left w-100">
@@ -381,7 +345,7 @@
                         [ngClass]="{'input-label-focused': register_name.touched && register_name?.value?.length > 0 }">Full
                         Name</span>
                       <label class="error name_error" id="register_name_error"
-                        *ngIf="register_name.touched && register_name.invalid">Name can't be blank</label>
+                        *ngIf="register_name.touched && register_name?.value?.length < 1 ||register_name?.value?.length < 1 && userEmailRegisterInvalid.register_name">Please Enter Full Name</label>
                     </div>
                     <div class="input-group signup_email_us us_show"
                       [ngClass]="{ 'has-error': user_register_email.touched && user_register_email.invalid }">
@@ -393,10 +357,9 @@
                         [ngClass]="{'input-label-focused': user_register_email.touched && user_register_email?.value?.length > 0 }">Email
                         ID</span>
                       <label class="error" id="register_email_error"
-                        *ngIf="user_register_email.errors?.required && user_register_email.touched">Emailid can't be
-                        blank</label>
-                      <label class="error" id="login_email_error"
-                        *ngIf="user_register_email.errors?.pattern && user_register_email.touched">Email is invalid
+                        *ngIf="user_register_email.touched && user_register_email?.value?.length < 1 ||user_register_email?.value?.length < 1 && userEmailRegisterInvalid.user_register_email">Please enter Email Id</label>
+                      <label class="error" id="register_email_error2"
+                        *ngIf="user_register_email.invalid && user_register_email.touched && user_register_email?.value?.length > 0">Email is invalid
                       </label>
                     </div>
                     <div class="input-group hide_password_group signup_password_us"
@@ -412,10 +375,10 @@
                       <span class="input-label"
                         [ngClass]="{'input-label-focused': register_password.touched && register_password?.value?.length > 0 }">Password</span>
                       <label class="error" id="register_pw_error"
-                        *ngIf="register_password.errors?.required && register_password.touched">Password can't be
+                        *ngIf="register_password.touched && register_password?.value?.length < 1 || register_password?.value?.length < 1 && userEmailRegisterInvalid.register_password">Password can't be
                         blank</label>
                       <label class="error" id="register_pw_error"
-                        *ngIf="register_password.errors?.minlength && register_password.touched">Minimum length of 6
+                        *ngIf="register_password.invalid && register_password.touched && register_password?.value?.length > 0">Minimum length of 6
                         characters is mandatory</label>
                     </div>
                     <div class="input-group custom-controls d-block margin-bottom-15"
@@ -427,12 +390,12 @@
                         </a>and <a (click)="redirectToPrivacyPolicy()" class="text-uppercase oriya-color4" target="blank">privacy
                           policy</a></label>
                       <label class="error" id="email_terms_check_error"
-                        *ngIf="email_agree_terms.touched && email_agree_terms.invalid">Please check the terms of
+                        *ngIf="email_agree_terms.touched && email_agree_terms.invalid || email_agree_terms.invalid && userEmailRegisterInvalid.email_agree_terms">Please check the terms of
                         use</label>
                     </div>
                     <div class="text-center margin-bottom-20 margin-top-25 light">
                       <input type="submit" class="text-uppercase btn-oria btn-oria-big font-bold user_register"
-                        id="user_register" value="Register" [disabled]="emailRegisterForm.invalid">
+                        id="user_register" value="Register">
                       <!-- <input lass="text-uppercase btn-oria font-bold" id="user_register" type="submit" value="Register">    -->
                     </div>
                   </form>
@@ -456,7 +419,7 @@
                         [ngClass]="{'input-label-focused': mob_register_name.touched && mob_register_name?.value?.length > 0 }">Full
                         Name</span>
                       <label class="error name_error" id="mob_register_name_error"
-                        *ngIf="mob_register_name.touched && mob_register_name.invalid">Name can't be blank</label>
+                        *ngIf="mob_register_name.touched && mob_register_name?.value?.length < 1 || mob_register_name?.value?.length < 1 && userMobileRegisterInvalid.mob_register_name">Name can't be blank</label>
                     </div>
                     <div class="input-group country"
                       [ngClass]="{ 'has-error': user_register_mobile.touched && user_register_mobile.invalid }">
@@ -469,10 +432,10 @@
                         [ngClass]="{'input-label-focused': user_register_mobile.touched && user_register_mobile?.value }">Mobile
                         Number</span>
                       <label class="error" id="mob_register_mobile_error"
-                        *ngIf="user_register_mobile.errors?.required && user_register_mobile.touched">Moblie Number
-                        can't be blank</label>
+                        *ngIf="user_register_mobile.touched && user_register_mobile?.value?.length < 1 || user_register_mobile?.value?.length < 1 && userMobileRegisterInvalid.user_register_mobile">Please enter the
+                        Mobile Number</label>
                       <label class="error" id="mob_register_mobile_error"
-                        *ngIf="user_register_mobile.errors?.pattern && user_register_mobile.touched">
+                        *ngIf="user_register_mobile.invalid && user_register_mobile.touched && user_register_mobile?.value?.length > 0">
                         Please enter 10 digit mobile number
                       </label>
                     </div>
@@ -490,10 +453,10 @@
                       <span class="input-label"
                         [ngClass]="{'input-label-focused': mob_register_password.touched && mob_register_password?.value?.length > 0 }">Password</span>
                       <label class="error" id="mob_register_password_error"
-                        *ngIf="mob_register_password.errors?.required && mob_register_password.touched">Password can't
+                        *ngIf="mob_register_password.touched && mob_register_password?.value?.length < 1 || mob_register_password?.value?.length < 1 && userMobileRegisterInvalid.mob_register_password">Password can't
                         be blank</label>
                       <label class="error" id="mob_register_password_error"
-                        *ngIf="mob_register_password.errors?.minlength && mob_register_password.touched">Minimum length
+                        *ngIf="mob_register_password.invalid && mob_register_password.touched && mob_register_password?.value?.length > 0">Minimum length
                         of 6 characters is mandatory </label>
                     </div>
                     <div class="input-group custom-controls d-block margin-bottom-15"
@@ -505,7 +468,7 @@
                         </a>and <a (click)="redirectToPrivacyPolicy()" class="text-uppercase oriya-color4" target="blank">privacy
                           policy</a></label>
                       <label class="error" id="phone_terms_check_error"
-                        *ngIf="phone_agree_terms.touched && phone_agree_terms.invalid">Please check the terms of
+                        *ngIf="phone_agree_terms.touched && phone_agree_terms.invalid || phone_agree_terms.invalid && userMobileRegisterInvalid.phone_agree_terms">Please check the terms of
                         use</label>
                     </div>
                     <div class="text-center margin-bottom-20 margin-top-25 light mobile_signup_next" *ngIf="!registerStep2">
@@ -517,8 +480,8 @@
                         class="form-control reg_otp" name="registerMobileOTP" #registerMobileOTP="ngModel" [(ngModel)]="userMobileRegister.registerMobileOTP" required>
                       <span class="input-label"
                       [ngClass]="{'input-label-focused': registerMobileOTP.touched && registerMobileOTP?.value > 0 }">OTP</span>
-                      <label class="error" id="otp_error" *ngIf="registerMobileOTP.errors?.required && registerMobileOTP.touched">Please enter the OTP</label>
-                      <label class="error" id="otp_error" *ngIf="registerMobileOTP.errors?.pattern && registerMobileOTP.touched">OTP should be 4 digits</label>
+                      <label class="error" id="otp_error" *ngIf="registerMobileOTP.required && registerMobileOTP.touched">Please enter the OTP</label>
+                      <label class="error" id="otp_error" *ngIf="registerMobileOTP.inavlid && registerMobileOTP.touched">OTP should be 4 digits</label>
                       <a href="javascript:void(0);" class="oriya-color4 font-sbold" id="register_resend_otp" (click)="onUserMobileResendOTP(userMobileRegister)">Resend</a>
                       <label class="error" id="resend_otp_sucess"></label>
                     </div>
@@ -583,14 +546,12 @@
                         [ngClass]="{'input-label-focused': frgt_pwd_email_id.touched && frgt_pwd_email_id?.value?.length > 0 }">Email
                         ID</span>
                       <label class="error" id="frgt_pwd_email_error"
-                        *ngIf="frgt_pwd_email_id.errors?.required && frgt_pwd_email_id.touched">Email id can't be
-                        blank</label>
+                        *ngIf="frgt_pwd_email_id.touched && frgt_pwd_email_id?.value?.length < 1 || frgt_pwd_email_id?.value?.length < 1 && emailForgotPasswordInvalid.frgt_pwd_email_id">Please enter Email Id</label>
                       <label class="error" id="frgt_pwd_email_error"
-                        *ngIf="frgt_pwd_email_id.errors?.pattern && frgt_pwd_email_id.touched">Email is invalid </label>
+                        *ngIf="frgt_pwd_email_id.invalid && frgt_pwd_email_id.touched && frgt_pwd_email_id?.value?.length > 0">Email is invalid</label>
                     </div>
                     <div class="text-center margin-bottom-20 margin-top-25 light">
-                      <input type="submit" class="text-uppercase btn-oria btn-oria-big fgt_pwd_sub" value="Confirm"
-                        [disabled]="emailForgotForm.invalid">
+                      <input type="submit" class="text-uppercase btn-oria btn-oria-big fgt_pwd_sub" value="Confirm">
                     </div>
                   </form>
                 </div>
@@ -608,15 +569,14 @@
                         [ngClass]="{'input-label-focused': frgt_pwd_mobile_no.touched && frgt_pwd_mobile_no?.value }">Mobile
                         Number</span>
                       <label class="error" id="frgt_pwd_mobile_error"
-                        *ngIf="frgt_pwd_mobile_no.errors?.required && frgt_pwd_mobile_no.touched">Mobile Number can't be
-                        blank</label>
+                        *ngIf="frgt_pwd_mobile_no.touched && frgt_pwd_mobile_no?.value?.length < 1 || frgt_pwd_mobile_no?.value?.length < 1 && userMobileForgotInvalid.frgt_pwd_mobile_no">Please enter Mobile Number</label>
                       <label class="error" id="frgt_pwd_mobile_error"
-                        *ngIf="frgt_pwd_mobile_no.errors?.pattern && frgt_pwd_mobile_no.touched">
+                        *ngIf="frgt_pwd_mobile_no.invalid && frgt_pwd_mobile_no.touched && frgt_pwd_mobile_no?.value?.length > 0">
                         Please enter 10 digit mobile number
                       </label>
                     </div>
                     <div class="text-center margin-bottom-20 margin-top-25 light fgt_confirm_sec" *ngIf="!otpStep2">
-                      <input type="button" class="text-uppercase btn-oria btn-oria-big fgt_pwd_sub" value="Confirm" [disabled]="mobileForgotForm.invalid" (click)="onUserMobileForgotPassword(userMobileForgot)">
+                      <input type="button" class="text-uppercase btn-oria btn-oria-big fgt_pwd_sub" value="Confirm" (click)="onUserMobileForgotPassword(userMobileForgot)">
                     </div>
                     <div class="input-group fgt_opt_sec otp_step2" *ngIf="otpStep2">
                       <input type="number" pattern="^[0-9_-]{4}$" id="frgt_pwd_otp" name="frgt_pwd_otp" class="form-control"

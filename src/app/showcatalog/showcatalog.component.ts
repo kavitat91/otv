@@ -108,7 +108,9 @@ export class ShowcatalogComponent implements OnInit {
     this.pageservice.getCatloagContent(this.catalogName, this.language).subscribe(
       (resp) => {
         this.itemsList = resp["data"]["catalog_list_items"];
-        this.bannerSliderContent = this.itemsList[0]['catalog_list_items'];        
+        this.bannerSliderContent = this.itemsList[0]['catalog_list_items'];  
+        //this.itemsList = resp["data"]["catalog_list_items"];
+        //this.bannerSliderContent = this.itemsList;      
         for(var x=0; x < this.bannerSliderContent.length; x++)  {
           this.bannerSliderContent[x]["item_url"] = this.commonService.getItemURL(this.bannerSliderContent[x]);          
         }
