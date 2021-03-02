@@ -211,7 +211,7 @@
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- season_episode_list">
                 <div id="episodes-carousel" class="owl-carousel owl-theme episodes-carousel margin-bottom-0">
                   <owl-carousel [options]="carouselOptions2" [items]="allEpisodes" [carouselClasses]="['owl-theme owl-carousel horizontal-carousel margin-bottom-15']">   
-                    <div class="item" *ngFor="let e of allEpisodes">  
+                    <div class="item" *ngFor="let e of allEpisodes" (click)="onItemRedirect(e)">  
                       <a routerLink="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
                         <img src="{{e['thumbnails']['medium_16_9']['url']}}" class="carousel-slide-image">
                       </a>

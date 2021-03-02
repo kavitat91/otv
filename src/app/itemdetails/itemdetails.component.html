@@ -191,8 +191,9 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- season_episode_list">
                   <div id="episodes-carousel" class="owl-carousel owl-theme episodes-carousel margin-bottom-0">
                     <owl-carousel [options]="carouselOptions2" [items]="allEpisodes" [carouselClasses]="['owl-theme owl-carousel margin-bottom-0']">   
-                      <div class="item" *ngFor="let e of allEpisodes">  
-                        <a routerLink="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
+                      <div class="item" *ngFor="let e of allEpisodes;">  
+                        
+                          <a routerLink="/{{e['catalog_object']['friendly_id']}}/{{e['show_object']['friendly_id']}}/{{e['friendly_id']}}">
                           <img src="{{e['thumbnails']['medium_16_9']['url']}}">
                         </a>
                           
@@ -201,6 +202,8 @@
                           <label class="oriya-color1 block margin-bottom-0 ellipse-content">{{e['title']}}</label>
                           <span class="oriya-color2 block ellipse-content">{{e['item_caption']}}</span>
                         </p>
+                        
+                        
                       </div>
                     </owl-carousel>
                   </div>  
