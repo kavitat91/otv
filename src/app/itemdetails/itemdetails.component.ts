@@ -169,13 +169,14 @@ export class ItemdetailsComponent implements OnInit {
         this.analyticUserId = "NA";
         this.loadingIndicator = true;
         let favList = JSON.parse(localStorage.getItem('favouritesList'));
-        for(let i=0; i<favList; i++){
+        for(let i=0; i<favList.length; i++){
           if(favList[i].content_id == this.contentId){
             this.addedToFavouritesIcon = true;
             this.currentItem_listitem_id = favList[i].listitem_id;
             break;
           } 
         }
+        debugger;
         
         this.pageService.getCatalogDetails(this.language, this.catalogName).subscribe(
           (catResponse) => {
