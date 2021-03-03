@@ -189,7 +189,7 @@
                     *ngIf="errorStatus">{{statusMessage}}</label>
                 </div>
                 <div id="EmailSignIn" class="tab-pane fade in active">
-                  <form #userEmailLogin="ngForm" (ngSubmit)="onUserEmailLogin(userEmailLogin)">
+                  <form #emailLoginForm="ngForm" (ngSubmit)="onUserEmailLogin(userEmailLogin)">
                     
                     <div class="input-group"
                       [ngClass]="{ 'has-error': login_email.touched && login_email.invalid }">
@@ -473,7 +473,7 @@
                     </div>
                     <div class="text-center margin-bottom-20 margin-top-25 light mobile_signup_next" *ngIf="!registerStep2">
                       <input type="button" class="text-uppercase btn-oria btn-oria-big font-bold user_register"
-                        id="mob_user_register" [disabled]="mobileRegisterForm.invalid" value="Register" (click)="onUserMobileRegister1(userMobileRegister)">
+                        id="mob_user_register" [disabled]="mobileRegisterForm.invalid" value="Register" (click)="onUserMobileRegister(userMobileRegister)">
                     </div>
                     <div class="input-group otp_sec" *ngIf="registerStep2">
                       <input type="number" pattern="^[0-9_-]{4}$" id="otp"

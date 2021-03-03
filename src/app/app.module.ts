@@ -47,6 +47,7 @@ import { VideopopupComponent } from './videopopup/videopopup.component';
 import { PlanSummaryComponent } from './plan-summary/plan-summary.component';
 import { RazorpayresponseComponent } from './razorpayresponse/razorpayresponse.component';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { BroadcastService } from './shared/services/broadcast.service';
 //import {Md5} from 'ts-md5/dist/md5';
 
 
@@ -90,7 +91,7 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
     MatNativeDateModule,
     //NgxSpinnerModule
   ],
-  providers: [PageService, AllitmesserviceService, SearchService, UserService, PlansService, CommonService, SEOService
+  providers: [BroadcastService, PageService, AllitmesserviceService, SearchService, UserService, PlansService, CommonService, SEOService
     //NgxSpinnerService
   ],
   bootstrap: [AppComponent]

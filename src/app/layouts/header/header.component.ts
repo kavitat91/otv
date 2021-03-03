@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UserService } from './../../shared/services/user.service';
 import { CommonService } from '../../shared/services/common.service';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 //import { ClickElsewhereDirective } from '../../shared/directives/click-outside.directive.directive';
 @Component({
   selector: 'app-header',
@@ -96,7 +97,7 @@ public resetPasswordToast: boolean = false;
   @ViewChild('mobileRegisterForm', {static: false}) public mobileRegisterForm: NgForm;
   @ViewChild('emailForgotForm', {static: false}) public emailForgotForm: NgForm;
   @ViewChild('mobileForgotForm', {static: false}) public mobileForgotForm: NgForm;
-  constructor(private userService: UserService, private commonService: CommonService, private router: Router, private route: ActivatedRoute) { 
+  constructor(private broadcastService:BroadcastService, private userService: UserService, private commonService: CommonService, private router: Router, private route: ActivatedRoute) { 
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
         this.mobileMenu = false;
@@ -105,23 +106,31 @@ public resetPasswordToast: boolean = false;
         this.mobileMenuOpen = true;     
       }
     });
+
+    this.broadcastService.subscribe("EVENT", () => { this.loginScreen() });
+  }
+  loginScreen(){
+    console.log('showloginScreen');
+  }
+  ngOnInit() {
+    this.language = 'en';
+    localStorage.setItem('language', 'en');
+    this.init();
   }
 
-  ngOnInit() {
+  init() {
     if(localStorage.getItem('otv_user_id')) {
       this.loginStatus = true
     } 
     localStorage.removeItem("resetPasswordToast");
     this.getMenu();
-    this.language = 'en';
-    localStorage.setItem('language', 'en');
+    
     this.radioSelected = this.language;    
-    /* console.log("this.language"+localStorage.getItem('language'));
-    console.log("this.radioSelected"+localStorage.getItem('language')); */
-    this.loginPop = localStorage.getItem('loginPop');      
+    this.loginPop = localStorage.getItem('loginPop');
     this.continueWatchLength = localStorage.getItem('continueWatchItem');
     console.log("continueWatchLength: ", this.continueWatchLength)
   }
+
   ngOnChanges() {
     
   }
@@ -129,22 +138,34 @@ public resetPasswordToast: boolean = false;
   showPop(popId: string, prev_popup_type: string) { /* Show Pop up */
     console.log("popId"+popId);
     $('.modal').modal('hide');
-    $('#'+popId).modal('show');
+    $('#'+popId).modal('show');    
     if(prev_popup_type == 'loginform') {
-      this.emailLoginForm.reset();
-      this.mobileNoLoginForm.reset();
+      if(this.emailLoginForm != undefined){
+        this.emailLoginForm.reset();
+      }
+      if(this.mobileNoLoginForm != undefined){
+        this.mobileNoLoginForm.reset();
+      }
       this.countryCodeStatus = false;
       $('#signin_pop').modal('hide');
     }
     if(prev_popup_type == 'registerform') {
-      this.emailRegisterForm.reset();
-      this.mobileRegisterForm.reset();
+      if(this.emailRegisterForm != undefined) {
+        this.emailRegisterForm.reset();
+      }
+      if(this.mobileRegisterForm != undefined) {
+        this.mobileRegisterForm.reset();
+      }
       this.countryCodeStatus = false;
       $('#register_pop').modal('hide');
     }
     if(prev_popup_type == 'forgotpasswordform') {
-      this.emailForgotForm.reset();
-      this.mobileForgotForm.reset();
+      if(this.emailForgotForm != undefined) {
+        this.emailForgotForm.reset();
+      }
+      if(this.mobileForgotForm != undefined){
+        this.mobileForgotForm.reset();
+      }
       this.countryCodeStatus = false;
       $('#forgot_password_pop').modal('hide');
     }    
@@ -155,9 +176,14 @@ public resetPasswordToast: boolean = false;
   closePop(popupType: string) { /* Close Pop up */
     this.displayPopStatus = 'none';
     $('.modal').modal('hide');
+    console.log(popupType);
     if(popupType == 'loginform') {
-      this.emailLoginForm.reset();
-      this.mobileNoLoginForm.reset();
+      if(this.emailLoginForm != undefined){
+        this.emailLoginForm.reset();
+      }
+      if(this.mobileNoLoginForm != undefined){
+        this.mobileNoLoginForm.reset();
+      }
       this.countryCodeStatus = false;
     }
     if(popupType == 'registerform') {
@@ -166,8 +192,12 @@ public resetPasswordToast: boolean = false;
       this.countryCodeStatus = false;
     }
     if(popupType == 'forgotpasswordform') {
-      this.emailForgotForm.reset();
-      this.mobileForgotForm.reset();
+      if(this.emailForgotForm != undefined){
+        this.emailForgotForm.reset();
+      }
+      if(this.mobileForgotForm != undefined){
+        this.mobileForgotForm.reset();
+      }
       this.otpStep2 = false;
       this.countryCodeStatus = false;
     } 
@@ -184,13 +214,16 @@ public resetPasswordToast: boolean = false;
   tabChange(prevtabType: string) {
     $('label.error').remove();
     if(prevtabType == 'emaillogin') {
-      this.mobileNoLoginForm.reset();
+      if(this.mobileNoLoginForm != undefined){
+        this.mobileNoLoginForm.reset();
+      }
       this.statusMessage = '';  
       this.errorStatus = false; 
     }
     if(prevtabType == 'mobilelogin') {
-      this.emailLoginForm.reset(); 
-         
+      if(this.emailLoginForm != undefined){
+        this.emailLoginForm.reset(); 
+      }
       this.countryCodeStatus = false; 
       this.errorStatus = false;  
     }
@@ -209,7 +242,9 @@ public resetPasswordToast: boolean = false;
 
     }
     if(prevtabType == 'mobileforgot') {
-      this.emailForgotForm.reset();   
+      if(this.emailForgotForm != undefined) {
+        this.emailForgotForm.reset();   
+      }
       this.countryCodeStatus = false;   
     }
   }
@@ -355,9 +390,10 @@ public resetPasswordToast: boolean = false;
   }
 
   onUserEmailLogin(userLogin: any) { /* user login by email */
-    if(!userLogin.form.controls.login_email.value){
+    console.log(userLogin);
+    if(!userLogin.login_email){
       this.userEmailLoginInvalid.login_email = true;
-    } else if(!userLogin.form.controls.login_email_password.value){
+    } else if(!userLogin.login_email_password){
       this.userEmailLoginInvalid.login_email = false;
       this.userEmailLoginInvalid.login_email_password = true;
     } else{
@@ -380,13 +416,13 @@ public resetPasswordToast: boolean = false;
               status: true,
               user_id: userId,
               user_login_type: type,
+              user_name: user["data"]["user_name"],
               user_login_id: user["data"]["primary_id"],
               user_analy_id: user['data']['user_id'],
               user_sub_st: user['data']['is_subscribed']
             }
             this.commonService.setOtvUserLocalStorage(this.user_det);
             this.getFavourites();
-            window.location.reload();
           },
           (error: any) => {
             this.loadingIndicator = false;
@@ -418,6 +454,8 @@ public resetPasswordToast: boolean = false;
         let favourite_list_items = res.data.items;
         console.log("favourites", favourite_list_items);
         localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
+        this.init();
+        this.closePop('loginform');
       },
       (error) => {
         this.statusMessage = error.server_error_messsage;
@@ -452,13 +490,13 @@ public resetPasswordToast: boolean = false;
                 status: true,
                 user_id: userId,
                 user_login_type: type,
+                user_name: user["data"]["user_name"],
                 user_login_id: user["data"]["primary_id"],
                 user_analy_id: user['data']['user_id'],
                 user_sub_st: user['data']['is_subscribed']
               }
               this.commonService.setOtvUserLocalStorage(this.user_det);
               this.getFavourites();
-              window.location.reload();
             },
             (error: any) => {
               this.loadingIndicator = false;
@@ -510,6 +548,7 @@ public resetPasswordToast: boolean = false;
           this.statusMessage = "Confirmation email is sent to your email address";
           setTimeout(function() {
             this.errorStatus = false;
+            this.closePop('registerform');
           }.bind(this), 4500);
         },
         (error) => {
@@ -754,12 +793,15 @@ public resetPasswordToast: boolean = false;
         (resp) => {
           this.loadingIndicator = false; 
           this.errorStatus = true;
-          this.statusMessage = "Email has been sent to your registered email address"
+          this.statusMessage = "Email has been sent to your registered email address";
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
         },
         (error) => {
           this.loadingIndicator = false; 
-          this.errorStatus = true;
           this.statusMessage = error.server_error_messsage;
+          this.errorStatus = true;
         }
       )
     }

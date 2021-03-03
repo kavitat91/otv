@@ -184,7 +184,22 @@ export class UserComponent implements OnInit {
     } else if(!changePassword.new_change_confirm_password){
       this.inavlid_changePasswordForm.new_change_password = false;
       this.inavlid_changePasswordForm.new_change_confirm_password = true;
-    } else {
+    } else if(changePassword.old_change_password == changePassword.new_change_password ){      
+      
+      this.changePasswordToast = true;
+      setTimeout(() => {
+        this.changePasswordToast = false;
+      }, 4500);
+      this.statusMessage = "Old password and new password are same";      
+    }else if(changePassword.new_change_password != changePassword.new_change_confirm_password){
+      
+      this.changePasswordToast = true;
+      setTimeout(() => {
+        this.changePasswordToast = false;
+      }, 4500);
+      this.statusMessage = "New password and confirm new password are not same";
+    }
+     else {
       this.inavlid_changePasswordForm.new_change_confirm_password = false;
       this.userService.changePassword(changePassword, this.sessionId).subscribe(
         (user) => {
@@ -339,6 +354,7 @@ export class UserComponent implements OnInit {
       (res) => {
         let favourite_list_items = res.data.items;
         console.log("favourites", favourite_list_items);
+        this.favourite_list_items_count = favourite_list_items.length;
         localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
       },
       (error) => {

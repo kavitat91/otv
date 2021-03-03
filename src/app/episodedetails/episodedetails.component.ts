@@ -6,6 +6,7 @@ import { CommonService } from '../shared/services/common.service';
 import { Location } from "@angular/common";
 import { globals } from '../globals/globals';
 import { VideopopupComponent } from './../videopopup/videopopup.component';
+import { BroadcastService } from '../shared/services/broadcast.service';
 
 @Component({
   selector: 'app-episodedetails',
@@ -85,7 +86,8 @@ export class EpisodedetailsComponent implements OnInit {
   @Output() fireWatchLogin = new EventEmitter<any>();
 
   constructor(private pageService: PageService, private commonService: CommonService, private userService: UserService,
-    private router: Router, private route: ActivatedRoute, location: Location) { 
+    private router: Router, private route: ActivatedRoute, location: Location,
+    private broadcastService: BroadcastService) { 
     
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) { /* Your code goes here on every router change */
@@ -239,6 +241,7 @@ export class EpisodedetailsComponent implements OnInit {
 
   showWatchPop(popId){
     this.fireWatchLogin.emit();
+    this.broadcastService.boradcast("EVENT",null);
   }
 
   addToFavourites(){

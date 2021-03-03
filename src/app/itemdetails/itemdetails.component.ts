@@ -170,12 +170,15 @@ export class ItemdetailsComponent implements OnInit {
         this.analyticUserId = "NA";
         this.loadingIndicator = true;
         let favList = JSON.parse(localStorage.getItem('favouritesList'));
-        for(let i=0; i<favList.length; i++){
-          if(favList[i].content_id == this.contentId){
-            this.addedToFavouritesIcon = true;
-            this.currentItem_listitem_id = favList[i].listitem_id;
-            break;
-          } 
+        console.log(favList);
+        if(favList != null) {
+          for(let i=0; i<favList.length; i++){
+            if(favList[i].content_id == this.contentId){
+              this.addedToFavouritesIcon = true;
+              this.currentItem_listitem_id = favList[i].listitem_id;
+              break;
+            } 
+          }
         }
         
         this.pageService.getCatalogDetails(this.language, this.catalogName).subscribe(
@@ -300,6 +303,7 @@ export class ItemdetailsComponent implements OnInit {
       console.log("this.videoLoginCheck"+this.videoLoginCheck+"this.videoPremiumCheck"+this.videoPremiumCheck); 
     },  
     (error) => {
+      this.loadingIndicator = false;
       console.log(error);
     }
     );
@@ -315,6 +319,7 @@ export class ItemdetailsComponent implements OnInit {
 
   closePop(){
     this.displayPopStatus = 'none';
+    $('.modal').modal('hide');
   }
 
   showWatchPop(popId){
