@@ -358,14 +358,13 @@ export class ItemdetailsComponent implements OnInit {
       (res) => {
         this.favourite_list_items = res.data.items;
         console.log("favourites", this.favourite_list_items);
-        localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
+        localStorage.setItem('favouritesList' , JSON.stringify(this.favourite_list_items));
+        this.addedToFavouritesIcon = false;
         for(let i=0; i<this.favourite_list_items.length; i++){
           if(this.favourite_list_items[i].content_id == this.showContentId){
             this.addedToFavouritesIcon = true;
             this.currentItem_listitem_id = this.favourite_list_items[i].listitem_id;
             break;
-          } else {
-            this.addedToFavouritesIcon = false;
           }
         }
       },

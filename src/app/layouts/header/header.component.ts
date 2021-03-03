@@ -413,7 +413,6 @@ public resetPasswordToast: boolean = false;
 
   getFavourites(){
     let sId = localStorage.getItem('otv_user_id');
-    let favContentIds = [];
     this.userService.favourites(sId).subscribe(
       (res) => {
         let favourite_list_items = res.data.items;

@@ -284,7 +284,6 @@ export class EpisodedetailsComponent implements OnInit {
         for(let i=0; i<this.favourite_list_items.length; i++){
           if(this.favourite_list_items[i].content_id == this.tvShowContentId){
             this.addedToFavouritesIcon = true;
-          //  this.currentItem_listitem_id = favourite_list_items[i].listitem_id;
             break;
           }
         }
