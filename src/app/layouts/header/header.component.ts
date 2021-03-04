@@ -62,6 +62,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   userAccountMenu: any = false;
   langOptions: any = false;
   showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   countryCodeStatus: boolean = false;
   otpStep2: boolean = false;
   registerStep2: boolean = false;
@@ -87,7 +88,8 @@ profileMenu: boolean = false;
 langMenu: boolean = false;
 mobileMenuOpen: boolean = true;
 loginPop: string;
-continueWatchLength: any
+continueWatchLength: any;
+isEmailForgetPasswordSelected: boolean = true;
 
 public resetPasswordToast: boolean = false;
   
@@ -135,7 +137,7 @@ public resetPasswordToast: boolean = false;
     
   }
 
-  showPop(popId: string, prev_popup_type: string) { /* Show Pop up */
+  showPop(popId: string, prev_popup_type: string) { /* Show Pop up */    
     console.log("popId"+popId);
     $('.modal').modal('hide');
     $('#'+popId).modal('show');    
@@ -175,6 +177,8 @@ public resetPasswordToast: boolean = false;
 
   closePop(popupType: string) { /* Close Pop up */
     this.displayPopStatus = 'none';
+    this.statusMessage = '';
+    this.errorStatus = false;    
     $('.modal').modal('hide');
     console.log(popupType);
     if(popupType == 'loginform') {
@@ -239,11 +243,12 @@ public resetPasswordToast: boolean = false;
     if(prevtabType == 'emailforgot') {
       this.mobileForgotForm.reset(); 
       this.otpStep2 = false;
-
+      this.isEmailForgetPasswordSelected = true;
     }
     if(prevtabType == 'mobileforgot') {
       if(this.emailForgotForm != undefined) {
         this.emailForgotForm.reset();   
+        this.isEmailForgetPasswordSelected = false;
       }
       this.countryCodeStatus = false;   
     }
@@ -332,6 +337,9 @@ public resetPasswordToast: boolean = false;
 
   togglePassword() { /* toggle attribute(text, password) and change the image */
     this.showPassword = !this.showPassword;    
+  }
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
   
   getMenu() {
@@ -730,56 +738,77 @@ public resetPasswordToast: boolean = false;
     )
   }
 
-  onMobileForgotPassword2(userMobileForgot: any) {
-    this.loadingIndicator = true;
-    this.userService.mobileForgotPassword2(userMobileForgot).subscribe(
-      (resp: any) => {
-        this.loadingIndicator = false;
-        this.errorStatus = true;
-        this.statusMessage = "Success";
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);  
-        this.selectedPop = "reset_password_pop";
-        this.displayPopStatus = 'block';
-        this.otpval = userMobileForgot.frgt_pwd_otp;        
-      },
-      (error: any) => {
-        console.log(error);
-        this.loadingIndicator = false;
-        this.errorStatus = true;
-        this.statusMessage = error.server_error_messsage;
+  onMobileForgotPasswordForOTP(userMobileForgot: any) {
+    if(userMobileForgot.frgt_pwd_otp == null){
+      this.errorStatus = true;
+      this.statusMessage = "Please enter the OTP.";
         setTimeout(function() {
           this.errorStatus = false;
         }.bind(this), 4500);
-      }
-    )
-  }
-
-  onResetPassword(resetPassword: any) {
-    this.loadingIndicator = true;    
-    this.userService.mobileResetPassword(resetPassword, this.otpval).subscribe(
-      (resp) => {
-        this.loadingIndicator = false;    
-        this.resetPasswordToast = true;  
-        localStorage.setItem("resetPasswordToast", "true");
-        this.errorStatus = true;
-        this.statusMessage = "Password reset successfully";
-        setTimeout(function() {
-          this.errorStatus = false;
-        }.bind(this), 4500);
-        window.location.reload();
-      },
-      (error: any) =>  {
-        this.loadingIndicator = false;
+    }else{
+      this.loadingIndicator = true;
+      this.userService.mobileForgotPassword2(userMobileForgot).subscribe(
+        (resp: any) => {
+          this.loadingIndicator = false;
+          this.errorStatus = true;
+          this.statusMessage = "Success";
+          this.otpval = userMobileForgot.frgt_pwd_otp;
+          setTimeout(function() {
+            this.errorStatus = false;
+            this.selectedPop = "reset_password_pop";
+            this.displayPopStatus = 'block';
+          }.bind(this), 2500);
+        },
+        (error: any) => {
+          console.log(error);
+          this.loadingIndicator = false;
           this.errorStatus = true;
           this.statusMessage = error.server_error_messsage;
           setTimeout(function() {
             this.errorStatus = false;
           }.bind(this), 4500);
-      }          
-             
-    )
+        }
+      )
+    }
+  }
+
+  onResetPassword(resetPassword: any) {
+    if(resetPassword.reset_pwd == null || resetPassword.reset_con_pwd == null){
+      this.errorStatus = true;
+      this.statusMessage = "Please enter password and reset password.";
+      setTimeout(function() {
+        this.errorStatus = false;
+      }.bind(this), 4500);
+    }else if(resetPassword.reset_pwd != resetPassword.reset_con_pwd){
+      this.errorStatus = true;
+      this.statusMessage = "Password and reset password should not match.";
+      setTimeout(function() {
+        this.errorStatus = false;
+      }.bind(this), 4500);
+    } else {
+      this.loadingIndicator = true;    
+      this.userService.mobileResetPassword(resetPassword, this.otpval).subscribe(
+        (resp) => {
+          this.loadingIndicator = false;    
+          this.resetPasswordToast = true;  
+          localStorage.setItem("resetPasswordToast", "true");
+          this.errorStatus = true;
+          this.statusMessage = "Password reset successfully";
+          setTimeout(function() {
+            this.errorStatus = false;
+          }.bind(this), 4500);
+          window.location.reload();
+        },
+        (error: any) =>  {
+          this.loadingIndicator = false;
+            this.errorStatus = true;
+            this.statusMessage = error.server_error_messsage;
+            setTimeout(function() {
+              this.errorStatus = false;
+            }.bind(this), 4500);
+        }      
+      )
+    }
   }
 
   onUserEmailForgotPassword(emailForgotPassword: any) {

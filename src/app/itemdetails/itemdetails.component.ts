@@ -310,7 +310,13 @@ export class ItemdetailsComponent implements OnInit {
   }
 
   showVideoPop() {
-    this.child.showVideoPopChild(); 
+    let sId = localStorage.getItem('otv_user_id');
+    if(!sId){
+      $('.modal').modal('hide');
+      $('#fav_login_confirm_pop').modal('show');
+    } else {
+      this.child.showVideoPopChild();
+    }
   }
 
   showFavPop(popId){

@@ -246,7 +246,6 @@ export class UserComponent implements OnInit {
   }
 
   watchlist() {
-    
     this.loadingIndicator = true;
     this.userService.watchlist(this.sessionId).subscribe(
       (res) => {
@@ -255,12 +254,8 @@ export class UserComponent implements OnInit {
         this.watch_list_items_count = res.data.total_items_count;
         console.log(res.data);
         for(var x=0; x < this.watch_list_items.length; x++)  {
-          this.watch_list_items[x]["item_url"] = this.commonService.getItemURL(this.watch_list_items[x]);
-          //this.watch_list_items[x]["item_url"].push(this.itemURL);
-          //this.watch_list_items[x].push({item_url,this.itemURL});
+          this.watch_list_items[x]["item_url"] = this.commonService.getItemURL(this.watch_list_items[x]);          
         }
-        //console.log("this.itemURL"+this.itemURL);
-        //console.log("this.watch_list_items"+this.watch_list_items);
         this.loadingIndicator = false;
       },
       (error) => {
@@ -278,16 +273,13 @@ export class UserComponent implements OnInit {
         this.loadingIndicator = false;
         console.log(response);
         $("#item_"+itemId).hide();
-        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
-        //$("#watch_list_delete_toast").show().fadeOut(4500);
+        $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });        
         this.deleteWatchlist = true;
         setTimeout(function() {
           this.deleteWatchlist = false;
         }.bind(this), 4500);  
-        var item_cnt = response.items_count;
-        if(item_cnt == 0){
-          window.location.reload();
-        }
+        // Get Watch List
+        this.watchlist();
       },
       (error) => {
         console.log(error);      
@@ -303,14 +295,10 @@ export class UserComponent implements OnInit {
       (res) => {
         this.favourite_list_items = res.data.items;
         this.favourite_list_items_count = res.data.items.length;
-        console.log(res.data);
+        localStorage.setItem('favouritesList' , JSON.stringify(this.favourite_list_items));        
         for(var x=0; x < this.favourite_list_items.length; x++)  {
           this.favourite_list_items[x]["item_url"] = this.commonService.getItemURL(this.favourite_list_items[x]);
-          //this.watch_list_items[x]["item_url"].push(this.itemURL);
-          //this.watch_list_items[x].push({item_url,this.itemURL});
         }
-        //console.log("this.itemURL"+this.itemURL);
-        //console.log("this.watch_list_items"+this.watch_list_items);
         this.loadingIndicator = false;
       },
       (error) => {
@@ -333,13 +321,8 @@ export class UserComponent implements OnInit {
         this.deleteWatchlist = true;
         setTimeout(function() {
           this.deleteWatchlist = false;
-        }.bind(this), 4500);  
-        var item_cnt = response.items_count;
-        this.getFavourites(this.sessionId);
-
-        if(item_cnt == 0){
-          window.location.reload();
-        }
+        }.bind(this), 4500);
+        this.favourites();
       },
       (error) => {
         console.log(error);      
@@ -347,20 +330,6 @@ export class UserComponent implements OnInit {
         this.statusMessage = error.server_error_messsage;
       }
     )      
-  }
-
-  getFavourites(sId){
-    this.userService.favourites(sId).subscribe(
-      (res) => {
-        let favourite_list_items = res.data.items;
-        console.log("favourites", favourite_list_items);
-        this.favourite_list_items_count = favourite_list_items.length;
-        localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
-      },
-      (error) => {
-        console.log(error.server_error_messsage);
-      }
-    )
   }
 
   ngOnDestroy() {

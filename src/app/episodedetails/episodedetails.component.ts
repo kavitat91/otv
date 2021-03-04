@@ -227,7 +227,12 @@ export class EpisodedetailsComponent implements OnInit {
     );     
   }
   showVideoPop() {
-    this.child.showVideoPopChild();  
+    if(!localStorage.getItem('otv_user_id')){
+      $('.modal').modal('hide');
+      $('#watch_login_confirm_pop').modal('show');
+    }else{
+      this.child.showVideoPopChild();
+    }
   }
 
   showFavPop(popId){

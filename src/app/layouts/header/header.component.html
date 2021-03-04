@@ -528,8 +528,10 @@
               </li>
             </ul>
             <div class="pull-left w-100 padding-left-0 padding-right-0 margin-top-0">
-              <p class="margin-bottom-0 font-size2 margin-top-10" id="fp_user_msg">To reset your password, enter your
+              <p class="margin-bottom-0 font-size2 margin-top-10" id="fp_user_msg" *ngIf="isEmailForgetPasswordSelected">To reset your password, enter your
                 registered email address</p>
+              <p class="margin-bottom-0 font-size2 margin-top-10" id="fp_user_msg" *ngIf="!isEmailForgetPasswordSelected">To reset your password, enter your
+                  registered mobile number</p>
               <div class="pull-left w-100 padding-bottom-0 padding-top-45 relative-content">
                 <div class="w-100 all_error padding-left-0 padding-right-0">
                   <label class="error" id="fp_backend_user_errors" *ngIf="errorStatus">{{statusMessage}}</label>
@@ -580,7 +582,7 @@
                     </div>
                     <div class="input-group fgt_opt_sec otp_step2" *ngIf="otpStep2">
                       <input type="number" pattern="^[0-9_-]{4}$" id="frgt_pwd_otp" name="frgt_pwd_otp" class="form-control"
-                        value="" #frgt_pwd_otp="ngModel" [(ngModel)]="userMobileForgot.frgt_pwd_otp">
+                        value="" #frgt_pwd_otp="ngModel" [(ngModel)]="userMobileForgot.frgt_pwd_otp" required>
                         <span class="input-label"
                         [ngClass]="{'input-label-focused': frgt_pwd_otp.touched && frgt_pwd_otp?.value > 0 }">OTP</span>
                         <label class="error" id="otp_error" *ngIf="frgt_pwd_otp.errors?.required && frgt_pwd_otp.touched">Please enter the OTP</label>
@@ -600,7 +602,7 @@
                     <div class="text-center margin-bottom-20 margin-top-25 light fgt_opt_sec pull-left w-100"
                     *ngIf="otpStep2">
                       <a href="javascript:void(0);"
-                        class="text-uppercase btn-oria btn-oria-big fgt_otp_verify"  (click)="onMobileForgotPassword2(userMobileForgot)">Confirm</a>
+                        class="text-uppercase btn-oria btn-oria-big fgt_otp_verify"  (click)="onMobileForgotPasswordForOTP(userMobileForgot)">Confirm</a>
                     </div>
                   </form>
 
@@ -636,7 +638,7 @@
             <form #resetPasswordForm="ngForm" (ngSubmit)="onResetPassword(resetPassword)">                
               <div id="ResetPassword" class="tab-pane fade in active">
                 <div class="input-group hide_password_group signup_password_us">
-                  <input type="password" id="reset_pwd" name="reset_pwd" class="form-control user_password" maxlength="20" value="" required
+                  <input [type]="showPassword ? 'text' : 'password'" id="reset_pwd" name="reset_pwd" class="form-control user_password" maxlength="20" value="" required
                   #reset_pwd="ngModel" [(ngModel)]="resetPassword.reset_pwd"> 
                   <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword" (click)="togglePassword();">
                   <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword" (click)="togglePassword();">
@@ -645,10 +647,10 @@
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_pwd.errors?.minlength && reset_pwd.errors?.maxlength && reset_pwd.touched">Password should be minimum 6 and maximum 20 characters</label>
                 </div>
                 <div class="input-group hide_password_group signup_password_us">
-                  <input type="password" id="reset_con_pwd" name="reset_con_pwd" class="form-control user_password" maxlength="20" value="" required
+                  <input [type]="showConfirmPassword ? 'text' : 'password'" id="reset_con_pwd" name="reset_con_pwd" class="form-control user_password" maxlength="20" value="" required
                   #reset_con_pwd="ngModel" [(ngModel)]="resetPassword.reset_con_pwd"> 
-                  <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showPassword" (click)="togglePassword();">
-                  <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showPassword" (click)="togglePassword();">
+                  <img src="./assets/images/hide_password.svg" class="password_toggle" alt="hide password" title="hide password" *ngIf="!showConfirmPassword" (click)="toggleConfirmPassword();">
+                  <img src="./assets/images/show_password.svg" class="password_toggle show_pwd" alt="show password" title="show password" *ngIf="showConfirmPassword" (click)="toggleConfirmPassword();">
                   <span class="input-label" [ngClass]="{'input-label-focused': reset_con_pwd.touched && reset_con_pwd?.value?.length > 0 }">Confirm Password</span>
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_con_pwd.errors?.required && reset_con_pwd.touched">Confirm Password can't be blank</label>
                   <label class="error" id="reset_cnfm_pwd_error" *ngIf="reset_con_pwd.touched && reset_con_pwd.dirty && reset_pwd.value != reset_con_pwd.value">Password and Confirm Password do not match</label>

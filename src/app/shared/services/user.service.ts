@@ -171,7 +171,7 @@ export class UserService {
      );
   }
 
-  mobileForgotPassword2(userMobileForgot: any) {
+  mobileForgotPassword2(userMobileForgot: any) {    
     var forgot_password_params = {};
     forgot_password_params["user"] = {};
     forgot_password_params["user"]["key"] = userMobileForgot.frgt_pwd_otp.toString();    
