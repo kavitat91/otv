@@ -232,7 +232,7 @@ export class UserService {
   }
 
   watchlist(sessionId: string) {
-    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/watchlater/listitems?region=IN&auth_token="+environment.authtoken)
+    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/watchlater/listitems?region=IN&auth_token="+environment.authtoken+"&item_language="+localStorage.getItem('language'))
     .pipe(
       retry(1),
       catchError(this.commonService.handleError)
@@ -242,7 +242,7 @@ export class UserService {
 
   favourites(sessionId: string) {
     //https://prod.api.tarangplus.in/users/7f7d0fd0040ce500e61bc84bbb29aa5f/playlists/favourite?region=IN&auth_token=3zZmzoHg8z6SM3wpDoyw
-    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/favourite/listitems?region=IN&auth_token="+environment.authtoken)
+    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/favourite/listitems?region=IN&auth_token="+environment.authtoken+"&item_language="+localStorage.getItem('language'))
     .pipe(
       retry(1),
       catchError(this.commonService.handleError)
@@ -303,8 +303,8 @@ export class UserService {
      );
   }
 
-  getContinueWatching(sessionId: string): Observable<any> {
-    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/watchhistory/listitems?region=IN&auth_token="+environment.authtoken)
+  getContinueWatching(sessionId: string): Observable<any> {    
+    return this.http.get<any>(environment.apiURL+"users/"+sessionId+"/playlists/watchhistory/listitems?region=IN&auth_token="+environment.authtoken+"&item_language="+localStorage.getItem('language'))
     .pipe(
       retry(1),
       catchError(this.commonService.handleError)

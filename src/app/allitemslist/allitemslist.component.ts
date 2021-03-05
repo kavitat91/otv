@@ -39,7 +39,7 @@ export class AllitemslistComponent implements OnInit {
     
     this.sub = this.route.data
     .subscribe((page) =>{
-      //console.log(page);
+      console.log(page);      
       if(page['page'] == 'allitemlist') {
         this.page = "allitemlist";
         this.getList(this.catalogname);

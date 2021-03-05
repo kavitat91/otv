@@ -7,6 +7,8 @@ import { Location } from "@angular/common";
 import { globals } from '../globals/globals';
 import { VideopopupComponent } from './../videopopup/videopopup.component';
 import { BroadcastService } from '../shared/services/broadcast.service';
+import { Message } from 'src/app/message';
+
 
 @Component({
   selector: 'app-episodedetails',
@@ -18,13 +20,13 @@ export class EpisodedetailsComponent implements OnInit {
   language: string;
   layoutScheme: any;
   episodeDetails: any;
-  allEpisodes: any;
-  allEpisodesFirst: any;
+  allEpisodes: any = [];
+  allEpisodesFirst: any = [];
   contentId: any;
   videoPreview: any;
   new_play_url: any;
   key: string;
-  other_items: any;
+  other_items: any = [];
   catalog_name: any;
   tvshow_name: any;
   theme_type: string;
@@ -81,9 +83,7 @@ export class EpisodedetailsComponent implements OnInit {
   currentItem_listitem_id: string;
   favourite_list_items: any = [];
 
-  @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
-  @Output() fireLogin = new EventEmitter<any>();
-  @Output() fireWatchLogin = new EventEmitter<any>();
+  @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent;
 
   constructor(private pageService: PageService, private commonService: CommonService, private userService: UserService,
     private router: Router, private route: ActivatedRoute, location: Location,
@@ -95,8 +95,10 @@ export class EpisodedetailsComponent implements OnInit {
         let a = location.path().split("/");      
         this.catalogName = a[1]; 
         this.showName = a[2]; 
-        this.itemName = a[3]; 
-        this.getEpisodeDetails();
+        this.itemName = a[3];
+        if(this.catalogName != undefined && this.showName != undefined && this.itemName != undefined) {
+          this.getEpisodeDetails();
+        }
       }
     });
   }
@@ -125,6 +127,7 @@ export class EpisodedetailsComponent implements OnInit {
     //this.getEpisodeDetails();
 
   }
+
   getEpisodeDetails() {
     this.loadingIndicator = true;
     this.language = localStorage.getItem('language');
@@ -153,14 +156,17 @@ export class EpisodedetailsComponent implements OnInit {
         this.userPlanType = "NA";
         this.userPlan = "NA";
         this.analyticUserId = "NA";
+
         let favList = JSON.parse(localStorage.getItem('favouritesList'));
-        for(let i=0; i<favList.length; i++){
-          if(favList[i].content_id == this.tvShowContentId){
-            this.addedToFavouritesIcon = true;
-          //  this.currentItem_listitem_id = favList[i].listitem_id;
-            break;
-          } 
+        if(favList != null) {
+          for(let i=0; i<favList.length; i++){
+            if(favList[i].content_id == this.tvShowContentId){
+              this.addedToFavouritesIcon = true;          
+              break;
+            } 
+          }
         }
+        
         /* this.new_play_url = this.commonService.getPlayUrlKey(this.episodeDetails);
         console.log("this.new_play_url"+this.new_play_url); */
         //this.videoURL = "https://www.tarangplus.in/odiyatv_player/demo/embed.html?contenturl=ydUll0+UkrHTPrZCQ56A0P/E+JM3zdCJwgnp59m48R4yP4CkZCwmtn0mDVfOmagNfLk7QltalupeD6nYr971XSLDKRzbVCSY+6SzDFj4m2ALP6/PfYuwxS4N9hq7HC6J|key=uFNtbotlPCR7OlKdbtdaSg==|image=https://d18yh0jkm7grap.cloudfront.net/images/Agyan-Mind-Kale-Ki/5eb264b219521d5da6000013/large_16_9/1589262111.jpg?1589262111|title=Agyan%20Mind%20Kale%20Ki|theme_type=movie|channel_logo=|catalog_id=5d6789edbabd8163a0000016|content_id=5eb264bc3326af455e000090|genre=crime|language=hindi|category=bollywood%20classic|preview_avail=false|is_premium=false|pre_role_ad=https://pubads.g.doubleclick.net/gampad/ads?sz=640x360&iu=/6062/iab_vast_samples/skippable&ciu_szs=300x250,728x90&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=[referrer_url]&correlator=[timestamp]|mid_role_ad=http://adex.adchakra.net/KIRTI/openx-2.8.9/www/delivery/fc.php?script=bannerTypeHtml:vastInlineBannerTypeHtml:vastInlineHtml&zones=pre-roll:0.0-0=1&nz=1&source=&r=1234&block=1&format=vast&charset=UTF-8&version=3.0|mid_role_pos=";
@@ -189,6 +195,7 @@ export class EpisodedetailsComponent implements OnInit {
             console.log(error);
           }
         )
+        
         this.pageService.getAllEpisodes(this.language, this.catalogName, this.showName).subscribe(
           (tvshow_response) => {
             this.allEpisodes = tvshow_response["data"]["items"];
@@ -226,27 +233,24 @@ export class EpisodedetailsComponent implements OnInit {
     }
     );     
   }
-  showVideoPop() {
+  showVideoPop() {    
     if(!localStorage.getItem('otv_user_id')){
       $('.modal').modal('hide');
-      $('#watch_login_confirm_pop').modal('show');
+      $('#watch_video_confirm_pop').modal('show');
     }else{
       this.child.showVideoPopChild();
     }
   }
 
-  showFavPop(popId){
-    this.fireLogin.emit();
-  }
-
   closePop(){
+    console.log('closepop');
     this.displayPopStatus = 'none';
     $('.modal').modal('hide');
   }
 
-  showWatchPop(popId){
-    this.fireWatchLogin.emit();
-    this.broadcastService.boradcast("EVENT",null);
+  showLoginPop(){
+    this.closePop();
+    this.broadcastService.dispatch(new Message('login', null));
   }
 
   addToFavourites(){
@@ -303,7 +307,6 @@ export class EpisodedetailsComponent implements OnInit {
   }
 
   onItemRedirect(item){
-    debugger;
     for(let i=0; i<this.favourite_list_items.length; i++){
       if(this.favourite_list_items[i].content_id == this.showContentId){
         this.addedToFavouritesIcon = true;

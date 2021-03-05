@@ -190,7 +190,7 @@
                 <option value ="s" *ngFor="let s of seasons">{{s['title']}}</option>
               </select> -->
             </span>  
-            <div class="row">
+            <div class="row" *ngIf="allEpisodes.length>0">
               <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col- margin-bottom-10 margin-top-0">
                   <h2 class="margin-bottom-0 margin-top-5 text-capitalize pull-left carousel-title oriya-color1 font-sbold">
                     {{allEpisodesFirst?.catalog_object?.layout_type == "songs" ? "Songs" : "Episodes"}}</h2>
@@ -273,7 +273,7 @@
           </p>
           <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
             <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop()">cancel</a>
-            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showFavPop('fav_login_confirm_pop')">Proceed</a>          
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showLoginPop()">Proceed</a>          
           </div>
         </div>   
       </div>
@@ -290,9 +290,28 @@
           </p>
           <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
             <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop()">cancel</a>
-            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showWatchPop('watch_login_confirm_pop')">Proceed</a>          
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showLoginPop()">Proceed</a>          
           </div>
         </div>   
       </div>
     </div>
   </div>
+
+  <div class="modal small-popup" id="watch_video_confirm_pop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-left padding-left-30 padding-right-30">
+          <h1 class="pull-left margin-bottom-10 font-semibold w-100 text-center page-title">Login</h1>
+          <p class="pull-left w-100 margin-top-15 margin-bottom-25 text-center">
+            Please login to watch the video
+          </p>
+          <div class="pull-left w-100 margin-bottom-20 margin-top-0 center-align-content">
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big btn-oria2 pull-left margin-right-15" id="logout_cancel" (click)="closePop()">cancel</a>
+            <a href="javascript:void(0);" class="text-uppercase btn-oria btn-oria-big pull-left" id="logout_confirm" (click)="showLoginPop()">Proceed</a>          
+          </div>
+        </div>   
+      </div>
+    </div>
+  </div>
+
+  

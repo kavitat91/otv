@@ -1,4 +1,6 @@
-export interface Message {
-    type: string;
-    payload: any;
+export class Message {    
+    constructor(
+        public type: string,
+        public payload: any,
+      ) {}
 }

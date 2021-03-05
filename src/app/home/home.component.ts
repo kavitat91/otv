@@ -116,8 +116,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
         }
       )
     }
-    
   }
+  
   deleteContinueWatchPop(itemId: string) {
     $('#ctn_watch_delete_pop').modal('show');
     this.continueItemId = itemId;

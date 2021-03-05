@@ -38,7 +38,7 @@ export class VideopopupComponent implements OnInit {
     console.log("videoURL"+this.videoURL);
   }
 
-  showVideoPopChild() {
+  showVideoPopChild() {    
     this.videoClickStatus = true;
     this.displayPopStatus = 'block';   
     var videoPremiumSt = this.videoPremiumCheck;
@@ -79,6 +79,7 @@ export class VideopopupComponent implements OnInit {
     //window.location.reload();
   }
   closePop() {
+    console.log('closepop');
     this.displayPopStatus = 'none'; 
     this.videoClickStatus = false;
   }

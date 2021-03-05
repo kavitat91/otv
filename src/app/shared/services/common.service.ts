@@ -159,7 +159,13 @@ export class CommonService {
   }
   
   getPlayUrlKey(response: any) {
-    let url = this.signSmarturl(response['play_url']['saranyu']['url']);
+    console.log(response);    
+    let url;
+    if(response['play_url_type'] == 'youtube' ) {
+      url = this.signSmarturl(response['play_url']['youtube']['url']);
+    }else{
+      url = this.signSmarturl(response['play_url']['saranyu']['url']);
+    }    
     console.log("urlurl"+url);
     //sign_smarturl(response['play_url']['saranyu']['url'])
     console.log(response);
@@ -205,7 +211,7 @@ export class CommonService {
     const md5 = new Md5();
     var signature = md5.appendStr(smart_url_key+base_url).end()
 
-    var signed_url =  base_url+signature;
+    var signed_url =  base_url+signature;    
     console.log("signature"+signature)
     //var header = {"Accept" : "application/json", "Cache-Control" : "no-cache"}
     

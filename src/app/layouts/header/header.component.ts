@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from './../../shared/services/user.service';
 import { CommonService } from '../../shared/services/common.service';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
+import { Message } from 'src/app/message';
 //import { ClickElsewhereDirective } from '../../shared/directives/click-outside.directive.directive';
 @Component({
   selector: 'app-header',
@@ -109,14 +110,23 @@ public resetPasswordToast: boolean = false;
       }
     });
 
-    this.broadcastService.subscribe("EVENT", () => { this.loginScreen() });
+    //this.broadcastService.subscribe("EVENT", () => { this.loginScreen() });
+
+    this.broadcastService.on(new Message('login', null)).subscribe(event => this.loginScreen());
   }
   loginScreen(){
     console.log('showloginScreen');
+    this.showPop('signin_pop','');
   }
   ngOnInit() {
-    this.language = 'en';
-    localStorage.setItem('language', 'en');
+    
+    if(localStorage.getItem('language') == undefined){
+      this.language = 'en';
+      
+      localStorage.setItem('language', 'en');
+    }else{
+      this.language = localStorage.getItem('language');
+    }
     this.init();
   }
 
@@ -130,7 +140,6 @@ public resetPasswordToast: boolean = false;
     this.radioSelected = this.language;    
     this.loginPop = localStorage.getItem('loginPop');
     this.continueWatchLength = localStorage.getItem('continueWatchItem');
-    console.log("continueWatchLength: ", this.continueWatchLength)
   }
 
   ngOnChanges() {
@@ -281,9 +290,11 @@ public resetPasswordToast: boolean = false;
     this.langToast = true;
     setTimeout(function() {
       this.langOptions = false;
-    }.bind(this), 500);          
+    }.bind(this), 500);
+
     setTimeout(function() {
-      //window.location.reload();
+      this.langToast = false;
+      window.location.reload();
     }.bind(this), 2000);        
   }
 
@@ -750,14 +761,9 @@ public resetPasswordToast: boolean = false;
       this.userService.mobileForgotPassword2(userMobileForgot).subscribe(
         (resp: any) => {
           this.loadingIndicator = false;
-          this.errorStatus = true;
-          this.statusMessage = "Success";
           this.otpval = userMobileForgot.frgt_pwd_otp;
-          setTimeout(function() {
-            this.errorStatus = false;
-            this.selectedPop = "reset_password_pop";
-            this.displayPopStatus = 'block';
-          }.bind(this), 2500);
+          this.selectedPop = "reset_password_pop";
+          this.displayPopStatus = 'block';          
         },
         (error: any) => {
           console.log(error);

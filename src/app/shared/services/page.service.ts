@@ -52,6 +52,7 @@ export class PageService {
   }
   
   getItemDetails(lang: string, catalog_slug: string, show_slug: string ): Observable<any> {
+    console.log('getItemDetails');
     if(lang == 'od') {
       lang = 'od'
     }
@@ -81,6 +82,7 @@ export class PageService {
   }
 
   getAllEpisodes(lang: string, catalog_slug: string, show_slug: string ): Observable<any> {
+    console.log('getAllEpisodes');
     if(lang == 'od') {
       lang = 'od'
     }
@@ -111,6 +113,7 @@ export class PageService {
      );
   }
   getAssociatedVideos(lang: string, catalog_slug: string, item_slug: any) {
+    console.log('getAssociatedVideos');
     return this.http.get<any>(environment.apiURL+"catalogs/"+catalog_slug+"/items/"+item_slug+"videolists?region=IN&item_language="+lang+"&auth_token="+environment.authtoken)
     .pipe(
       retry(1),

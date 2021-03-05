@@ -43,8 +43,10 @@ export class ShowcatalogComponent implements OnInit {
           } */
           this.sub = this.route.data
           .subscribe((page) =>{
-            if(page['page'] == 'cataloglist' && a[2] != 'all' && a[1] != undefined) {
-              this.showCatalog();
+            if(page['page'] == 'cataloglist' && a[2] != 'all' && a[1] != undefined) {              
+              if(this.catalogName != 'livetv' && this.catalogName != 'plans' ) {
+                this.showCatalog();
+              }
             }
           }); 
         }
@@ -55,8 +57,7 @@ export class ShowcatalogComponent implements OnInit {
     //let currentUrl = this.route.snapshot.url[0].path;
     //this.showCatalog();
     this.contentHeight = this.commonService.pageHeight() + 81; 
-    if(window.outerWidth < 1200) {
-      console.log()
+    if(window.outerWidth < 1200) {      
       this.mobileNav = true;
       console.log("mobileNav"+this.mobileNav);
 
@@ -104,7 +105,7 @@ export class ShowcatalogComponent implements OnInit {
 
   showCatalog() {
     this.loadingIndicator = true;
-    this.language = localStorage.getItem('language');
+    this.language = localStorage.getItem('language');   
     this.pageservice.getCatloagContent(this.catalogName, this.language).subscribe(
       (resp) => {
         this.itemsList = resp["data"]["catalog_list_items"];

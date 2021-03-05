@@ -10,6 +10,8 @@ import { Location } from "@angular/common";
 import { globals } from '../globals/globals';
 import { VideopopupComponent } from './../videopopup/videopopup.component';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { BroadcastService } from '../shared/services/broadcast.service';
+import { Message } from '../message';
 
 @Component({
   selector: 'app-itemdetails',
@@ -86,13 +88,11 @@ export class ItemdetailsComponent implements OnInit {
   currentItem_listitem_id: string;
   favourite_list_items: any = [];
 
-  @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent; 
-  @Output() fireLogin = new EventEmitter<any>();
-  @Output() fireWatchLogin = new EventEmitter<any>();
+  @ViewChild(VideopopupComponent, {static: false}) child: VideopopupComponent;
 
   constructor(private pageService: PageService, private commonService: CommonService, private userService: UserService,
     private router: Router, private route: ActivatedRoute, location: Location, private titleService: Title, private metaService: Meta,
-    private seoService: SEOService
+    private seoService: SEOService, private broadcastService:BroadcastService
     ) { 
     
     this.router.events.subscribe((ev) => {
@@ -100,7 +100,9 @@ export class ItemdetailsComponent implements OnInit {
         let a = location.path().split("/");      
         this.catalogName = a[1]; 
         this.showName = a[2]; 
-        this.getItemDetails();
+        if(this.catalogName != undefined && this.showName != undefined){
+          this.getItemDetails();
+        }
       }   
     });    
     
@@ -318,18 +320,15 @@ export class ItemdetailsComponent implements OnInit {
       this.child.showVideoPopChild();
     }
   }
-
-  showFavPop(popId){
-    this.fireLogin.emit();
-  }
-
+  
   closePop(){
     this.displayPopStatus = 'none';
     $('.modal').modal('hide');
   }
 
-  showWatchPop(popId){
-    this.fireWatchLogin.emit();
+  showLoginPop() {
+    this.closePop();
+    this.broadcastService.dispatch(new Message('login', null));
   }
 
   addToFavourites(){
