@@ -91,6 +91,7 @@ mobileMenuOpen: boolean = true;
 loginPop: string;
 continueWatchLength: any;
 isEmailForgetPasswordSelected: boolean = true;
+isMobileForgetPasswordSelected: boolean = false;
 
 public resetPasswordToast: boolean = false;
   
@@ -253,10 +254,12 @@ public resetPasswordToast: boolean = false;
       this.mobileForgotForm.reset(); 
       this.otpStep2 = false;
       this.isEmailForgetPasswordSelected = true;
+      this.isMobileForgetPasswordSelected = false;
     }
     if(prevtabType == 'mobileforgot') {
       if(this.emailForgotForm != undefined) {
         this.emailForgotForm.reset();   
+        this.isMobileForgetPasswordSelected = true;
         this.isEmailForgetPasswordSelected = false;
       }
       this.countryCodeStatus = false;   
@@ -698,6 +701,7 @@ public resetPasswordToast: boolean = false;
       this.userMobileForgotInvalid.frgt_pwd_mobile_no = true;
     } else {
       this.userMobileForgotInvalid.frgt_pwd_mobile_no = false;
+      this.isMobileForgetPasswordSelected = false;
       this.loadingIndicator = true;
       this.userService.mobileForgotPassword1(userMobileForgot).subscribe(
         (resp: any) => {
@@ -823,6 +827,7 @@ public resetPasswordToast: boolean = false;
       this.emailForgotPasswordInvalid.frgt_pwd_email_id = true;
     } else {
       this.emailForgotPasswordInvalid.frgt_pwd_email_id = false;
+      this.isEmailForgetPasswordSelected = false;
       this.loadingIndicator = true;    
       this.userService.emailForgotPassword(emailForgotPassword).subscribe(
         (resp) => {
