@@ -28,11 +28,12 @@ export class PlanSummaryComponent implements OnInit {
       console.log("Plan-Summary component : sePlan - "+history.state['sePlan'])
       this.data2 = history.state['sePlan']
     });
-    //console.log(this.data2.split("|")[4])
-    this.price = this.data2.split("|")[4]
-    this.discountPrice = this.data2.split("|")[5]
-    this.currency = this.data2.split("|")[6]
-    
+    console.log(this.data2);    
+    if(this.data2 != undefined) {
+      this.price = this.data2.split("|")[4]
+      this.discountPrice = this.data2.split("|")[5]
+      this.currency = this.data2.split("|")[6]
+    }
     console.log("Price : "+this.price+", Discount Price :"+this.discountPrice+", Currency : "+this.currency)
   }
 

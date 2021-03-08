@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     private router: Router, private route: ActivatedRoute, private titleService: Title, private metaService: Meta) { }
 
   ngOnInit() {
-    this.sessionId = localStorage.getItem('otv_user_id')      
+    this.sessionId = localStorage.getItem('otv_user_id');
     this.getHomeList();
     this.getContinueWatching();
     this.contentHeight = this.commonService.pageHeight() + 81;    
@@ -103,16 +103,17 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     if(this.sessionId){
       this.userService.getContinueWatching(this.sessionId).subscribe(
         (data) => {
+          this.loadingIndicator = false;
           this.continueWatchItem = data['data']['items'];
-          localStorage.setItem('continueWatchItem', this.continueWatchItem.length);
+          localStorage.setItem('continueWatchItems', JSON.stringify(this.continueWatchItem));
           for(var x=0; x < this.continueWatchItem.length; x++) {
             this.continueWatchItem[x]['itemURL'] = this.commonService.getItemURL(this.continueWatchItem[x]);
             console.log(this.continueWatchItem[x]['itemURL']);
-          }
-          
+          }          
         },
         (error) => {
           console.log(error);
+          this.loadingIndicator = false;
         }
       )
     }

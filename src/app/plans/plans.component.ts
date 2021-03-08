@@ -5,6 +5,8 @@ import { UserService } from './../shared/services/user.service';
 import { CommonService } from './../shared/services/common.service';
 import { PlansService } from './../shared/services/plans.service';
 import { Router, RouterModule } from '@angular/router';
+import { BroadcastService } from '../shared/services/broadcast.service';
+import { Message } from '../message';
 
 @Component({
   selector: 'app-plans',
@@ -18,7 +20,9 @@ export class PlansComponent implements OnInit {
   activePlans: any;
   loadingIndicator: boolean = false;
   language: string;
-  constructor(private titleService: Title, private metaService: Meta, private commonService: CommonService, private plansService: PlansService, private userService: UserService, private router: Router) { }
+  constructor(private titleService: Title, private metaService: Meta, private commonService: CommonService, 
+    private plansService: PlansService, private userService: UserService, private router: Router,
+    private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     
@@ -87,7 +91,21 @@ export class PlansComponent implements OnInit {
   }
 
   showPlansSubscribePop(){
-    $('.modal').modal('hide');
+    if(!localStorage.getItem('otv_user_id')){
+      $('.modal').modal('hide');
+      $('#login_confirm_pop').modal('show');
+    }else{
+      $('.modal').modal('hide');
       $('#plans_subscribe_pop').modal('show');
+    }    
+  }
+
+  closePop() {
+    $('.modal').modal('hide');
+  }
+
+  showLoginPop() {
+    this.closePop();
+    this.broadcastService.dispatch(new Message('login', null));
   }
 }

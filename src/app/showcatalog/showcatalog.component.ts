@@ -44,7 +44,7 @@ export class ShowcatalogComponent implements OnInit {
           this.sub = this.route.data
           .subscribe((page) =>{
             if(page['page'] == 'cataloglist' && a[2] != 'all' && a[1] != undefined) {              
-              if(this.catalogName != 'livetv' && this.catalogName != 'plans' ) {
+              if(this.catalogName == 'shows-list' || this.catalogName == 'music-list' || this.catalogName == 'serial-list' || this.catalogName == 'devotional-list' ) {
                 this.showCatalog();
               }
             }

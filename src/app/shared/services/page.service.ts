@@ -88,8 +88,7 @@ export class PageService {
     }
     else {
       lang = ''
-    }
-    debugger;
+    }    
     return this.http.get<any>(environment.apiURL+"catalogs/"+catalog_slug+"/items/"+show_slug+"/episodes?order_by=desc&region=IN&item_language="+lang+"&auth_token="+environment.authtoken)
     .pipe(
       retry(1),

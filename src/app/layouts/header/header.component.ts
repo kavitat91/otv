@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   otpStep2: boolean = false;
   registerStep2: boolean = false;
   otpval: any;
-  header_tabs: any;
+  header_tabs: any = [];
   language: any;
   langToast: boolean = false;
   watchHistoryToast: boolean = false;
@@ -89,7 +89,7 @@ profileMenu: boolean = false;
 langMenu: boolean = false;
 mobileMenuOpen: boolean = true;
 loginPop: string;
-continueWatchLength: any;
+continueWatchItems: any = [];
 isEmailForgetPasswordSelected: boolean = true;
 isMobileForgetPasswordSelected: boolean = false;
 
@@ -107,19 +107,18 @@ public resetPasswordToast: boolean = false;
         this.mobileMenu = false;
         this.profileMenu = false;
         this.langMenu = false;
-        this.mobileMenuOpen = true;     
+        this.mobileMenuOpen = true;
       }
     });
 
-    //this.broadcastService.subscribe("EVENT", () => { this.loginScreen() });
-
-    this.broadcastService.on(new Message('login', null)).subscribe(event => this.loginScreen());
+    //this.broadcastService.subscribe("EVENT", () => { this.loginScreen() });    
   }
   loginScreen(){
     console.log('showloginScreen');
     this.showPop('signin_pop','');
   }
   ngOnInit() {
+    this.broadcastService.on(new Message('login', null)).subscribe(event => this.loginScreen());
     
     if(localStorage.getItem('language') == undefined){
       this.language = 'en';
@@ -140,7 +139,25 @@ public resetPasswordToast: boolean = false;
     
     this.radioSelected = this.language;    
     this.loginPop = localStorage.getItem('loginPop');
-    this.continueWatchLength = localStorage.getItem('continueWatchItem');
+    this.getContinueWatching();
+    this.continueWatchItems = JSON.parse(localStorage.getItem('continueWatchItems'));
+    console.log(this.continueWatchItems.length);
+  }
+
+  getContinueWatching() {    
+    this.loadingIndicator = true;
+    if(localStorage.getItem('otv_user_id')){
+      this.userService.getContinueWatching(localStorage.getItem('otv_user_id')).subscribe (
+        (data) => {
+          localStorage.setItem('continueWatchItems', JSON.stringify(data['data']['items']));
+          this.loadingIndicator = false;
+        },
+        (error) => {
+          console.log(error);
+          this.loadingIndicator = false;
+        }
+      )
+    }
   }
 
   ngOnChanges() {
@@ -396,8 +413,7 @@ public resetPasswordToast: boolean = false;
     this.loadingIndicator = true;
     this.userService.deleteWatchHistory(localStorage.getItem('otv_user_id')).subscribe(
       (response) => {
-        console.log(response);
-        this.continueWatchLength = localStorage.removeItem('continueWatchItem');
+        console.log(response);        
         $('#delete_watch').modal('hide');
         this.watchHistoryToast = true;        
         setTimeout(function() {

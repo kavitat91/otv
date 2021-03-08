@@ -100,7 +100,9 @@ export class ItemdetailsComponent implements OnInit {
         let a = location.path().split("/");      
         this.catalogName = a[1]; 
         this.showName = a[2]; 
-        if(this.catalogName != undefined && this.showName != undefined){
+        console.log(this.catalogName);
+        console.log(this.showName);
+        if(this.catalogName != undefined && this.showName != undefined && this.catalogName != 'plans' && this.showName != 'plans_summary'){
           this.getItemDetails();
         }
       }   

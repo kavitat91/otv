@@ -65,7 +65,7 @@ export class CommonService {
     localStorage.removeItem('otv_user_pack_status');
     localStorage.removeItem('favouritesList');
     localStorage.removeItem('rzp_device_id');
-    localStorage.removeItem('continueWatchItem');
+    localStorage.removeItem('continueWatchItems');
   }
   getItemURL(i: any) {
     //console.log(i);
