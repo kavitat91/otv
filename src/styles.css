@@ -677,7 +677,7 @@ body {
     padding-bottom: 24px;
   }
   header nav li:nth-child(2) {
-    display: none;
+    /* display: none; */
   }
   header nav li ul li {
     margin-bottom: 5px;

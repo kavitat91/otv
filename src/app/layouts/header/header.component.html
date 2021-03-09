@@ -32,7 +32,7 @@
         <div class="header-right d-none d-xl-block relative-content" (clickElsewhere)="closeLangMenu()">
           <div class="search-wrap">
             <!-- <input type="search" name="" placeholder="Search" class="search_box"> -->  
-            <a routerLink="search"><i class="fa fa-search" aria-hidden="true"></i></a>
+            <a routerLink="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
           </div>
           <!-- <a data-target="#register_pop" data-toggle="modal" class="text-uppercase login"href="#register_pop">LogIn</a> -->
           <a href="javascript:void(0);" class="language-menu" (click)="toggleLangOptions();">
@@ -61,13 +61,13 @@
           <ul class="list-none margin-bottom-0 pull-left language-options" *ngIf="langOptions">
             <li class="pull-left w-100" *ngFor="let item of languageOptions;">
               <input type="radio" id="{{item.name}}" class="lang_sel" name="language" value="{{item.value}}" [(ngModel)]="radioSelected" (change)="onLangChange(item.value)" [checked]="item.value == language">              
-              <label for="{{item.name}}">{{item.name}}</label>              
+              <label for="{{item.name}}">{{item.name}}</label>
             </li>            
           </ul>
         </div>
         <div class="header-right mobile-header-right d-block d-xl-none">
           <div class="search-wrap">
-            <a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
+            <a routerLink="/search"><i class="fa fa-search" aria-hidden="true"></i></a>
           </div>
           <a href="javascript:void(0);" class="pull-left text-uppercase language-menu" (click)="mobileToggle('langMenu')">
             <i class="fa fa-language" aria-hideen="true"></i>
@@ -100,7 +100,7 @@
                   <a routerLink="{{mob['display_title'].toLowerCase() == 'all' ? '/' : '/'+mob['home_link']}}" class="oriya-color1" id="{{mob['home_link']}}_mobile">{{mob['display_title']}}</a>
                 </ng-container>  
               </li>
-							 <li><a href="/livetv" class="oriya-color1" id="livetv_mobile">Live TV</a></li>
+							 <li><a routerLink="/livetv" class="oriya-color1" id="livetv_mobile">Live TV</a></li>
 						</ul>
 					</nav>
 					<a routerLink="/plans" class="pull-left text-uppercase mobile-login" id="">Plans</a>
@@ -154,7 +154,7 @@
 							</li>
 							<li>
 								<input type="radio" id="mobile_odia" name="mobile_language_options">
-								<label for="mobile_odia">Odia</label>								
+								<label for="mobile_odia">Odia</label>
 							</li>
 						</ul>
 					</nav>
