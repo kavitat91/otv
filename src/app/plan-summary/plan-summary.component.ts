@@ -121,8 +121,8 @@ export class PlanSummaryComponent implements OnInit {
     console.log("hello");
     var promo_code = $("#promo_code").val();
     let plan_dt =  this.data2;
-    // if(promo_code){
-     this.promo_code = promo_code
+    this.promo_code = promo_code
+    if(this.promo_code.length != 0){
      $("#plan_apply_promo").text("Apply...");
      console.log("coupon code"+ promo_code);
       this.plansService.ValidateCouponCode(localStorage.getItem('otv_user_id'),plan_dt,this.promo_code).subscribe(
@@ -133,12 +133,15 @@ export class PlanSummaryComponent implements OnInit {
           console.log(error);
           this.loadingIndicator = false;
           this.delete_promo_dt();
-          $("#promo_error_msg").show().fadeOut(4000);
+          $("#promo_error_msg").text("Sorry, this Promo Code is Invalid").show().fadeOut(4000);
           $("#plan_apply_promo").text("Apply");
           $("#pln_fin_prc").text($("#pln_ac_prc").text());
         }
       )
-    //}
+    }
+    else{
+      $("#promo_error_msg").text("Please enter the promocode").show().fadeOut(4000);
+    }
   }
 
   set_promo_localstorage(promo_res){
