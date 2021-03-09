@@ -17,6 +17,8 @@ export class PlanSummaryComponent implements OnInit {
   currency: any;
   promo_code: any;
   keysToRemove: any;
+  promoCode: any;
+
 
   constructor(public router: Router, public route: ActivatedRoute, private plansService: PlansService){
     this.router.routeReuseStrategy.shouldReuseRoute = () => {

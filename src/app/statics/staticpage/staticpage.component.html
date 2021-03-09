@@ -21,7 +21,7 @@
                     us</h1>
                   <div class="contact-form-wrap">
                     <input type="hidden" id="user_region" name="" value="IN">
-                    <form #contact="ngForm" (ngSubmit)="onContactSubmit(contact)">
+                    <form #contactForm="ngForm" (ngSubmit)="onContactSubmit(contact)">
                       <div class="input-group query_type margin-bottom-25 margin-top-25">
                         <div class="custom-select">
                           <select id="contact_us_query" #contact_us_query="ngModel" name="contact_us_query" [(ngModel)]="contact.contact_us_query">

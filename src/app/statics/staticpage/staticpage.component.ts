@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../shared/services/user.service';
 import { CommonService } from '../../shared/services/common.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-staticpage',
@@ -23,7 +24,7 @@ export class StaticpageComponent implements OnInit {
   contentHeight: number; 
   contentHeight5: number; 
   contactToast: boolean = false;
-
+  @ViewChild('contactForm', {static: false}) public contactForm: NgForm;
   constructor(private route: ActivatedRoute, private service: UserService, private commonService: CommonService) { }
 
 
