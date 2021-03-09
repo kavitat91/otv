@@ -15,6 +15,8 @@ export class PlanSummaryComponent implements OnInit {
   price: any;
   discountPrice: any;
   currency: any;
+  promo_code: any;
+  keysToRemove: any;
 
   constructor(public router: Router, public route: ActivatedRoute, private plansService: PlansService){
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
@@ -28,6 +30,9 @@ export class PlanSummaryComponent implements OnInit {
       console.log("Plan-Summary component : sePlan - "+history.state['sePlan'])
       this.data2 = history.state['sePlan']
     });
+
+    let keysToRemove = ["otv_promo_code_id","otv_promo_amt","otv_promo_code"];
+    keysToRemove.forEach(k => localStorage.removeItem(k))
     console.log(this.data2);    
     if(this.data2 != undefined) {
       this.price = this.data2.split("|")[4]
@@ -112,4 +117,58 @@ export class PlanSummaryComponent implements OnInit {
     this.rzp.open();
   }
 
+  CouponCode(){
+    console.log("hello");
+    var promo_code = $("#promo_code").val();
+    let plan_dt =  this.data2;
+    this.promo_code = promo_code
+    if(this.promo_code.length != 0){
+     $("#plan_apply_promo").text("Apply...");
+     console.log("coupon code"+ promo_code);
+      this.plansService.ValidateCouponCode(localStorage.getItem('otv_user_id'),plan_dt,this.promo_code).subscribe(
+        (response) => {
+         this.set_promo_localstorage(response)
+        },
+        (error) => {
+          console.log(error);
+          this.loadingIndicator = false;
+          this.delete_promo_dt();
+          $("#promo_error_msg").text("Sorry, this Promo Code is Invalid").show().fadeOut(4000);
+          $("#plan_apply_promo").text("Apply");
+          $("#pln_fin_prc").text($("#pln_ac_prc").text());
+        }
+      )
+    }
+    else{
+      $("#promo_error_msg").text("Please enter the promocode").show().fadeOut(4000);
+    }
+  }
+
+  set_promo_localstorage(promo_res){
+    console.log(promo_res)
+    console.log("promo code data");
+    var dt = promo_res['data']['payment']
+    localStorage.setItem("otv_promo_code_id",dt['coupon_id'])
+    localStorage.setItem("otv_promo_amt",dt['net_amount']);
+    localStorage.setItem("otv_promo_code",dt['coupon_code'])
+    $("#pln_fin_prc").text(dt['net_amount']);
+    $(".promo_sec").hide();
+    $("#user_promo_code").text(dt['coupon_code']);
+    $("#promo_suc_pop").show();
+    $("#plan_apply_promo").text("Apply");
+  }
+
+  RemoveCouponCode(){
+    $("#promo_code").val("");
+    this.delete_promo_dt();
+    console.log("remove coupon code is clicked");
+    $("#promo_suc_pop").hide();
+    $(".promo_sec").show();
+    $("#pln_fin_prc").text($("#pln_ac_prc").text());
+  }
+
+  delete_promo_dt(){
+   let keysToRemove = ["otv_promo_code_id","otv_promo_amt","otv_promo_code"];
+   keysToRemove.forEach(k => localStorage.removeItem(k))
+  }
 }

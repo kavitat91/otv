@@ -22,6 +22,7 @@ export class PlansService {
     throw new Error('Method not implemented.');
   }
   plan_init_params = {};
+  promo_cod_dt = {};
   constructor(private http: HttpClient, private commonService: CommonService) { }
   
   options = { headers: new HttpHeaders ({ 'Content-Type': 'application/json' }) }
@@ -82,7 +83,11 @@ export class PlansService {
     this.plan_init_params["user_info"]["email"] = sessionId;
     this.plan_init_params["user_info"]["mobile_number"] = "";
     this.plan_init_params["miscellaneous"]["browser"] = "Generic_Browser";
-    
+    if(localStorage.getItem("otv_promo_code") != undefined){
+      this.plan_init_params["payment_info"]["coupon_code"] = localStorage.getItem("otv_promo_code");
+      this.plan_init_params["payment_info"]["coupon_code_id"] = localStorage.getItem("otv_promo_code_id")
+      this.plan_init_params["payment_info"]["price_charged"] = localStorage.getItem("otv_promo_amt")
+    }
     console.log("12"+JSON.stringify(this.plan_init_params));
     console.log("service.ts : sessionId " + sessionId)
     console.log("service.ts : environment.authtoken "+ environment.authtoken)
@@ -104,5 +109,35 @@ export class PlansService {
       catchError(this.commonService.handleError)
      );
   }
+
+ ValidateCouponCode(sessionId: string, sePlan: string, promo_code: string){
+  let promo_cod_dt = {}
+  let planDet = sePlan.split("|");
+  let pln_sig = ""
+  var all_packs = [];
+  var pack_data = {}
+  pack_data['plan_categories'] = planDet[3];
+  pack_data['category_type'] = "individual";
+  pack_data['category_pack_id'] = planDet[0];
+  pack_data['subscription_catalog_id'] = planDet[1];
+  pack_data['plan_id'] = planDet[2];
+  all_packs.push(pack_data);
+  var secret_key = "93038e8c2664cc5b149d"
+  var sec_key = secret_key+sessionId+"IN"+planDet[2]; 
+  const md5 = new Md5();
+  var md5_sign = md5.appendStr(sec_key).end(); 
+  console.log(md5_sign);
+  this.promo_cod_dt['us'] = md5_sign
+  this.promo_cod_dt['packs'] = all_packs
+  this.promo_cod_dt['coupon_code'] = promo_code
+  this.promo_cod_dt['region'] = "IN"
+  console.log("promo code data");
+  console.log(this.promo_cod_dt);
+  return this.http.post<any>(environment.apiURL+"v2/users/"+sessionId+"/apply_coupon_code?region=IN&auth_token="+environment.authtoken, JSON.stringify(this.promo_cod_dt), this.options)
+    .pipe(
+      retry(1),
+      catchError(this.commonService.handleError)
+     );
+ }
   
 }

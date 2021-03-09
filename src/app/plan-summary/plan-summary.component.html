@@ -13,18 +13,18 @@
 							<p class="font-size-plan mb-0 font-mblack" id="selected_plan" style="color:#F1950E; font-weight: bold;"></p>
 						</div>
 						<div class="pull-right">
-							<p class="font-mblack1 mb-0"><span class="sel_pl_cuncy font-mregular">{{currency}} {{price}}</span>&nbsp;<span class="sel_pln_prc"></span></p>
+							<p class="font-mblack1 mb-0"><span class="sel_pl_cuncy font-mregular">{{currency}} <span id="pln_ac_prc">{{price}}</span></span>&nbsp;<span class="sel_pln_prc"></span></p>
 						</div>	
 					</div>	
 					<div class="float-left promo-box relative-content">
 	          <p class="pull-left w-100 shemaroo-color9 font-size1 mb-2 font-mbold promo_sec">Have A Promocode?</p>
-	          <input type="text" name="" class="pull-left font-size1 promo_sec" placeholder="Enter Promo Code" id="promo_code" maxlength="15">
-	          <a href="javascript:void(0);" class="pull-left text-uppercase font-mbold font-size3 promo_sec" id="plan_apply_promo">Apply</a>
+	          <input type="text" name="" class="pull-left font-size1 promo_sec" placeholder="Enter Promo Code" id="promo_code" maxlength="15" required>
+	          <a href="javascript:void(0);" class="pull-left text-uppercase font-mbold font-size3 promo_sec" id="plan_apply_promo" (click)="CouponCode();">Apply</a>
             <p class="font-mregular pull-left w-100 text-left shemaroo-color1 font-size3" id="promo_suc_pop" style="display: none;">
-              <span class="pull-left w-100 font-light font-size2 shemaroo-color1"><img src="/assets/images/tick.svg" alt="" title="">&nbsp;&nbsp;Applied Code&nbsp;&nbsp;<span class="text-uppercase font-semibold shemaroo-color4"><span id="user_promo_code" style="font-weight: bold;"> </span>&nbsp;&nbsp;</span><img src="/assets/images/cancel.svg" class="cancel_plan_promo" alt="" title=""><br></span>
+              <span class="pull-left w-100 font-light font-size2 shemaroo-color1"><img src="/assets/images/tick.svg" alt="" title="" style="width: 20px;">&nbsp;&nbsp;Applied Code&nbsp;&nbsp;<span class="text-uppercase font-semibold shemaroo-color4"><span id="user_promo_code" style="font-weight: bold;"> </span>&nbsp;&nbsp;</span><img src="./assets/images/cancel.svg" class="cancel_plan_promo" (click)="RemoveCouponCode();" alt="" title=""><br></span>
             </p>
-	          <label class="font-mregular error promocode_error mb-0">
-	            Sorry, this Promo Code is Invalid<img src="/assets/images/wrong_mark.svg" class="ml-1" style="margin-top: -4px;">
+	          <label class="font-mregular error promocode_error mb-0" id="promo_error_msg">
+	            Sorry, this Promo Code is Invalid<!-- <img src="./assets/images/wrong_mark.svg" class="ml-1" style="margin-top: -4px;"> -->
 	          </label>
 	          <p class="font-mregular pull-left w-100 text-left shemaroo-color8 font-size2" id="promo_success_msg" style="display: none;">
 	          	Your 20% discounted coupon code is been applyed
@@ -38,7 +38,7 @@
 	          		Total Payable<br>
 	          		<span class="pull-left w-100 font-mregular shemaroo-color3 font-size2" id="inc_tax">*Inclusive of all taxes</span>
 	          	</p>
-	          	<p class="pull-right font-mblack1 shemaroo-color9" style="font-size: 24px;"><span class="sel_pl_cuncy font-mregular">{{currency}} <b>{{discountPrice}}</b></span>&nbsp;<span id="grand_amount" class="sel_pln_final_prc" style="font-weight: bold;"></span>
+	          	<p class="pull-right font-mblack1 shemaroo-color9" style="font-size: 24px;"><span class="sel_pl_cuncy font-mregular">{{currency}} <b id="pln_fin_prc">{{discountPrice}}</b></span>&nbsp;<span id="grand_amount" class="sel_pln_final_prc" style="font-weight: bold;"></span>
 	          	</p>
 	          </div>
             <div class="pull-left w-100 total-price" id="tvod_sec" style="display:none;">
