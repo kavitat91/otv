@@ -141,7 +141,7 @@ public resetPasswordToast: boolean = false;
     this.loginPop = localStorage.getItem('loginPop');
     this.getContinueWatching();
     this.continueWatchItems = JSON.parse(localStorage.getItem('continueWatchItems'));
-    console.log(this.continueWatchItems.length);
+    console.log(this.continueWatchItems);
   }
 
   getContinueWatching() {    
@@ -374,14 +374,17 @@ public resetPasswordToast: boolean = false;
   }
   
   getMenu() {
+    this.loadingIndicator = true;
     this.commonService.getMenuList(this.language).subscribe(
       (resp) => {
+        this.loadingIndicator = false;
         this.header_tabs = resp["data"]["catalog_list_items"];
         /*  for(var i=0; i < this.header_tabs.length; i++) {
           console.log(this.header_tabs[i]['display_title']);
         } */
       },
       (error) => {
+        this.loadingIndicator = false;
         console.log(error);
       }
     )
@@ -487,8 +490,10 @@ public resetPasswordToast: boolean = false;
 
   getFavourites(){
     let sId = localStorage.getItem('otv_user_id');
+    this.loadingIndicator = true;
     this.userService.favourites(sId).subscribe(
       (res) => {
+        this.loadingIndicator = false;
         let favourite_list_items = res.data.items;
         console.log("favourites", favourite_list_items);
         localStorage.setItem('favouritesList' , JSON.stringify(favourite_list_items));
@@ -497,6 +502,7 @@ public resetPasswordToast: boolean = false;
       },
       (error) => {
         this.statusMessage = error.server_error_messsage;
+        this.loadingIndicator = false;
       }
     )
   }
@@ -581,6 +587,7 @@ public resetPasswordToast: boolean = false;
       this.loadingIndicator = true;
       this.userService.emailRegister(userEmailRegister).subscribe(
         (response) => {
+          this.loadingIndicator = false;
           console.log(response);
           this.errorStatus = true;
           this.statusMessage = "Confirmation email is sent to your email address";

@@ -48,6 +48,8 @@ import { PlanSummaryComponent } from './plan-summary/plan-summary.component';
 import { RazorpayresponseComponent } from './razorpayresponse/razorpayresponse.component';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { BroadcastService } from './shared/services/broadcast.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingService } from './shared/services/loading.service';
 //import {Md5} from 'ts-md5/dist/md5';
 
 
@@ -89,10 +91,11 @@ import { BroadcastService } from './shared/services/broadcast.service';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    //NgxSpinnerModule
+    NgxSpinnerModule
+    
   ],
-  providers: [BroadcastService, PageService, AllitmesserviceService, SearchService, UserService, PlansService, CommonService, SEOService
-    //NgxSpinnerService
+  providers: [BroadcastService, PageService, AllitmesserviceService, SearchService, UserService, 
+    PlansService, CommonService, SEOService, LoadingService
   ],
   bootstrap: [AppComponent]
 })

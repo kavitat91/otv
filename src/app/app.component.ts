@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   	this.router.events.subscribe(
   		(routerEvent: Event) => {
 				if(routerEvent instanceof NavigationStart) {
-					this.loadingIndicator = true;
+					this.loadingIndicator = false;
 				}  			
 				if(routerEvent instanceof NavigationEnd || routerEvent instanceof NavigationCancel || routerEvent instanceof NavigationError) {
 					this.loadingIndicator = false;

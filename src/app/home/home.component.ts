@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { PageService } from '../shared/services/page.service';
 import { CommonService } from '../shared/services/common.service';
 import { UserService } from '../shared/services/user.service';
+import { LoadingService } from '../shared/services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   continueItemId: string;
 
   constructor(private service: PageService, private commonService: CommonService, private userService: UserService,
-    private router: Router, private route: ActivatedRoute, private titleService: Title, private metaService: Meta) { }
+    private router: Router, private route: ActivatedRoute, private loadingService: LoadingService, 
+    private titleService: Title, private metaService: Meta) { }
 
   ngOnInit() {
     this.sessionId = localStorage.getItem('otv_user_id');
@@ -98,11 +100,12 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   }
 
   getContinueWatching() {
-    
+    //this.loadingService.showLoader();
     this.loadingIndicator = true;
     if(this.sessionId){
       this.userService.getContinueWatching(this.sessionId).subscribe(
         (data) => {
+          //this.loadingService.hideLoader();
           this.loadingIndicator = false;
           this.continueWatchItem = data['data']['items'];
           localStorage.setItem('continueWatchItems', JSON.stringify(this.continueWatchItem));
@@ -113,6 +116,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
         },
         (error) => {
           console.log(error);
+          //this.loadingService.hideLoader();
           this.loadingIndicator = false;
         }
       )
@@ -145,7 +149,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     )
   }
 
-  getHomeList() {
+  getHomeList() {    
+    //this.loadingService.showLoader();
     this.loadingIndicator = true;
     this.language = localStorage.getItem('language');
   	this.service.getHomeContent(this.language).subscribe(
@@ -196,12 +201,14 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       }
  
       this.carouselStatus = true;
-      this.loadingIndicator = false;    
+      //this.loadingService.hideLoader(); 
+      this.loadingIndicator = false;
       return this.det1;
       
       //this.commonService.getImageUrl()
   	},
   	(error: any) => {
+      //this.loadingService.hideLoader();
       this.loadingIndicator = false;
       //console.log(error);
       this.errorStatus = true;
